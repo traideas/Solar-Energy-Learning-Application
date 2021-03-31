@@ -38,8 +38,8 @@ const useStyles = makeStyles((theme) => ({
 const Registration = () => {
     const classes = useStyles()
     const { register, handleSubmit, errors } = useForm()
-    const onSubmit = data => console.log(data)
-    console.log(errors)
+    const onSubmit = data => console.log("data", data)
+    console.log("error", errors)
     return (
         <Container component="main" maxWidth="xs" className={classes.root}>
             <CssBaseline />
@@ -51,13 +51,41 @@ const Registration = () => {
                 <form className={classes.form} onSubmit={handleSubmit(onSubmit)} validate="true">
                     <Grid container spacing={3}>
                         <Grid item xs={12} sm={6}>
-                            <TextField autoComplete="fname" autoFocus id="firstName" required fullWidth variant="outlined" label="First Name" name="firstName" inputRef={register({required: true})} />
+                            <TextField 
+                            autoComplete="fname" 
+                            autoFocus id="firstName" 
+                            required 
+                            fullWidth 
+                            variant="outlined" 
+                            label="First Name" 
+                            name="firstName" 
+                            inputRef={register({required: true})} 
+                            />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <TextField autoComplete="lname" autoFocus id="lastName" required fullWidth variant="outlined" label="Last Name" name="lastName" inputRef={register({required: true})} />
+                            <TextField 
+                            autoComplete="lname" 
+                            autoFocus id="lastName" 
+                            required 
+                            fullWidth 
+                            variant="outlined" 
+                            label="Last Name" 
+                            name="lastName" 
+                            inputRef={register({required: true})}
+                            />
                         </Grid>
                         <Grid item xs={12} >
-                            <TextField defaultValue="2000-05-24" type="date" id="date" fullWidth autoFocus variant="outlined" label="Birth Date" name="birthDate" inputRef={register({required: true})} />
+                            <TextField 
+                            defaultValue="2000-05-24" 
+                            type="date" 
+                            id="date" 
+                            fullWidth 
+                            autoFocus 
+                            variant="outlined" 
+                            label="Birth Date" 
+                            name="birthDate" 
+                            inputRef={register({required: true})}
+                            />
                         </Grid>
                         <Grid item xs={12}>
                         <TextField
@@ -65,19 +93,46 @@ const Registration = () => {
                             required
                             fullWidth
                             id="email"
-                            label="Email Address"
+                            label= "Email Address"
                             name="email"
                             autoComplete="email"
-                            inputRef={register({required: true})}
+                            inputRef={register({
+                                required: true,
+                                pattern: /\S+@\S+\.\S+/
+                                })}
+                            error = {errors.email ? true : false}
+                            helperText = {errors.email ? "Invalid Email" :  ""}
                         />
+                        {}
                         </Grid>
                         <Grid item xs={12}>
-                            <TextField type="password" fullWidth variant="outlined" required label="Password" name="password" inputRef={register({required: true})} />
+                            <TextField 
+                            type="password" 
+                            fullWidth 
+                            variant="outlined" 
+                            required 
+                            label="Password" 
+                            name="password" 
+                            inputRef={register({
+                                required: true,
+                                minLength: 6
+                                })}
+                            error = {errors.password ? true : false}
+                            helperText = {errors.password ? "Password is too short" :  ""}
+                            />
                         </Grid>
                         <Grid item xs={12}>
-                            <TextField fullWidth variant="outlined" required label="User Name" name="userName" ref={register} />
+                            <TextField 
+                            fullWidth 
+                            variant="outlined" 
+                            required 
+                            label="User 
+                            Name" 
+                            name="userName" 
+                            ref={register}
+                            />
                         </Grid>
-                        <Grid justify="flex-start" item xs={12}>
+                        <Grid item xs={12}>
                             <FormControlLabel
                                 control={<Checkbox value="allowExtraEmails" color="primary" />}
                                 label="I agree to the terms and conditions of Solar learning management app."
