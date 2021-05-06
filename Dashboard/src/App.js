@@ -1,12 +1,13 @@
-import { Dashboard } from "./Dashboard"
+import React from "react";
+import { Route, Switch, Redirect } from "react-router-dom";
 
+import AuthLayout from "./Layouts/Auth/AuthLayout";
 
 const App = () => {
   return (
-    <div>
-      Code Goes HEre
-      <Dashboard />
-    </div>
+    <Switch>
+      <Route path="/" render={(props) => <AuthLayout {...props} />} />
+    </Switch>
   )
 }
 
