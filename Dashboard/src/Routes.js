@@ -91,6 +91,8 @@ var routes = [
     iconColor: "Info",
     component: Login,
     layout: "/auth",
+    invisible: true
+    
   },
   {
     path: "/index",
@@ -101,7 +103,7 @@ var routes = [
     layout: "/admin",
   },
   {
-    name: "Create Video"
+    name: "Create Video",
   },
   {
     divider: true,
