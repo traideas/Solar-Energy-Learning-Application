@@ -101,6 +101,9 @@ var routes = [
     layout: "/admin",
   },
   {
+    name: "Create Video"
+  },
+  {
     divider: true,
   },
   {
