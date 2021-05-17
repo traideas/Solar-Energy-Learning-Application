@@ -5,8 +5,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
+/* import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem"; */
 
 // core components
 import componentStyles from "assets/theme/components/auth-footer.js";
@@ -27,21 +27,21 @@ const Footer = () => {
             classes.justifyContentCenter + " " + classes.flexDirectionColumn,
         }}
       >
-        <Grid item xs={12} xl={6}>
-          <div className={classes.copyrightWrapper}>
+        <Grid item xs={12} xl={12}>
+          <div className={classes.copyrightWrapper} style={{ textAlign: "center", marginBottom: "30px" }}>
             © {new Date().getFullYear()}{" "}
             <a
               className={classes.copyrightLink}
-              href="https://www.creative-tim.com?ref=adr-admin-footer"
+              href="/"
               rel="noopener noreferrer"
               target="_blank"
             >
-              Creative Tim
+              MyREL
             </a>
           </div>
         </Grid>
 
-        <Grid
+        {/* <Grid
           item
           xs={12}
           xl={6}
@@ -113,7 +113,7 @@ const Footer = () => {
               MIT License
             </ListItem>
           </Box>
-        </Grid>
+        </Grid> */}
       </Container>
     </Box>
   );

@@ -11,8 +11,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Typography from "@material-ui/core/Typography";
 // @material-ui/icons components
 import DirectionsRun from "@material-ui/icons/DirectionsRun";
-import EventNote from "@material-ui/icons/EventNote";
-import LiveHelp from "@material-ui/icons/LiveHelp";
+/* import EventNote from "@material-ui/icons/EventNote";
+import LiveHelp from "@material-ui/icons/LiveHelp"; */
 import Person from "@material-ui/icons/Person";
 import Settings from "@material-ui/icons/Settings";
 
@@ -81,7 +81,7 @@ export default function NavbarDropdown() {
         />
         <span>Settings</span>
       </Box>
-      <Box
+      {/* <Box
         display="flex!important"
         alignItems="center!important"
         component={MenuItem}
@@ -94,8 +94,8 @@ export default function NavbarDropdown() {
           marginRight="1rem"
         />
         <span>Activity</span>
-      </Box>
-      <Box
+      </Box> */}
+      {/* <Box
         display="flex!important"
         alignItems="center!important"
         component={MenuItem}
@@ -108,7 +108,7 @@ export default function NavbarDropdown() {
           marginRight="1rem"
         />
         <span>Support</span>
-      </Box>
+      </Box> */}
       <Divider component="div" classes={{ root: classes.dividerRoot }} />
       <Box
         display="flex!important"

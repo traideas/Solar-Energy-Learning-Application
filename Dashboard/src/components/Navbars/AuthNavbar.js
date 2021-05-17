@@ -16,9 +16,9 @@ import Toolbar from "@material-ui/core/Toolbar";
 // @material-ui/icons components
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Clear from "@material-ui/icons/Clear";
-import Dashboard from "@material-ui/icons/Dashboard";
+/* import Dashboard from "@material-ui/icons/Dashboard"; */
 import MenuIcon from "@material-ui/icons/Menu";
-import Person from "@material-ui/icons/Person";
+/* import Person from "@material-ui/icons/Person"; */
 import VpnKey from "@material-ui/icons/VpnKey";
 
 // core components
@@ -50,7 +50,7 @@ export default function AuthNavbar() {
       component={List}
       className={classes.flexDirectionColumn}
     >
-      <ListItem
+      {/* <ListItem
         component={Link}
         to="/admin/dashboard"
         onClick={handleMenuClose}
@@ -65,7 +65,7 @@ export default function AuthNavbar() {
           marginRight=".5rem!important"
         />
         Dashboard
-      </ListItem>
+      </ListItem> */}
       <ListItem
         component={Link}
         to="/auth/register"
@@ -98,7 +98,7 @@ export default function AuthNavbar() {
         />
         Login
       </ListItem>
-      <ListItem
+      {/* <ListItem
         component={Link}
         to="/admin/user-profile"
         onClick={handleMenuClose}
@@ -113,7 +113,7 @@ export default function AuthNavbar() {
           marginRight=".5rem!important"
         />
         Profile
-      </ListItem>
+      </ListItem> */}
     </Box>
   );
   return (

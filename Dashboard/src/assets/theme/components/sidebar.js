@@ -104,6 +104,9 @@ const componentStyles = (theme) => ({
   textInfoLight: {
     color: theme.palette.info.light,
   },
+  textSuccess: {
+    color: theme.palette.success.dark,
+  },
   menuPaper: {
     width: "calc(100% - 2rem)",
   },
