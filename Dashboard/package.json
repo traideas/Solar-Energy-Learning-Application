@@ -1,7 +1,7 @@
 {
-  "name": "argon-dashboard-material-ui",
-  "version": "1.0.0",
-  "author": "Creative Tim",
+  "name": "myrel-dashboard",
+  "version": "0.0.1",
+  "author": "Traideas",
   "license": "MIT",
   "description": "Material UI version of Argon Dashboard React by Creative Tim",
   "homepage": "https://demos.creative-tim.com/argon-dashboard-material-ui/#/admin/dashboard",

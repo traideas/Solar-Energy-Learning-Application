@@ -21,7 +21,7 @@ import VpnKey from "@material-ui/icons/VpnKey";
 var routes = [
   {
     href: "#pablo",
-    name: "Upgrade to pro",
+    name: "Version 0.01",
     icon: FlashOn,
     upgradeToPro: true,
   },
