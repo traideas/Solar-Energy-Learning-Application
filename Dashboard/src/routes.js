@@ -1,11 +1,11 @@
 // core components
-/* 
+import Dashboard from "views/admin/Dashboard.js";
 import Icons from "views/admin/Icons.js";
+import Login from "views/auth/Login.js";
 import Maps from "views/admin/Maps.js";
 import Profile from "views/admin/Profile.js";
 import Register from "views/auth/Register.js";
-import Dashboard from "views/admin/Dashboard.js";
-import Tables from "views/admin/Tables.js"; */
+import Tables from "views/admin/Tables.js";
 // @material-ui/icons components
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Dns from "@material-ui/icons/Dns";
@@ -18,17 +18,14 @@ import Person from "@material-ui/icons/Person";
 import Tv from "@material-ui/icons/Tv";
 import VpnKey from "@material-ui/icons/VpnKey";
 
-import { Login } from "./Login/Login";
-import { Dashboard } from "./Dashboard/Dashboard";
-
 var routes = [
   {
-    href: "/",
-    name: "Version 0.01",
+    href: "#pablo",
+    name: "Upgrade to pro",
     icon: FlashOn,
     upgradeToPro: true,
   },
-  /* {
+  {
     path: "/index",
     name: "Dashboard",
     icon: Tv,
@@ -82,26 +79,7 @@ var routes = [
     icon: AccountCircle,
     iconColor: "ErrorLight",
     component: Register,
-    layout: "/auth", 
-  },*/
-  {
-    path: "/login",
-    name: "Login",
-    icon: VpnKey,
-    iconColor: "Info",
-    component: Login,
     layout: "/auth",
-  },
-  {
-    path: "/index",
-    name: "Dashboard",
-    icon: Tv,
-    iconColor: "Primary",
-    component: Dashboard,
-    layout: "/admin",
-  },
-  {
-    name: "Create Video"
   },
   {
     divider: true,

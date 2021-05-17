@@ -1,5 +1,5 @@
 const Chart = require("chart.js");
-const themeColors = require("../theme/colors").default;
+const themeColors = require("assets/theme/colors.js").default;
 //
 // Chart extension for making the bars rounded
 // Code from: https://codepen.io/jedtrow/full/ygRYgo
