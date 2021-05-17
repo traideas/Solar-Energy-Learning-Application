@@ -6,7 +6,7 @@ export default [
     horizontal: true
   },
   {
-    title: 'Is makeup one of your daily esse …',
+    title: 'Read',
     image: 'https://images.unsplash.com/photo-1519368358672-25b03afee3bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2004&q=80',
     cta: 'View article'
   },

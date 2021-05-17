@@ -1,10 +1,10 @@
 import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 
-export default SlideContent = () => {
+export default VideoContent = () => {
     return (
         <View style={styles.container}>
-            <Text>This is Slide content</Text>
+            <Text>This is Video content</Text>
         </View>
     )
 }
