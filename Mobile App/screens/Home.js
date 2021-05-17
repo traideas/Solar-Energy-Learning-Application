@@ -29,10 +29,15 @@ const renderContent = () => {
     )
 }
 
-export default Home = () => {
+export default Home = ({ navigation }) => {
     return (
         <Block flex center style={styles.home}>
-            {renderContent()}
+            <TouchableWithoutFeedback  onPress={() => navigation.navigate("VideoContent")}>
+              <Text style={styles.articles}>Go TO Video Content</Text>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={() => navigation.navigate("SlideContent")}>
+              <Text style={styles.articles}>Go TO Slide Content</Text>
+            </TouchableWithoutFeedback>
         </Block>
     )
 }
@@ -44,5 +49,6 @@ const styles = StyleSheet.create({
     articles: {
       width: width - theme.SIZES.BASE * 2,
       paddingVertical: theme.SIZES.BASE,
+      margin: 30
     },
   });

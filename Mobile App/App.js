@@ -6,6 +6,7 @@ import { Block, GalioProvider } from 'galio-framework'
 
 import Home from './screens/Home'
 import Login from './screens/Login'
+import VideoContent from './screens/VideoContent'
 import SlideContent from './screens/SlideContent'
 
 //theme
@@ -23,6 +24,8 @@ export default function App() {
         <Stack.Navigator>
           <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
           <Stack.Screen name="Home" component={Home} options={{ title: 'MyREL', headerLeft: null }}/>
+          <Stack.Screen name="VideoContent" component={VideoContent} options={{ title: 'Video Contents' }}/>
+          <Stack.Screen name="SlideContent" component={SlideContent} options={{ title: 'Slide Contents' }}/>
         </Stack.Navigator>
       </GalioProvider>
     </NavigationContainer>
