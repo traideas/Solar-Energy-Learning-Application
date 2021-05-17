@@ -23,8 +23,8 @@ import { Dashboard } from "./Dashboard/Dashboard";
 
 var routes = [
   {
-    href: "#pablo",
-    name: "Upgrade to pro",
+    href: "/",
+    name: "Version 0.01",
     icon: FlashOn,
     upgradeToPro: true,
   },

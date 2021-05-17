@@ -15,9 +15,12 @@ import AuthFooter from './AuthFooter'
 import componentStyles from "./authLayoutTheme";
 
 import routes from "../../routes";
+import { Login } from "../../Login/Login";
+import { PinDropSharp, PowerInputSharp } from "@material-ui/icons";
 const useStyles = makeStyles(componentStyles)
 
-const AuthLayout = () => {
+const AuthLayout = ({ children }) => {
+
     const classes = useStyles();
     const mainContent = React.useRef(null);
     const location = useLocation();
@@ -65,9 +68,11 @@ const AuthLayout = () => {
                     zIndex="101"
                 >
                     <Box component={Grid} container justifyContent="center">
+                        {children}
                         <Switch>
-                            {getRoutes(routes)}
-                            <Redirect from="*" to="/auth/login" />
+                            {/* {getRoutes(routes)}
+                            <Redirect from="*" to="/auth/login" /> */}
+
                         </Switch>
                     </Box>
                 </Container>
