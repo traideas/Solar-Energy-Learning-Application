@@ -42,6 +42,7 @@ export default function Sidebar({ routes, logo, dropdown, input }) {
   // creates the links that appear in the left menu / Sidebar
   const createLinks = (routes) => {
     return routes.map((prop, key) => {
+      if (prop.invisible) return null;
       if (prop.divider) {
         return <Divider key={key} classes={{ root: classes.divider }} />;
       } else if (prop.title) {
@@ -273,6 +274,7 @@ Sidebar.propTypes = {
           "WarningLight",
           "Info",
           "InfoLight",
+          "Success"
         ]),
       }),
       // this generates a Link (<Link to="layout + path">..</Link>) link
@@ -297,6 +299,7 @@ Sidebar.propTypes = {
           "WarningLight",
           "Info",
           "InfoLight",
+          "Success"
         ]),
       }),
       // this is just a title without any action on it

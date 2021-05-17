@@ -15,20 +15,23 @@ import Grain from "@material-ui/icons/Grain";
 import LocationOn from "@material-ui/icons/LocationOn";
 import Palette from "@material-ui/icons/Palette";
 import Person from "@material-ui/icons/Person";
-import Tv from "@material-ui/icons/Tv";
+/* import Tv from "@material-ui/icons/Tv"; */
 import VpnKey from "@material-ui/icons/VpnKey";
+import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import NoteAddIcon from '@material-ui/icons/NoteAdd';
 
 var routes = [
   {
     href: "#pablo",
-    name: "Version 0.01",
+    name: "MyREL 0.01",
     icon: FlashOn,
     upgradeToPro: true,
   },
   {
     path: "/index",
     name: "Dashboard",
-    icon: Tv,
+    icon: DashboardIcon,
     iconColor: "Primary",
     component: Dashboard,
     layout: "/admin",
@@ -72,12 +75,35 @@ var routes = [
     iconColor: "Info",
     component: Login,
     layout: "/auth",
+    invisible: true
   },
   {
     path: "/register",
     name: "Register",
     icon: AccountCircle,
     iconColor: "ErrorLight",
+    component: Register,
+    layout: "/auth",
+  },
+  {
+    divider: true,
+  },
+  {
+    title: "Learning Metarials",
+  },
+  {
+    path: "/register",
+    name: "Video",
+    icon: VideoLibraryIcon,
+    iconColor: "Info",
+    component: Register,
+    layout: "/auth",
+  },
+  {
+    path: "/register",
+    name: "Slide",
+    icon: NoteAddIcon,
+    iconColor: "Success",
     component: Register,
     layout: "/auth",
   },
