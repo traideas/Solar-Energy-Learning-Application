@@ -6,7 +6,7 @@ import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import CardHeader from "@material-ui/core/CardHeader";
+/* import CardHeader from "@material-ui/core/CardHeader"; */
 import Checkbox from "@material-ui/core/Checkbox";
 import FilledInput from "@material-ui/core/FilledInput";
 import FormControl from "@material-ui/core/FormControl";
@@ -29,7 +29,7 @@ function Login() {
     <>
       <Grid item xs={12} lg={5} md={7}>
         <Card classes={{ root: classes.cardRoot }}>
-          <CardHeader
+          {/* <CardHeader
             className={classes.cardHeader}
             title={
               <Box
@@ -92,17 +92,17 @@ function Login() {
                 </Button>
               </Box>
             }
-          ></CardHeader>
+          ></CardHeader> */}
           <CardContent classes={{ root: classes.cardContent }}>
             <Box
               color={theme.palette.gray[600]}
               textAlign="center"
               marginBottom="1rem"
               marginTop=".5rem"
-              fontSize="1rem"
+              fontSize="1.2rem"
             >
               <Box fontSize="80%" fontWeight="400" component="small">
-                Or sign in with credentials
+                Sign in with credentials
               </Box>
             </Box>
             <FormControl
@@ -168,8 +168,7 @@ function Login() {
           </Grid>
           <Grid item xs={6} component={Box} textAlign="right">
             <a
-              href="#admui"
-              onClick={(e) => e.preventDefault()}
+              href="/auth/register"
               className={classes.footerLinks}
             >
               Create new account

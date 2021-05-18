@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'studentportal',
     'rest_framework',
     'rest_framework.authtoken',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'LMS.urls'
@@ -80,7 +82,7 @@ WSGI_APPLICATION = 'LMS.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'StudentPortal',
+        'NAME': 'MyREL',
         'USER': 'newuser',
         'PASSWORD': 'zaq13edc',
         'HOST': 'localhost',
@@ -148,3 +150,8 @@ AUTH_USER_MODEL = 'studentportal.User'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+# Cors Header
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]

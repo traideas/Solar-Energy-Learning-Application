@@ -26,7 +26,10 @@
     "@material-ui/core": "4.11.3",
     "@material-ui/icons": "4.11.2",
     "@material-ui/lab": "4.0.0-alpha.57",
+    "axios": "^0.21.1",
+    "babel-eslint": "^10.1.0",
     "chart.js": "2.9.4",
+    "eslint-config-react-app": "^6.0.0",
     "node-sass": "5.0.0",
     "nouislider": "14.6.3",
     "prop-types": "15.7.2",
@@ -35,8 +38,10 @@
     "react-copy-to-clipboard": "5.0.3",
     "react-datetime": "3.0.4",
     "react-dom": "17.0.1",
+    "react-hook-form": "^7.6.0",
     "react-router-dom": "5.2.0",
-    "react-scripts": "4.0.2"
+    "react-scripts": "4.0.2",
+    "sweetalert": "^2.1.2"
   },
   "eslintConfig": {
     "extends": [
@@ -75,7 +80,7 @@
     ]
   },
   "devDependencies": {
-    "eslint": "7.20.0",
+    "eslint": "^7.26.0",
     "eslint-plugin-unused-imports": "1.1.0",
     "gulp": "4.0.2",
     "gulp-append-prepend": "1.0.8"
