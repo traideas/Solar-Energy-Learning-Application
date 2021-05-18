@@ -32,7 +32,12 @@ function Login() {
   const { register, handleSubmit, reset } = useForm()
   const onSubmit = ({ username, password }) => {
     AuthService.login(username, password)
-    reset()
+    .then(function (response) {
+      swal("Congratulations!", "Account Created Successfully!", "success")
+    })
+    .catch(function (error) {
+      swal("Login Failed!", "Please Check Your Credentials!", "error");
+    })
   }
   return (
     <>
