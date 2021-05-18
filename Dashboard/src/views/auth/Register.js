@@ -192,7 +192,7 @@ function Register() {
                   }
                 />
               </FormControl>
-              <Box
+              {/* <Box
                 fontStyle="italic"
                 fontSize="1rem"
                 color={theme.palette.gray[600]}
@@ -208,7 +208,7 @@ function Register() {
                     strong
                 </Box>
                 </Box>
-              </Box>
+              </Box> */}
               {/*  <FormControlLabel
                 value="end"
                 control={<Checkbox color="primary" />}
