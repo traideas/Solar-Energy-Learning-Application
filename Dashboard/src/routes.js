@@ -86,6 +86,7 @@ var routes = [
     iconColor: "ErrorLight",
     component: Register,
     layout: "/auth",
+    invisible: true
   },
   {
     divider: true,
@@ -100,6 +101,15 @@ var routes = [
     iconColor: "Primary",
     component: Videos,
     layout: "/admin",
+  },
+  {
+    path: "/create/videos",
+    name: "Videos",
+    icon: VideoLibraryIcon,
+    iconColor: "Primary",
+    component: Videos,
+    layout: "/admin",
+    invisible: true
   },
   {
     path: "/register",
