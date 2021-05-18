@@ -4,26 +4,17 @@ import {
   ImageBackground,
   Dimensions,
   StatusBar,
-  KeyboardAvoidingView,
-  TouchableHighlight
+  KeyboardAvoidingView
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
 
-import Button from "../components/Button";
-import Input from "../components/Input";
-import Icon from "../components/Icon";
+import { Button, Icon, Input } from "../components";
 import { Images, argonTheme } from "../constants";
 
 const { width, height } = Dimensions.get("screen");
 
-export default Login = ({ navigation }) => {
-    const pressHandler = () => {
-        console.log("Login Button Clicked")
-        navigation.push('Home')
-    }
-    const onPressRegister = () => {
-      navigation.push('Register')
-    }
+class Register extends React.Component {
+  render() {
     return (
       <Block flex middle>
         <StatusBar hidden />
@@ -33,7 +24,7 @@ export default Login = ({ navigation }) => {
         >
           <Block safe flex middle>
             <Block style={styles.registerContainer}>
-              {/* <Block flex={0.25} middle style={styles.socialConnect}>
+              <Block flex={0.25} middle style={styles.socialConnect}>
                 <Text color="#8898AA" size={12}>
                   Sign up with
                 </Text>
@@ -63,11 +54,11 @@ export default Login = ({ navigation }) => {
                     </Block>
                   </Button>
                 </Block>
-              </Block> */}
+              </Block>
               <Block flex>
                 <Block flex={0.17} middle>
-                  <Text color="#8898AA" size={28}>
-                    Login With
+                  <Text color="#8898AA" size={12}>
+                    Or sign up the classic way
                   </Text>
                 </Block>
                 <Block flex center>
@@ -76,7 +67,7 @@ export default Login = ({ navigation }) => {
                     behavior="padding"
                     enabled
                   >
-                    {/* <Block width={width * 0.8} style={{ marginBottom: 15 }}>
+                    <Block width={width * 0.8} style={{ marginBottom: 15 }}>
                       <Input
                         borderless
                         placeholder="Name"
@@ -90,7 +81,7 @@ export default Login = ({ navigation }) => {
                           />
                         }
                       />
-                    </Block> */}
+                    </Block>
                     <Block width={width * 0.8} style={{ marginBottom: 15 }}>
                       <Input
                         borderless
@@ -121,7 +112,7 @@ export default Login = ({ navigation }) => {
                           />
                         }
                       />
-                      {/* <Block row style={styles.passwordCheck}>
+                      <Block row style={styles.passwordCheck}>
                         <Text size={12} color={argonTheme.COLORS.MUTED}>
                           password strength:
                         </Text>
@@ -129,7 +120,7 @@ export default Login = ({ navigation }) => {
                           {" "}
                           strong
                         </Text>
-                      </Block> */}
+                      </Block>
                     </Block>
                     <Block row width={width * 0.75}>
                       <Checkbox
@@ -137,9 +128,9 @@ export default Login = ({ navigation }) => {
                           borderWidth: 3
                         }}
                         color={argonTheme.COLORS.PRIMARY}
-                        label="Remember Me"
+                        label="I agree with the"
                       />
-                      {/* <Button
+                      <Button
                         style={{ width: 100 }}
                         color="transparent"
                         textStyle={{
@@ -148,19 +139,14 @@ export default Login = ({ navigation }) => {
                         }}
                       >
                         Privacy Policy
-                      </Button> */}
-                    </Block>
-                    <Block middle>
-                      <Button color="primary" style={styles.createButton} onPress={pressHandler}>
-                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                          Login
-                        </Text>
                       </Button>
                     </Block>
-                    <Block middle style={{paddingTop: 20}}>
-                    <TouchableHighlight onPress={onPressRegister}>
-                      <Text>Register If you dont Have an account</Text>
-                    </TouchableHighlight>
+                    <Block middle>
+                      <Button color="primary" style={styles.createButton}>
+                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                          CREATE ACCOUNT
+                        </Text>
+                      </Button>
                     </Block>
                   </KeyboardAvoidingView>
                 </Block>
@@ -170,6 +156,7 @@ export default Login = ({ navigation }) => {
         </ImageBackground>
       </Block>
     );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -225,4 +212,4 @@ const styles = StyleSheet.create({
   }
 });
 
-
+export default Register;
