@@ -18,7 +18,7 @@ const { width, height } = Dimensions.get("screen");
 export default Login = ({ navigation }) => {
     const pressHandler = () => {
         console.log("Login Button Clicked")
-        navigation.navigate('Home')
+        navigation.push('Home')
     }
     return (
       <Block flex middle>
