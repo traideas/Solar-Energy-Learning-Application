@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -126,11 +126,12 @@ const Videos = () => {
                 </Grid>
                 <Grid item xs="auto">
                   <Box justifyContent="flex-end" display="flex" flexWrap="wrap">
+                  <Link exact to='/admin/createvideos'>
                     <Button variant="contained" color="primary" size="small"
-                        onClick={() => window.location.href='/admin/createvideos'}
                     >
                       Create New
                     </Button>
+                    </Link>
                   </Box>
                 </Grid>
               </Grid>

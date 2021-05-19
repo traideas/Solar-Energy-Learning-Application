@@ -109,6 +109,7 @@ var routes = [
     iconColor: "Primary",
     component: CreateVideos,
     layout: "/admin",
+    invisible: true
   },
   {
     path: "/slides",
