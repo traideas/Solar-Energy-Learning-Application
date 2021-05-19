@@ -26,14 +26,15 @@ import AuthService from '../../services/auth.service'
 
 const useStyles = makeStyles(componentStyles);
 
-function Login() {
+function Login({ history }) {
   const classes = useStyles();
   const theme = useTheme();
   const { register, handleSubmit, reset } = useForm()
   const onSubmit = ({ username, password }) => {
     AuthService.login(username, password)
     .then(function (response) {
-      swal("Congratulations!", "Account Created Successfully!", "success")
+      history.push('/admin/index')
+      /* swal("Congratulations!", "Account Created Successfully!", "success") */
     })
     .catch(function (error) {
       swal("Login Failed!", "Please Check Your Credentials!", "error");

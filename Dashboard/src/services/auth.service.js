@@ -36,6 +36,7 @@ const logout = () => {
     localStorage.removeItem("userTypeStudent");
     localStorage.removeItem("userTypeTeacher");
     localStorage.removeItem("userId");
+    localStorage.removeItem("userTypeAdmin");
 };
 
 const isLogedin = () => {
