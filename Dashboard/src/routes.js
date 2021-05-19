@@ -7,6 +7,7 @@ import Profile from "views/admin/Profile.js";
 import Register from "views/auth/Register.js";
 import Tables from "views/admin/Tables.js";
 import Videos from "views/admin/Videos.js";
+import CreateVideos from "views/admin/CreateVideos";
 // @material-ui/icons components
 import AccountCircle from "@material-ui/icons/AccountCircle";
 /* import Dns from "@material-ui/icons/Dns"; */
@@ -103,21 +104,19 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/create/videos",
-    name: "Videos",
-    icon: VideoLibraryIcon,
+    path: "/createvideos",
+    name: "Create Video",
     iconColor: "Primary",
-    component: Videos,
+    component: CreateVideos,
     layout: "/admin",
-    invisible: true
   },
   {
-    path: "/register",
+    path: "/slides",
     name: "Slide",
     icon: NoteAddIcon,
     iconColor: "Success",
     component: Register,
-    layout: "/auth",
+    layout: "/admin",
   },
   {
     path: "/register",
@@ -125,7 +124,7 @@ var routes = [
     icon: AttachFileIcon,
     iconColor: "Error",
     component: Register,
-    layout: "/auth",
+    layout: "/admin",
   },
   {
     divider: true,
