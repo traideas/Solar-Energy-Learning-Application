@@ -1,4 +1,5 @@
 import React from "react";
+import { useForm, Controller } from "react-hook-form";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import { useTheme } from "@material-ui/core/styles";
@@ -22,11 +23,29 @@ import UserHeader from "components/Headers/Header.js";
 import componentStyles from "assets/theme/views/admin/profile.js";
 import boxShadows from "assets/theme/box-shadow.js";
 
+import APIService from '../../services/api.service'
+import AuthService from '../../services/auth.service'
+import swal from "sweetalert";
+
 const useStyles = makeStyles(componentStyles);
 
 function CreateVideos() {
   const classes = useStyles();
   const theme = useTheme();
+  const { register, handleSubmit, reset, control } = useForm();
+
+  const onSubmit = ({ title, description, file, photo }) => {
+    const created_by = AuthService.getUserId()
+    APIService.uploadVideoContent(title, description, created_by, file, photo)
+    .then(function(res) {
+        reset()
+        swal("Success!", "Video Content Created Successfully!", "success")
+    })
+    .catch(function(res) {
+        swal("Failed!", "Please Try Again!", "error");
+    })
+  };
+
   return (
     <>
       <UserHeader />
@@ -51,7 +70,7 @@ function CreateVideos() {
             >
               Video Content Information
             </Box>
-            <div className={classes.plLg4}>
+            <form className={classes.plLg4} onSubmit={handleSubmit(onSubmit)}>
               <Grid container>
                 <Grid item xs={12} lg={12}>
                   <FormGroup>
@@ -68,7 +87,10 @@ function CreateVideos() {
                         component={FilledInput}
                         autoComplete="off"
                         type="text"
-                        defaultValue="E.g: How to Make Solar Batteries"
+                        placeholder="lucky.jesse"
+                        name="title"
+                        required
+                        {...register("title")}
                       />
                     </FormControl>
                   </FormGroup>
@@ -82,14 +104,13 @@ function CreateVideos() {
                       width="100%"
                       marginBottom="1rem!important"
                     >
-                      <Box
-                        paddingLeft="0.75rem"
-                        paddingRight="0.75rem"
-                        component={FilledInput}
+                      <FilledInput
                         autoComplete="off"
                         multiline
-                        defaultValue="A brief Description about the content of the video"
-                        rows="4"
+                        placeholder="A brief Description about the content of the video"
+                        rows="5"
+                        name="description"
+                        {...register("description")}
                       />
                     </FormControl>
                   </FormGroup>
@@ -103,13 +124,11 @@ function CreateVideos() {
                       width="100%"
                       marginBottom="1rem!important"
                     >
-                      <Box
-                        paddingLeft="0.75rem"
-                        paddingRight="0.75rem"
-                        component={FilledInput}
-                        autoComplete="off"
-                        type="text"
-                        defaultValue="E.g: How to Make Solar Batteries"
+                    {/* Have to use FilledInput, Trying with input for now */}
+                      <input
+                        type="file"
+                        name="photo"
+                        {...register("photo")}
                       />
                     </FormControl>
                   </FormGroup>
@@ -117,19 +136,18 @@ function CreateVideos() {
                 <Grid item xs={12} lg={6}>
                   <FormGroup>
                     <FormLabel>Upload Video</FormLabel>
+                    
                     <FormControl
                       variant="filled"
                       component={Box}
                       width="100%"
                       marginBottom="1rem!important"
                     >
-                      <Box
-                        paddingLeft="0.75rem"
-                        paddingRight="0.75rem"
-                        component={FilledInput}
+                      <input
                         autoComplete="off"
-                        type="text"
-                        defaultValue="E.g: How to Make Solar Batteries"
+                        type="file"
+                        name="file"
+                        {...register("file")}
                       />
                     </FormControl>
                   </FormGroup>
@@ -137,11 +155,12 @@ function CreateVideos() {
                 <Button
                   variant="contained"
                   classes={{ root: classes.buttonRoot }}
+                  type="submit"
                 >
                   Create Video
                 </Button>
               </Grid>
-            </div>
+            </form>
           </CardContent>
         </Card>
       </Container>
