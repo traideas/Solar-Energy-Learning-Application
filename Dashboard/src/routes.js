@@ -104,7 +104,7 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/createvideos",
+    path: "/videos/createvideos",
     name: "Create Video",
     iconColor: "Primary",
     component: CreateVideos,

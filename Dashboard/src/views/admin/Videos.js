@@ -126,7 +126,7 @@ const Videos = () => {
                 </Grid>
                 <Grid item xs="auto">
                   <Box justifyContent="flex-end" display="flex" flexWrap="wrap">
-                  <Link exact to='/admin/createvideos'>
+                  <Link to='/admin/videos/createvideos'>
                     <Button variant="contained" color="primary" size="small"
                     >
                       Create New
