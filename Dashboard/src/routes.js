@@ -8,6 +8,8 @@ import Register from "views/auth/Register.js";
 import Tables from "views/admin/Tables.js";
 import Videos from "views/admin/Videos.js";
 import CreateVideos from "views/admin/CreateVideos";
+import Slide from "views/admin/Slide";
+import Article from "views/admin/Article";
 // @material-ui/icons components
 import AccountCircle from "@material-ui/icons/AccountCircle";
 /* import Dns from "@material-ui/icons/Dns"; */
@@ -23,6 +25,10 @@ import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
+import CreateSlides from "views/admin/CreateSlides";
+import CreateArticles from "views/admin/CreateArticles";
+import ViewQuize from "views/admin/ViewQuize";
+import CreateQuize from "views/admin/CreateQuize";
 
 var routes = [
   {
@@ -47,14 +53,14 @@ var routes = [
     component: Icons,
     layout: "/admin",
   },
-  {
+  /* {
     path: "/maps",
     name: "Maps",
     icon: LocationOn,
     iconColor: "Warning",
     component: Maps,
     layout: "/admin",
-  },
+  }, */
   {
     path: "/user-profile",
     name: "User Profile",
@@ -116,22 +122,48 @@ var routes = [
     name: "Slide",
     icon: NoteAddIcon,
     iconColor: "Success",
-    component: Register,
+    component: Slide,
     layout: "/admin",
   },
   {
-    path: "/register",
+    path: "/slides/createslides",
+    name: "Slide",
+    component: CreateSlides,
+    layout: "/admin",
+    invisible: true
+  },
+  {
+    path: "/articles",
     name: "Article",
     icon: AttachFileIcon,
     iconColor: "Error",
-    component: Register,
+    component: Article,
     layout: "/admin",
+  },
+  {
+    path: "/articles/createarticles",
+    name: "Slide",
+    component: CreateArticles,
+    layout: "/admin",
+    invisible: true
   },
   {
     divider: true,
   },
   {
     title: "Quize",
+  },
+  {
+    path: "/quize",
+    name: "View Quize",
+    component: ViewQuize,
+    layout: "/admin"
+  },
+  {
+    path: "/createquize",
+    name: "Create Quize",
+    component: CreateQuize,
+    layout: "/admin"
   },
   /* {
     href:
