@@ -1,5 +1,9 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from "yup";
+
 import Header from "components/Headers/Header";
 import componentStyles from "assets/theme/views/admin/elements";
 
@@ -25,8 +29,23 @@ import { KeyboardArrowDown } from "@material-ui/icons";
 const useStyles = makeStyles(componentStyles);
 
 const CreateQuize = () => {
+  //form schema builder
+  const validationSchema = Yup.object().shape({
+    numberOfQuize: Yup.string().required("Number of Quize is required"),
+    quizes: Yup.array().of(
+      Yup.object().shape({
+        question: Yup.string(),
+        //optionA: Yup.string().required("Quize option is required"),
+        //optionB: Yup.string().required("Quize option is required"),
+        //optionC: Yup.string().required("Quize option is required"),
+        //optionD: Yup.string().required("Quize option is required")
+      })
+    ),
+  });
   const classes = useStyles();
-  const { register, handleSubmit, reset, errors, watch } = useForm();
+  const { register, handleSubmit, reset, errors, watch } = useForm({
+    resolver: yupResolver(validationSchema),
+  });
 
   //For Watching re-render when the Quize number is changed
   const watchNumberOfQuize = watch("numberOfQuize");
@@ -37,7 +56,9 @@ const CreateQuize = () => {
   };
 
   const onSubmit = (data) => {
-    console.log(data);
+    console.log("clasd")
+    console.log(data)
+    alert("SUCCESS!! :-)\n\n" + JSON.stringify(data, null, 4));
   };
 
   return (
@@ -67,7 +88,7 @@ const CreateQuize = () => {
                     <FormLabel>Select The Number of Quizes</FormLabel>
                     <FormControl variant="outlined" fullWidth>
                       <Select
-                        defaultValue={1}
+                        defaultValue={""}
                         IconComponent={KeyboardArrowDown}
                         name="numberOfQuize"
                         {...register("numberOfQuize")}
@@ -93,10 +114,8 @@ const CreateQuize = () => {
                           type="text"
                           className={classes.inputLarge}
                           placeholder="Quize Question"
-                          //name={`quize[${1}]question`}
-                          //{...register(`quize[${1}]question`)}
-                          name={`quize[${i}]question`}
-                          // need to fix register, working with meterial. How to Referance
+                          name={`quizes[${i}].question`}
+                          {...register(`quizes[${i}].question`)}
                         />
                       </FormControl>
                     </FormGroup>
@@ -110,6 +129,8 @@ const CreateQuize = () => {
                           type="text"
                           className={classes.inputLarge}
                           placeholder="Quize Question"
+                          name={`quizes[${i}].optionA`}
+                          {...register(`quizes[${i}].optionA`)}
                         />
                       </FormControl>
                     </FormGroup>
@@ -123,6 +144,8 @@ const CreateQuize = () => {
                           type="text"
                           className={classes.inputLarge}
                           placeholder="Quize Question"
+                          name={`quizes[${i}].optionB`}
+                          {...register(`quizes[${i}].optionB`)}
                         />
                       </FormControl>
                     </FormGroup>
@@ -136,6 +159,8 @@ const CreateQuize = () => {
                           type="text"
                           className={classes.inputLarge}
                           placeholder="Quize Question"
+                          name={`quizes[${i}].optionC`}
+                          {...register(`quizes[${i}].optionC`)}
                         />
                       </FormControl>
                     </FormGroup>
@@ -149,6 +174,8 @@ const CreateQuize = () => {
                           type="text"
                           className={classes.inputLarge}
                           placeholder="Quize Question"
+                          name={`quizes[${i}].optionD`}
+                          {...register(`quizes[${i}].optionD`)}
                         />
                       </FormControl>
                     </FormGroup>
