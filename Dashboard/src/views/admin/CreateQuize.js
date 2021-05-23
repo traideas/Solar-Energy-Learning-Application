@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 
-import { yupResolver } from '@hookform/resolvers/yup';
+import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
 import Header from "components/Headers/Header";
@@ -35,10 +35,11 @@ const CreateQuize = () => {
     quizes: Yup.array().of(
       Yup.object().shape({
         question: Yup.string(),
-        //optionA: Yup.string().required("Quize option is required"),
-        //optionB: Yup.string().required("Quize option is required"),
-        //optionC: Yup.string().required("Quize option is required"),
-        //optionD: Yup.string().required("Quize option is required")
+        a: Yup.string(),
+        b: Yup.string(),
+        c: Yup.string(),
+        d: Yup.string(),
+        correct_option: Yup.string()
       })
     ),
   });
@@ -56,9 +57,8 @@ const CreateQuize = () => {
   };
 
   const onSubmit = (data) => {
-    console.log("clasd")
-    console.log(data)
-    alert("SUCCESS!! :-)\n\n" + JSON.stringify(data, null, 4));
+    //alert("SUCCESS!! :-)\n\n" + JSON.stringify(data, null, 4));
+    alert("SUCCESS!! :-)\n\n" + JSON.stringify(data));
   };
 
   return (
@@ -116,11 +116,12 @@ const CreateQuize = () => {
                           placeholder="Quize Question"
                           name={`quizes[${i}].question`}
                           {...register(`quizes[${i}].question`)}
+                          required
                         />
                       </FormControl>
                     </FormGroup>
                   </Grid>
-                  <Grid item xs={3}>
+                  <Grid item xs={4}>
                     <FormGroup>
                       <FormLabel>Option A</FormLabel>
                       <FormControl>
@@ -129,13 +130,14 @@ const CreateQuize = () => {
                           type="text"
                           className={classes.inputLarge}
                           placeholder="Quize Question"
-                          name={`quizes[${i}].optionA`}
-                          {...register(`quizes[${i}].optionA`)}
+                          name={`quizes[${i}].a`}
+                          {...register(`quizes[${i}].a`)}
+                          required
                         />
                       </FormControl>
                     </FormGroup>
                   </Grid>
-                  <Grid item xs={3}>
+                  <Grid item xs={4}>
                     <FormGroup>
                       <FormLabel>Option B</FormLabel>
                       <FormControl>
@@ -144,13 +146,14 @@ const CreateQuize = () => {
                           type="text"
                           className={classes.inputLarge}
                           placeholder="Quize Question"
-                          name={`quizes[${i}].optionB`}
-                          {...register(`quizes[${i}].optionB`)}
+                          name={`quizes[${i}].b`}
+                          {...register(`quizes[${i}].b`)}
+                          required
                         />
                       </FormControl>
                     </FormGroup>
                   </Grid>
-                  <Grid item xs={3}>
+                  <Grid item xs={4}>
                     <FormGroup>
                       <FormLabel>Option C</FormLabel>
                       <FormControl>
@@ -159,13 +162,14 @@ const CreateQuize = () => {
                           type="text"
                           className={classes.inputLarge}
                           placeholder="Quize Question"
-                          name={`quizes[${i}].optionC`}
-                          {...register(`quizes[${i}].optionC`)}
+                          name={`quizes[${i}].c`}
+                          {...register(`quizes[${i}].c`)}
+                          required
                         />
                       </FormControl>
                     </FormGroup>
                   </Grid>
-                  <Grid item xs={3}>
+                  <Grid item xs={4}>
                     <FormGroup>
                       <FormLabel>Option D</FormLabel>
                       <FormControl>
@@ -174,9 +178,29 @@ const CreateQuize = () => {
                           type="text"
                           className={classes.inputLarge}
                           placeholder="Quize Question"
-                          name={`quizes[${i}].optionD`}
-                          {...register(`quizes[${i}].optionD`)}
+                          name={`quizes[${i}].d`}
+                          {...register(`quizes[${i}].d`)}
+                          required
                         />
+                      </FormControl>
+                    </FormGroup>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <FormGroup>
+                      <FormLabel>Correct Option</FormLabel>
+                      <FormControl variant="outlined" fullWidth>
+                        <Select
+                          defaultValue={""}
+                          IconComponent={KeyboardArrowDown}
+                          name={`quizes[${i}].correct_option`}
+                          {...register(`quizes[${i}].correct_option`)}
+                          required
+                        >
+                          <MenuItem value="a">A</MenuItem>
+                          <MenuItem value="b">B</MenuItem>
+                          <MenuItem value="c">C</MenuItem>
+                          <MenuItem value="d">D</MenuItem>
+                        </Select>
                       </FormControl>
                     </FormGroup>
                   </Grid>
