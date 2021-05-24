@@ -4,7 +4,8 @@ import {
   ImageBackground,
   Dimensions,
   StatusBar,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  TouchableHighlight
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
 
@@ -19,6 +20,9 @@ export default Login = ({ navigation }) => {
     const pressHandler = () => {
         console.log("Login Button Clicked")
         navigation.push('Home')
+    }
+    const onPressRegister = () => {
+      navigation.push('Register')
     }
     return (
       <Block flex middle>
@@ -152,6 +156,11 @@ export default Login = ({ navigation }) => {
                           Login
                         </Text>
                       </Button>
+                    </Block>
+                    <Block middle style={{paddingTop: 20}}>
+                    <TouchableHighlight onPress={onPressRegister}>
+                      <Text>Register If you dont Have an account</Text>
+                    </TouchableHighlight>
                     </Block>
                   </KeyboardAvoidingView>
                 </Block>

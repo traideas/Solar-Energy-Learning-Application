@@ -1,5 +1,4 @@
 import React from "react";
-import axios from 'axios'
 import swal from 'sweetalert';
 import { useForm } from "react-hook-form";
 // @material-ui/core components
@@ -24,23 +23,17 @@ import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import FingerprintIcon from '@material-ui/icons/Fingerprint';
 // core components
 import componentStyles from "assets/theme/views/auth/register.js";
+//Services
+import AuthService from '../../services/auth.service'
 
 const useStyles = makeStyles(componentStyles);
 
 function Register() {
+  const classes = useStyles();
+  const theme = useTheme();
   const { register, handleSubmit, reset } = useForm()
-  const onSubmit = data => {
-    axios.post('http://127.0.0.1:8000/teacher/', {
-      user: {
-        first_name: data.first_name,
-        last_name: data.last_name,
-        username: data.username,
-        email: data.email,
-        password: data.password
-      },
-      institute_name: data.institute_name,
-
-    })
+  const onSubmit = ({ first_name, last_name, username, email, password, institute_name }) => {
+      AuthService.register(first_name, last_name, username, email, password, institute_name)
       .then(function (response) {
         reset()
         swal("Congratulations!", "Account Created Successfully!", "success")
@@ -49,8 +42,6 @@ function Register() {
         swal("Registration Failed!", "Please Try Again!", "error");
       });
   }
-  const classes = useStyles();
-  const theme = useTheme();
   return (
     <>
       <Grid item xs={12} lg={6} md={8}>
@@ -233,7 +224,7 @@ function Register() {
               <Box textAlign="center" marginTop="1.5rem" marginBottom="1.5rem">
                 <Button color="primary" variant="contained" type="submit">
                   Create account
-              </Button>
+                </Button>
               </Box>
             </form>
           </CardContent>
