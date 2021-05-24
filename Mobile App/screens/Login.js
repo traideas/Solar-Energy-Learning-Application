@@ -1,4 +1,4 @@
-import React, { useState, createRef } from "react";
+import React, { useState, createRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import {
   StyleSheet,
@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   TouchableHighlight,
   Alert,
+  AsyncStorage,
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
 
@@ -15,17 +16,29 @@ import Button from "../components/Button";
 import Input from "../components/Input";
 import Icon from "../components/Icon";
 import { Images, argonTheme } from "../constants";
+import axios from "axios";
 
 const { width, height } = Dimensions.get("screen");
 
 export default Login = ({ navigation }) => {
   const { control, handleSubmit } = useForm()
+  const [data, setData] = useState({})
+  const [loading, setLoading] = useState(false);
+  const [errortext, setErrortext] = useState('');
 
-  const onSubmit = (data) => {
-    Alert.alert(JSON.stringify(data))
+  const onSubmit = (e) => {
+    setLoading(true)
+    axios.post("http://127.0.0.1:8000/api/auth/", e)
+    .then(({data}) => {
+      AsyncStorage.setItem('user_id', JSON.stringify(data.user_id))
+    })
+    .catch(err => console.log(err))
   };
   const onPressRegister = () => {
-    navigation.push("Register");
+    //navigation.navigate("HomeRoute"); 
+    // Check if Stored in AsyncStorage
+      AsyncStorage.getItem('user_id')
+      .then(val => console.log(val))
   };
   return (
     <Block flex middle>
@@ -51,7 +64,7 @@ export default Login = ({ navigation }) => {
                   <Block width={width * 0.8} style={{ marginBottom: 15 }}>
                     <Input
                       borderless
-                      placeholder="Email"
+                      placeholder="Username"
                       iconContent={
                         <Icon
                           size={16}
@@ -61,7 +74,7 @@ export default Login = ({ navigation }) => {
                           style={styles.inputIcons}
                         />
                       }
-                      name="email"
+                      name="username"
                       control={control}
                     />
                   </Block>
