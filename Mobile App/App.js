@@ -11,8 +11,8 @@ import SlideContent from "./screens/SlideContent";
 import Register from "./screens/Register";
 
 // Before Rendering any navigation stack
-import { enablrScreens } from "react-native-screens";
-enablrScreens();
+import { enableScreens } from "react-native-screens";
+enableScreens();
 
 import Screens from "./navigation/Screens";
 
@@ -28,8 +28,9 @@ export default function App() {
   return (
     <NavigationContainer>
       <GalioProvider theme={argonTheme}>
-        <Screens />
-
+        <Block flex>
+          <Screens />
+        </Block>
         {/* <Stack.Navigator>
           <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
           <Stack.Screen name="Home" component={Home} options={{ title: 'MyREL', headerLeft: null }}/>

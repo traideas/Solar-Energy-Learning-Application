@@ -75,7 +75,7 @@ export default function OnBoardingStack(props) {
         name="Onboarding"
         component={Onboarding}
         options={{
-          headerTransparent: true,
+          headerShown: false,
         }}
       />
       {isUserLoggedIn ? (

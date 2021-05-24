@@ -6,17 +6,21 @@ import { Input } from "galio-framework";
 
 import Icon from './Icon';
 import { argonTheme } from "../constants";
+import { useController } from "react-hook-form";
 
-class ArInput extends React.Component {
-  render() {
-    const { shadowless, success, error } = this.props;
-
+function ArInput(props)  {
+    const { shadowless, success, error, name, control } = props;
+    const { field } = useController({
+      control,
+      defaultValue: '',
+      name
+    })
     const inputStyles = [
       styles.input,
       !shadowless && styles.shadow,
       success && styles.success,
       error && styles.error,
-      {...this.props.style}
+      {...props.style}
     ];
 
     return (
@@ -33,10 +37,11 @@ class ArInput extends React.Component {
             family="AntDesign"
           />
         }
-        {...this.props}
+        {...props}
+        value={field.value}
+        onChangeText={field.onChange}
       />
     );
-  }
 }
 
 ArInput.defaultProps = {
