@@ -35,10 +35,10 @@ export default Login = ({ navigation }) => {
     .catch(err => console.log(err))
   };
   const onPressRegister = () => {
-    //navigation.navigate("HomeRoute"); 
+    navigation.push("Register"); 
     // Check if Stored in AsyncStorage
-      AsyncStorage.getItem('user_id')
-      .then(val => console.log(val))
+      /* AsyncStorage.getItem('user_id')
+      .then(val => console.log(val)) */
   };
   return (
     <Block flex middle>
