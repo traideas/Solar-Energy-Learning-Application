@@ -8,6 +8,7 @@ import Home from './screens/Home'
 import Login from './screens/Login'
 import VideoContent from './screens/VideoContent'
 import SlideContent from './screens/SlideContent'
+import Register from './screens/Register'
 
 //theme
 import { argonTheme } from './constants'
@@ -26,6 +27,7 @@ export default function App() {
           <Stack.Screen name="Home" component={Home} options={{ title: 'MyREL', headerLeft: null }}/>
           <Stack.Screen name="VideoContent" component={VideoContent} options={{ title: 'Video Contents' }}/>
           <Stack.Screen name="SlideContent" component={SlideContent} options={{ title: 'Slide Contents' }}/>
+          <Stack.Screen name="Register" component={Register} options={{ headerShown: false }}/>
         </Stack.Navigator>
       </GalioProvider>
     </NavigationContainer>

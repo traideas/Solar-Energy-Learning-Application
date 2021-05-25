@@ -188,19 +188,25 @@ class DocSerializer(serializers.ModelSerializer):
 
 
 
-
-
-class QuizSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Quiz
-        fields = ['title', 'description', 'teacher', 'start_date', 'photo','total_marks']
-
-
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
         fields = ['quiz', 'question', 'options_1', 'options_2',
                   'options_3', 'options_4', 'answer', 'mark']
+        extra_kwargs = {'mark': {'required': False}}
+
+
+
+class QuizSerializer(serializers.ModelSerializer):
+    questions = QuestionSerializer(many=True, read_only=True)
+    class Meta:
+        model = Quiz
+        fields = ['title', 'description', 'teacher', 'start_date', 'photo','questions','total_marks']
+
+        extra_kwargs = { 'total_marks': {'required': False},
+                         'photo': {'required': False}
+                         }
+
 
 
 

@@ -19,6 +19,9 @@ import Settings from "@material-ui/icons/Settings";
 // core components
 import componentStyles from "assets/theme/components/navbar-dropdown.js";
 
+//AuthServie
+import AuthServive from '../../services/auth.service'
+
 const useStyles = makeStyles(componentStyles);
 
 export default function NavbarDropdown() {
@@ -34,6 +37,11 @@ export default function NavbarDropdown() {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogout = () => {
+    AuthServive.logout()
+    window.location.reload()
+  }
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -114,7 +122,7 @@ export default function NavbarDropdown() {
         display="flex!important"
         alignItems="center!important"
         component={MenuItem}
-        onClick={handleMenuClose}
+        onClick={handleLogout}
       >
         <Box
           component={DirectionsRun}

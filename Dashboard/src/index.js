@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { GuardProvider, GuardedRoute } from 'react-router-guards'
 
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider } from "@material-ui/core/styles";
@@ -13,9 +14,17 @@ import "assets/scss/argon-dashboard-react.scss";
 
 import AdminLayout from "layouts/Admin.js";
 import AuthLayout from "layouts/Auth.js";
+import AuthService from "./services/auth.service";
 
-const isSignedIn = () => {
-  return true
+const requireLogin = (to, from, next) => {
+  if(to.meta.auth) {
+    if(AuthService.isLogedin()) {
+      next()
+    }
+    next.redirect("/auth/login")
+  } else {
+    next()
+  }
 }
 
 ReactDOM.render(
@@ -23,12 +32,13 @@ ReactDOM.render(
     {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
     <CssBaseline />
     <BrowserRouter>
+    <GuardProvider guards={[requireLogin]}>
       <Switch>
-        { }
-        <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-        <Route path="/auth" render={(props) => <AuthLayout {...props} />} />
+        <GuardedRoute path="/admin" render={(props) => <AdminLayout {...props} />} meta={{ auth: true }} />
+        <GuardedRoute path="/auth" render={(props) => <AuthLayout {...props} />} />
         <Redirect from="/" to="/admin/index" />
       </Switch>
+    </GuardProvider>
     </BrowserRouter>
   </ThemeProvider>,
   document.querySelector("#root")

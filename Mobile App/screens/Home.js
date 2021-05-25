@@ -19,8 +19,8 @@ const renderContent = () => {
         contentContainerStyle={styles.articles}>
         <Block flex>
             <Block flex row>
-                <Card item={{title: "Slide Contents"}} style={{ marginRight: theme.SIZES.BASE }} />
-                <Card item={{title: "Watch"}} />
+              <Card item={{title: "Slide Contents"}} style={{ marginRight: theme.SIZES.BASE }} />
+              <Card item={{title: "Watch"}} />
             </Block>
           <Card item={{title: "Take Quize"}} />
           <Card item={articles[3]} horizontal />
@@ -32,12 +32,7 @@ const renderContent = () => {
 export default Home = ({ navigation }) => {
     return (
         <Block flex center style={styles.home}>
-            <TouchableWithoutFeedback  onPress={() => navigation.navigate("VideoContent")}>
-              <Text style={styles.articles}>Go TO Video Content</Text>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={() => navigation.navigate("SlideContent")}>
-              <Text style={styles.articles}>Go TO Slide Content</Text>
-            </TouchableWithoutFeedback>
+            {renderContent()}
         </Block>
     )
 }

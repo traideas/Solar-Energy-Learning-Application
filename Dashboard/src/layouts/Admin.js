@@ -37,7 +37,8 @@ const Admin = () => {
     return routes.map((prop, key) => {
       if (prop.layout === "/admin") {
         return (
-          <Route
+          <Route 
+            exact
             path={prop.layout + prop.path}
             component={prop.component}
             key={key}
