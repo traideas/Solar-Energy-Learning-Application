@@ -6,6 +6,7 @@ import {
   StatusBar,
   Dimensions,
   SafeAreaView,
+  AsyncStorage,
 } from "react-native";
 import { Block, Button, Text, theme } from "galio-framework";
 
@@ -16,6 +17,14 @@ import Images from "../constants/Images";
 import { HeaderHeight } from "../constants/utils";
 
 export default Onboarding = ({ navigation }) => {
+   const handlePress = () => {
+     AsyncStorage.getItem('user_id')
+     .then((value) => {
+       navigation.replace(
+         value === null ? 'AuthRoute' : 'HomeRoute'
+       )
+     })
+   }
   return (
     <Block flex style={styles.container}>
         <StatusBar barStyle="light-content" />
@@ -86,7 +95,7 @@ export default Onboarding = ({ navigation }) => {
                 shadowless
                 style={styles.button}
                 color={argonTheme.COLORS.INFO}
-                onPress={() => navigation.navigate("AuthRoute")}
+                onPress={handlePress}
               >
                 <Text style={{ fontSize: 14 }} color={theme.COLORS.WHITE}>
                   GET STARTED

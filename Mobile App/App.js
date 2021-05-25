@@ -1,5 +1,6 @@
 import "react-native-gesture-handler";
-import React from "react";
+import React, { useEffect } from "react";
+import * as Font from 'expo-font';
 
 import { StyleSheet, View, Text } from "react-native";
 import { Block, GalioProvider } from "galio-framework";
@@ -20,24 +21,21 @@ import Screens from "./navigation/Screens";
 import { argonTheme } from "./constants";
 
 import { NavigationContainer } from "@react-navigation/native";
-//import { createStackNavigator } from '@react-navigation/stack';
-
-//const Stack = createStackNavigator()
 
 export default function App() {
+  useEffect(() => {
+    Font.loadAsync({
+      "open-sans-regular": require("./assets/font/OpenSans-Regular.ttf"),
+      "open-sans-light": require("./assets/font/OpenSans-Light.ttf"),
+      "open-sans-bold": require("./assets/font/OpenSans-Bold.ttf"),
+    });
+  });
   return (
     <NavigationContainer>
       <GalioProvider theme={argonTheme}>
         <Block flex>
           <Screens />
         </Block>
-        {/* <Stack.Navigator>
-          <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-          <Stack.Screen name="Home" component={Home} options={{ title: 'MyREL', headerLeft: null }}/>
-          <Stack.Screen name="VideoContent" component={VideoContent} options={{ title: 'Video Contents' }}/>
-          <Stack.Screen name="SlideContent" component={SlideContent} options={{ title: 'Slide Contents' }}/>
-          <Stack.Screen name="Register" component={Register} options={{ headerShown: false }}/>
-        </Stack.Navigator> */}
       </GalioProvider>
     </NavigationContainer>
   );

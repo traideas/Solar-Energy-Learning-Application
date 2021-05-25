@@ -12,6 +12,7 @@ import Register from "../screens/Register";
 import Home from "../screens/Home";
 import SlideContent from "../screens/SlideContent";
 import VideoContent from "../screens/VideoContent";
+import Quiz from "../screens/Quiz";
 
 //header for screens
 import { Icon, Header } from "../components";
@@ -42,7 +43,18 @@ function AuthStack(props) {
 
 function HomeStack(props) {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: "#f4511e",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          fontWeight: "bold",
+        },
+        headerTitleAlign: "center",
+      }}
+    >
       <Stack.Screen
         name="Home"
         component={Home}
@@ -64,6 +76,7 @@ function HomeStack(props) {
           title: "Video Contents",
         }}
       />
+      <Stack.Screen name="Quiz" component={Quiz} />
     </Stack.Navigator>
   );
 }
@@ -72,17 +85,23 @@ export default function OnBoardingStack(props) {
   return (
     <Stack.Navigator>
       <Stack.Screen
+        initialRouteName="Onboarding"
         name="Onboarding"
         component={Onboarding}
         options={{
           headerShown: false,
         }}
       />
-      {isUserLoggedIn ? (
-        <Stack.Screen name="AuthRoute" component={AuthStack} />
-      ) : (
-        <Stack.Screen name="HomeRoute" component={HomeStack} />
-      )}
+      <Stack.Screen
+        name="AuthRoute"
+        component={AuthStack}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="HomeRoute"
+        component={HomeStack}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 }
