@@ -103,7 +103,7 @@ const Admin = () => {
             component={Box}
             classes={{ root: classes.containerRoot }}
           >
-            <AdminFooter />
+           {/*  <AdminFooter /> */}
           </Container>
         </Box>
       </>

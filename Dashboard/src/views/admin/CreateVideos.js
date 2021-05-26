@@ -87,7 +87,7 @@ function CreateVideos() {
                         component={FilledInput}
                         autoComplete="off"
                         type="text"
-                        placeholder="lucky.jesse"
+                        placeholder="Video Title"
                         name="title"
                         required
                         {...register("title")}
@@ -107,7 +107,7 @@ function CreateVideos() {
                       <FilledInput
                         autoComplete="off"
                         multiline
-                        placeholder="A brief Description about the content of the video"
+                        placeholder="A brief description about the content of the video"
                         rows="5"
                         name="description"
                         {...register("description")}
@@ -128,6 +128,7 @@ function CreateVideos() {
                       <input
                         type="file"
                         name="photo"
+                        accept=".jpg,.jpeg,.png"
                         {...register("photo")}
                       />
                     </FormControl>
@@ -147,6 +148,7 @@ function CreateVideos() {
                         autoComplete="off"
                         type="file"
                         name="file"
+                        accept=".mp4"
                         {...register("file")}
                       />
                     </FormControl>
