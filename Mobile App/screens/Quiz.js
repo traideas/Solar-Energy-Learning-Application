@@ -15,6 +15,37 @@ const DATA = [
     photo: null,
     total_marks: 30,
     id: 1,
+    "questions": [
+      {
+          "quiz": 1,
+          "question": "What is Solar Energy?",
+          "options_1": "natural energy",
+          "options_2": "Good",
+          "options_3": "Very Good",
+          "options_4": "Nice",
+          "answer": 1,
+          "mark": 1
+      },
+      {
+          "quiz": 1,
+          "question": "is Solar Energy expensive to use?",
+          "options_1": "yes",
+          "options_2": "no",
+          "options_3": "Depends on the usage",
+          "options_4": "All",
+          "answer": 3,
+          "mark": 1
+      },
+      {
+        "question": 'What is the capital of France?',
+        "answerOptions": [
+          { answerText: 'New York', isCorrect: false },
+          { answerText: 'London', isCorrect: false },
+          { answerText: 'Paris', isCorrect: true },
+          { answerText: 'Dublin', isCorrect: false },
+        ],
+      },
+  ],
   },
   {
     title: "Solar 102",
@@ -38,7 +69,7 @@ const QuizItem = ({ item, onPress }) => {
 
 const Quiz = ({ navigation }) => {
   const handlePress = (item) => {
-    navigation.navigate("TakeQuize", item)
+    navigation.navigate("QuizDetails", item)
   }
   const renderQuizeItem = ({ item }) => {
     return <QuizItem item={item} onPress={() => handlePress(item)} />;

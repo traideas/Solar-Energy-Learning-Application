@@ -13,7 +13,7 @@ import Home from "../screens/Home";
 import SlideContent from "../screens/SlideContent";
 import VideoContent from "../screens/VideoContent";
 import Quiz from "../screens/Quiz";
-import TakeQuize from "../screens/TakeQuize";
+import QuizDetails from "../screens/QuizDetails";
 
 //header for screens
 import { Icon, Header } from "../components";
@@ -78,7 +78,7 @@ function HomeStack(props) {
         }}
       />
       <Stack.Screen name="Quiz" component={Quiz} />
-      <Stack.Screen name="TakeQuize" component={TakeQuize} />
+      <Stack.Screen name="QuizDetails" component={QuizDetails} />
     </Stack.Navigator>
   );
 }
@@ -94,9 +94,10 @@ export default function OnBoardingStack(props) {
           headerShown: false,
         }}
       />
+      {/* Change HomeStack to AuthStack, it is for Mobile Purpose */}
       <Stack.Screen
         name="AuthRoute"
-        component={AuthStack}
+        component={HomeStack} 
         options={{ headerShown: false }}
       />
       <Stack.Screen
