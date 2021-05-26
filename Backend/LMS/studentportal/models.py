@@ -10,21 +10,21 @@ class User(AbstractUser):
     is_admin = models.BooleanField(default=False)
 
 class SchoolSection(models.Model):
-    Section_Choices = (
-        (1, 'First Standard'),
-        (2, 'Second Standard'),
-        (3, 'Third Standard'),
-        (4, 'Fourth Standard'),
-        (5, 'Fifth Standard'),
-        (6, 'Sixth Standard'),
-        (7, 'Seventh Standard'),
-        (8, 'Eighth Standard'),
-        (9, 'Ninth Standard'),
-        (10, 'Tenth Standard'),
-        (11, 'Eleventh Standard'),
-        (12, 'Twelfth Standard'),
-    )
-    section = models.PositiveSmallIntegerField(choices=Section_Choices)
+    # Section_Choices = (
+    #     (1, 'First Standard'),
+    #     (2, 'Second Standard'),
+    #     (3, 'Third Standard'),
+    #     (4, 'Fourth Standard'),
+    #     (5, 'Fifth Standard'),
+    #     (6, 'Sixth Standard'),
+    #     (7, 'Seventh Standard'),
+    #     (8, 'Eighth Standard'),
+    #     (9, 'Ninth Standard'),
+    #     (10, 'Tenth Standard'),
+    #     (11, 'Eleventh Standard'),
+    #     (12, 'Twelfth Standard'),
+    # )
+    # section = models.PositiveSmallIntegerField(choices=Section_Choices)
     # section = models.CharField(max_length=50)
     school_name = models.CharField(max_length=200)
     student_count = models.IntegerField(default=1)
@@ -35,7 +35,7 @@ class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     school_section = models.ForeignKey(SchoolSection, on_delete=models.CASCADE)
     school_roll = models.CharField(max_length=10)
-    birth_date = models.DateField(blank=False)
+    # birth_date = models.DateField(blank=False)
 
 
 

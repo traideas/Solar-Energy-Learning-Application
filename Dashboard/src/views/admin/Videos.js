@@ -98,6 +98,24 @@ const Videos = () => {
   };
   return (
     <>
+
+const [foodDetails, setfoodDetails] = useState([])
+
+useEffect(() => {
+    let mounted = true
+    axios.get("http://127.0.0.1:8000/stallowner/" + AuthService.getUserId() + "/")
+        .then(res => {
+            if (mounted) {
+                if (stalls[0] != undefined) {
+                    setfoodDetails(res.data.stalls[0].foods)
+                }
+            }
+        })
+    return () => {
+        mounted = false
+    }
+}, [setfoodDetails])
+
       <Header />
       {/* Page content */}
       <Container

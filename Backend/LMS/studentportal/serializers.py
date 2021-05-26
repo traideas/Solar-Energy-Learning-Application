@@ -43,13 +43,14 @@ class StudentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Student
-        fields = ['user', 'school_section', 'school_roll', 'birth_date']
+        # fields = ['user', 'school_section', 'school_roll', 'birth_date']
+        fields = ['user', 'school_section', 'school_roll']
 
     def create(self, validated_data):
         user_data = validated_data.pop('user')
         school_section_data = validated_data.pop('school_section')
         try:
-            school_section = SchoolSection.objects.get(section=school_section_data['section'], school_name=school_section_data['school_name'])
+            school_section = SchoolSection.objects.get( school_name=school_section_data['school_name'])
             count = school_section.student_count
             school_section.student_count = count + 1
             school_section.save()
@@ -92,7 +93,7 @@ class StudentSerializer(serializers.ModelSerializer):
             temp_school_section.student_count = temp_school_section.student_count - 1
             temp_school_section.save()
 
-            school_section = SchoolSection.objects.get(section=school_section_data['section'],
+            school_section = SchoolSection.objects.get(
                                                        school_name=school_section_data['school_name'])
             print(school_section)
             count = school_section.student_count
@@ -188,19 +189,27 @@ class DocSerializer(serializers.ModelSerializer):
 
 
 
-
-
-class QuizSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Quiz
-        fields = ['title', 'description', 'teacher', 'start_date', 'photo','total_marks']
-
-
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
         fields = ['quiz', 'question', 'options_1', 'options_2',
                   'options_3', 'options_4', 'answer', 'mark']
+        extra_kwargs = {'id': {'read_only': True},
+            'mark': {'required': False}}
+
+
+
+class QuizSerializer(serializers.ModelSerializer):
+    questions = QuestionSerializer(many=True, read_only=True)
+    class Meta:
+        model = Quiz
+        fields = ['id','title', 'description', 'teacher', 'start_date', 'photo','questions','total_marks']
+
+        extra_kwargs = { 'id': {'read_only': True},
+                       'total_marks': {'required': False},
+                         'photo': {'required': False}
+                         }
+
 
 
 
