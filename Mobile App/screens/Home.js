@@ -1,49 +1,36 @@
-import React from 'react'
-import { StyleSheet, Dimensions, ScrollView, TouchableWithoutFeedback, Text, TouchableOpacity } from 'react-native'
-import { Block, theme } from 'galio-framework'
+import React from "react";
+import { StyleSheet, View, Dimensions, ScrollView, TouchableOpacity } from "react-native";
+import { Block, theme, Text, Card } from "galio-framework";
 
-import Card  from '../components/Card';
-import articles from '../constants/articles';
-
-const { width } = Dimensions.get('screen');
-
-import { createStackNavigator } from '@react-navigation/stack';
-import SlideContent from './SlideContent';
-
-const HomeStack = createStackNavigator();
-
-const renderContent = () => {
-    return (
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.articles}>
-        <Block flex>
-            <Block flex row>
-              <Card item={{title: "Slide Contents"}} style={{ marginRight: theme.SIZES.BASE }} />
-              <Card item={{title: "Watch"}} />
-            </Block>
-          <Card item={{title: "Take Quize"}} />
-          <Card item={articles[3]} horizontal />
-        </Block>
-      </ScrollView>
-    )
-}
+const { width } = Dimensions.get("screen");
 
 export default Home = ({ navigation }) => {
-    return (
-        <Block flex center style={styles.home}>
-            {renderContent()}
-        </Block>
-    )
-}
+  return (
+    <ScrollView>
+      <Block flex style={styles.home}>
+      <Block center style={{padding: 20}}>
+        <Text>This is Home</Text>
+      </Block>
+        <TouchableOpacity>
+            <Card title="Watch Videos" />
+        </TouchableOpacity>
+        <TouchableOpacity>
+            <Card title="Read Articles" />
+        </TouchableOpacity>
+        <TouchableOpacity>
+            <Card title="View Slides" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Quiz")}>
+            <Card title="Quizes" />
+        </TouchableOpacity>
+      </Block>
+    </ScrollView>
+  );
+};
 
 const styles = StyleSheet.create({
-    home: {
-      width: width,    
-    },
-    articles: {
-      width: width - theme.SIZES.BASE * 2,
-      paddingVertical: theme.SIZES.BASE,
-      margin: 30
-    },
-  });
+  home: {
+    width: width,
+  },
+  card: {},
+});
