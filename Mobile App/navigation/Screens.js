@@ -13,6 +13,7 @@ import Home from "../screens/Home";
 import SlideContent from "../screens/SlideContent";
 import VideoContent from "../screens/VideoContent";
 import Quiz from "../screens/Quiz";
+import TakeQuize from "../screens/TakeQuize";
 
 //header for screens
 import { Icon, Header } from "../components";
@@ -77,6 +78,7 @@ function HomeStack(props) {
         }}
       />
       <Stack.Screen name="Quiz" component={Quiz} />
+      <Stack.Screen name="TakeQuize" component={TakeQuize} />
     </Stack.Navigator>
   );
 }
