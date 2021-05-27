@@ -44,6 +44,7 @@ const DATA = [
           { answerText: 'Paris', isCorrect: true },
           { answerText: 'Dublin', isCorrect: false },
         ],
+        "rightAnswer": "Paris"
       },
   ],
   },

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { Block, Button, Text } from "galio-framework";
+import { FlatList } from "react-native-gesture-handler";
 
-const TakeQuize = ({ quiz, onPress }) => {
+/* const TakeQuize = ({ quiz, onPress }) => {
   const { question, answerOptions } = quiz;
   const renderOptions = answerOptions.map((answerOption, index) => {
     return (
@@ -18,7 +19,7 @@ const TakeQuize = ({ quiz, onPress }) => {
       </Block>
       <Block style={styles.optionsContainer}>
         {renderOptions}
-        {/* <TouchableOpacity onPress={onPress}>
+        <TouchableOpacity onPress={onPress}>
           <Text h5>Option 1: {options_1}</Text>
         </TouchableOpacity>
         <TouchableOpacity>
@@ -29,23 +30,23 @@ const TakeQuize = ({ quiz, onPress }) => {
         </TouchableOpacity>
         <TouchableOpacity>
           <Text h5>Option 4: {options_4}</Text>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
       </Block>
     </Block>
   );
-};
+}; */
 
 export default QuizDetails = ({ navigation, route }) => {
   const { title, description, questions } = route.params;
   const [quizQuestions] = useState(questions);
   const [startQuiz, setStartQuiz] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(2);
-  const [selectedOption, setSelectedOption] = useState()
+  const [selectedOption, setSelectedOption] = useState();
   const startQuizHandler = () => {
     setStartQuiz(true);
   };
-  const handlePress = (option_num) => {
-    console.log(option_num, "Click");
+  const handlePress = (item) => {
+    console.log(item, "Click");
   };
   return (
     <Block style={styles.container}>
@@ -54,10 +55,24 @@ export default QuizDetails = ({ navigation, route }) => {
       <Block style={styles.quizContainer}>
         {startQuiz ? (
           <Block>
-            <TakeQuize
+            <Block style={styles.question}>
+              <Text h3>{quizQuestions[currentQuestion].question}</Text>
+            </Block>
+            <Block style={styles.optionsContainer}>
+              <FlatList
+                data={quizQuestions[currentQuestion].answerOptions}
+                keyExtractor={(item, index) => "key" + index}
+                renderItem={({ item }) =>
+                  <TouchableOpacity onPress={() => handlePress(item)}>
+                    <Text h5>Option 2: {item.answerText}</Text>
+                  </TouchableOpacity>
+                }
+              />
+            </Block>
+            {/* <TakeQuize
               quiz={quizQuestions[currentQuestion]}
               onPress={() => handlePress()}
-            />
+            /> */}
           </Block>
         ) : (
           <Button onPress={startQuizHandler}>Start Quiz</Button>
