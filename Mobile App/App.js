@@ -2,14 +2,8 @@ import "react-native-gesture-handler";
 import React, { useEffect } from "react";
 import * as Font from 'expo-font';
 
-import { StyleSheet, View, Text } from "react-native";
+//import { StyleSheet, View, Text } from "react-native";
 import { Block, GalioProvider } from "galio-framework";
-
-import Home from "./screens/Home";
-import Login from "./screens/Login";
-import VideoContent from "./screens/VideoContent";
-import SlideContent from "./screens/SlideContent";
-import Register from "./screens/Register";
 
 // Before Rendering any navigation stack
 import { enableScreens } from "react-native-screens";
