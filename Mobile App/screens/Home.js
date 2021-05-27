@@ -1,6 +1,6 @@
 import React from "react";
-import { StyleSheet, View, Dimensions, ScrollView, TouchableOpacity } from "react-native";
-import { Block, theme, Text, Card } from "galio-framework";
+import { StyleSheet, Dimensions, ScrollView, TouchableOpacity } from "react-native";
+import { Block, Text, Card } from "galio-framework";
 
 const { width } = Dimensions.get("screen");
 
