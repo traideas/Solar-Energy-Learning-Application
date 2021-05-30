@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useHistory } from 'react-router-dom'
 
 // @material-ui/core components
@@ -33,9 +33,28 @@ import Header from "components/Headers/Header.js";
 
 import componentStyles from "assets/theme/views/admin/tables.js";
 
+import axios from 'axios';
 const useStyles = makeStyles(componentStyles);
 
 const Videos = () => {
+
+
+  const [videoDetails, setvideoDetails] = useState([])
+
+    useEffect(() => {
+        let mounted = true
+        axios.get("http://127.0.0.1:8000/video/")
+            .then(res => {
+                if (mounted) {
+                    setvideoDetails(res.data)
+                }
+            })
+        return () => {
+            mounted = false
+        }
+    }, [setvideoDetails])
+
+
   const classes = useStyles();
   const theme = useTheme();
   const history = useHistory();
@@ -98,24 +117,6 @@ const Videos = () => {
   };
   return (
     <>
-
-const [foodDetails, setfoodDetails] = useState([])
-
-useEffect(() => {
-    let mounted = true
-    axios.get("http://127.0.0.1:8000/stallowner/" + AuthService.getUserId() + "/")
-        .then(res => {
-            if (mounted) {
-                if (stalls[0] != undefined) {
-                    setfoodDetails(res.data.stalls[0].foods)
-                }
-            }
-        })
-    return () => {
-        mounted = false
-    }
-}, [setfoodDetails])
-
       <Header />
       {/* Page content */}
       <Container
@@ -213,6 +214,8 @@ useEffect(() => {
                 </TableRow>
               </TableHead>
               <TableBody>
+              {
+                        videoDetails.map((list, index) => (
                 <TableRow>
                   <TableCell
                     classes={{
@@ -225,22 +228,10 @@ useEffect(() => {
                     variant="head"
                     scope="row"
                   >
-                    <Box alignItems="center" display="flex">
-                      <Box
-                        component={Avatar}
-                        marginRight="1rem"
-                        alt="..."
-                        src={require("assets/img/theme/bootstrap.jpg").default}
-                      />
-                      <Box display="flex" alignItems="flex-start">
-                        <Box fontSize=".875rem" component="span">
-                          Argon Design System
-                        </Box>
-                      </Box>
-                    </Box>
+                    {list.title}
                   </TableCell>
                   <TableCell classes={{ root: classes.tableCellRoot }}>
-                    $2,500 USD
+                    {list.description}
                   </TableCell>
                   <TableCell classes={{ root: classes.tableCellRoot }}>
                     <Box paddingTop=".35rem" paddingBottom=".35rem">
@@ -358,594 +349,9 @@ useEffect(() => {
                     </Menu>
                   </TableCell>
                 </TableRow>
-                <TableRow>
-                  <TableCell
-                    classes={{
-                      root:
-                        classes.tableCellRoot +
-                        " " +
-                        classes.tableCellRootBodyHead,
-                    }}
-                    component="th"
-                    variant="head"
-                    scope="row"
-                  >
-                    <Box alignItems="center" display="flex">
-                      <Box
-                        component={Avatar}
-                        marginRight="1rem"
-                        alt="..."
-                        src={require("assets/img/theme/angular.jpg").default}
-                      />
-                      <Box display="flex" alignItems="flex-start">
-                        <Box fontSize=".875rem" component="span">
-                          Angular Now UI Kit PRO
-                        </Box>
-                      </Box>
-                    </Box>
-                  </TableCell>
-                  <TableCell classes={{ root: classes.tableCellRoot }}>
-                    $1,800 USD
-                  </TableCell>
-                  <TableCell classes={{ root: classes.tableCellRoot }}>
-                    <Box paddingTop=".35rem" paddingBottom=".35rem">
-                      <Box
-                        marginRight="10px"
-                        component="i"
-                        width=".375rem"
-                        height=".375rem"
-                        borderRadius="50%"
-                        display="inline-block"
-                        className={
-                          classes.verticalAlignMiddle + " " + classes.bgSuccess
-                        }
-                      ></Box>
-                      completed
-                    </Box>
-                  </TableCell>
-                  <TableCell classes={{ root: classes.tableCellRoot }}>
-                    <AvatarGroup>
-                      <Tooltip title="Ryan Tompson" placement="top">
-                        <Avatar
-                          classes={{ root: classes.avatarRoot }}
-                          alt="..."
-                          src={
-                            require("assets/img/theme/team-1-800x800.jpg")
-                              .default
-                          }
-                        />
-                      </Tooltip>
-                      <Tooltip title="Romina Hadid" placement="top">
-                        <Avatar
-                          classes={{ root: classes.avatarRoot }}
-                          alt="..."
-                          src={
-                            require("assets/img/theme/team-2-800x800.jpg")
-                              .default
-                          }
-                        />
-                      </Tooltip>
-                      <Tooltip title="Alexander Smith" placement="top">
-                        <Avatar
-                          classes={{ root: classes.avatarRoot }}
-                          alt="..."
-                          src={
-                            require("assets/img/theme/team-3-800x800.jpg")
-                              .default
-                          }
-                        />
-                      </Tooltip>
-                      <Tooltip title="Jessica Doe" placement="top">
-                        <Avatar
-                          classes={{ root: classes.avatarRoot }}
-                          alt="..."
-                          src={
-                            require("assets/img/theme/team-4-800x800.jpg")
-                              .default
-                          }
-                        />
-                      </Tooltip>
-                    </AvatarGroup>
-                  </TableCell>
-                  <TableCell classes={{ root: classes.tableCellRoot }}>
-                    <Box display="flex" alignItems="center">
-                      <Box component="span" marginRight=".5rem">
-                        100%
-                      </Box>
-                      <Box width="100%">
-                        <LinearProgress
-                          variant="determinate"
-                          value={100}
-                          classes={{
-                            root: classes.linearProgressRoot,
-                            bar: classes.bgGradientSuccess,
-                          }}
-                        />
-                      </Box>
-                    </Box>
-                  </TableCell>
-                  <TableCell
-                    classes={{ root: classes.tableCellRoot }}
-                    align="right"
-                  >
-                    <Box
-                      aria-controls="simple-menu-2"
-                      aria-haspopup="true"
-                      onClick={handleClick}
-                      size="small"
-                      component={Button}
-                      width="2rem!important"
-                      height="2rem!important"
-                      minWidth="2rem!important"
-                      minHeight="2rem!important"
-                    >
-                      <Box
-                        component={MoreVert}
-                        width="1.25rem!important"
-                        height="1.25rem!important"
-                        position="relative"
-                        top="2px"
-                        color={theme.palette.gray[500]}
-                      />
-                    </Box>
-                    <Menu
-                      id="simple-menu-2"
-                      anchorEl={anchorEl2}
-                      keepMounted
-                      open={Boolean(anchorEl2)}
-                      onClose={handleClose}
-                    >
-                      <MenuItem onClick={handleClose}>Action</MenuItem>
-                      <MenuItem onClick={handleClose}>Another action</MenuItem>
-                      <MenuItem onClick={handleClose}>
-                        Something else here
-                      </MenuItem>
-                    </Menu>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell
-                    classes={{
-                      root:
-                        classes.tableCellRoot +
-                        " " +
-                        classes.tableCellRootBodyHead,
-                    }}
-                    component="th"
-                    variant="head"
-                    scope="row"
-                  >
-                    <Box alignItems="center" display="flex">
-                      <Box
-                        component={Avatar}
-                        marginRight="1rem"
-                        alt="..."
-                        src={require("assets/img/theme/sketch.jpg").default}
-                      />
-                      <Box display="flex" alignItems="flex-start">
-                        <Box fontSize=".875rem" component="span">
-                          Black Dashboard
-                        </Box>
-                      </Box>
-                    </Box>
-                  </TableCell>
-                  <TableCell classes={{ root: classes.tableCellRoot }}>
-                    $3,150 USD
-                  </TableCell>
-                  <TableCell classes={{ root: classes.tableCellRoot }}>
-                    <Box paddingTop=".35rem" paddingBottom=".35rem">
-                      <Box
-                        marginRight="10px"
-                        component="i"
-                        width=".375rem"
-                        height=".375rem"
-                        borderRadius="50%"
-                        display="inline-block"
-                        className={
-                          classes.verticalAlignMiddle + " " + classes.bgError
-                        }
-                      ></Box>
-                      delayed
-                    </Box>
-                  </TableCell>
-                  <TableCell classes={{ root: classes.tableCellRoot }}>
-                    <AvatarGroup>
-                      <Tooltip title="Ryan Tompson" placement="top">
-                        <Avatar
-                          classes={{ root: classes.avatarRoot }}
-                          alt="..."
-                          src={
-                            require("assets/img/theme/team-1-800x800.jpg")
-                              .default
-                          }
-                        />
-                      </Tooltip>
-                      <Tooltip title="Romina Hadid" placement="top">
-                        <Avatar
-                          classes={{ root: classes.avatarRoot }}
-                          alt="..."
-                          src={
-                            require("assets/img/theme/team-2-800x800.jpg")
-                              .default
-                          }
-                        />
-                      </Tooltip>
-                      <Tooltip title="Alexander Smith" placement="top">
-                        <Avatar
-                          classes={{ root: classes.avatarRoot }}
-                          alt="..."
-                          src={
-                            require("assets/img/theme/team-3-800x800.jpg")
-                              .default
-                          }
-                        />
-                      </Tooltip>
-                      <Tooltip title="Jessica Doe" placement="top">
-                        <Avatar
-                          classes={{ root: classes.avatarRoot }}
-                          alt="..."
-                          src={
-                            require("assets/img/theme/team-4-800x800.jpg")
-                              .default
-                          }
-                        />
-                      </Tooltip>
-                    </AvatarGroup>
-                  </TableCell>
-                  <TableCell classes={{ root: classes.tableCellRoot }}>
-                    <Box display="flex" alignItems="center">
-                      <Box component="span" marginRight=".5rem">
-                        72%
-                      </Box>
-                      <Box width="100%">
-                        <LinearProgress
-                          variant="determinate"
-                          value={72}
-                          classes={{
-                            root: classes.linearProgressRoot,
-                            bar: classes.bgGradientError,
-                          }}
-                        />
-                      </Box>
-                    </Box>
-                  </TableCell>
-                  <TableCell
-                    classes={{ root: classes.tableCellRoot }}
-                    align="right"
-                  >
-                    <Box
-                      aria-controls="simple-menu-3"
-                      aria-haspopup="true"
-                      onClick={handleClick}
-                      size="small"
-                      component={Button}
-                      width="2rem!important"
-                      height="2rem!important"
-                      minWidth="2rem!important"
-                      minHeight="2rem!important"
-                    >
-                      <Box
-                        component={MoreVert}
-                        width="1.25rem!important"
-                        height="1.25rem!important"
-                        position="relative"
-                        top="2px"
-                        color={theme.palette.gray[500]}
-                      />
-                    </Box>
-                    <Menu
-                      id="simple-menu-3"
-                      anchorEl={anchorEl3}
-                      keepMounted
-                      open={Boolean(anchorEl3)}
-                      onClose={handleClose}
-                    >
-                      <MenuItem onClick={handleClose}>Action</MenuItem>
-                      <MenuItem onClick={handleClose}>Another action</MenuItem>
-                      <MenuItem onClick={handleClose}>
-                        Something else here
-                      </MenuItem>
-                    </Menu>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell
-                    classes={{
-                      root:
-                        classes.tableCellRoot +
-                        " " +
-                        classes.tableCellRootBodyHead,
-                    }}
-                    component="th"
-                    variant="head"
-                    scope="row"
-                  >
-                    <Box alignItems="center" display="flex">
-                      <Box
-                        component={Avatar}
-                        marginRight="1rem"
-                        alt="..."
-                        src={require("assets/img/theme/react.jpg").default}
-                      />
-                      <Box display="flex" alignItems="flex-start">
-                        <Box fontSize=".875rem" component="span">
-                          React Material Dashboard
-                        </Box>
-                      </Box>
-                    </Box>
-                  </TableCell>
-                  <TableCell classes={{ root: classes.tableCellRoot }}>
-                    $4,400 USD
-                  </TableCell>
-                  <TableCell classes={{ root: classes.tableCellRoot }}>
-                    <Box paddingTop=".35rem" paddingBottom=".35rem">
-                      <Box
-                        marginRight="10px"
-                        component="i"
-                        width=".375rem"
-                        height=".375rem"
-                        borderRadius="50%"
-                        display="inline-block"
-                        className={
-                          classes.verticalAlignMiddle + " " + classes.bgInfo
-                        }
-                      ></Box>
-                      on schedule
-                    </Box>
-                  </TableCell>
-                  <TableCell classes={{ root: classes.tableCellRoot }}>
-                    <AvatarGroup>
-                      <Tooltip title="Ryan Tompson" placement="top">
-                        <Avatar
-                          classes={{ root: classes.avatarRoot }}
-                          alt="..."
-                          src={
-                            require("assets/img/theme/team-1-800x800.jpg")
-                              .default
-                          }
-                        />
-                      </Tooltip>
-                      <Tooltip title="Romina Hadid" placement="top">
-                        <Avatar
-                          classes={{ root: classes.avatarRoot }}
-                          alt="..."
-                          src={
-                            require("assets/img/theme/team-2-800x800.jpg")
-                              .default
-                          }
-                        />
-                      </Tooltip>
-                      <Tooltip title="Alexander Smith" placement="top">
-                        <Avatar
-                          classes={{ root: classes.avatarRoot }}
-                          alt="..."
-                          src={
-                            require("assets/img/theme/team-3-800x800.jpg")
-                              .default
-                          }
-                        />
-                      </Tooltip>
-                      <Tooltip title="Jessica Doe" placement="top">
-                        <Avatar
-                          classes={{ root: classes.avatarRoot }}
-                          alt="..."
-                          src={
-                            require("assets/img/theme/team-4-800x800.jpg")
-                              .default
-                          }
-                        />
-                      </Tooltip>
-                    </AvatarGroup>
-                  </TableCell>
-                  <TableCell classes={{ root: classes.tableCellRoot }}>
-                    <Box display="flex" alignItems="center">
-                      <Box component="span" marginRight=".5rem">
-                        90%
-                      </Box>
-                      <Box width="100%">
-                        <LinearProgress
-                          variant="determinate"
-                          value={90}
-                          classes={{
-                            root: classes.linearProgressRoot,
-                            bar: classes.bgGradientInfo,
-                          }}
-                        />
-                      </Box>
-                    </Box>
-                  </TableCell>
-                  <TableCell
-                    classes={{ root: classes.tableCellRoot }}
-                    align="right"
-                  >
-                    <Box
-                      aria-controls="simple-menu-4"
-                      aria-haspopup="true"
-                      onClick={handleClick}
-                      size="small"
-                      component={Button}
-                      width="2rem!important"
-                      height="2rem!important"
-                      minWidth="2rem!important"
-                      minHeight="2rem!important"
-                    >
-                      <Box
-                        component={MoreVert}
-                        width="1.25rem!important"
-                        height="1.25rem!important"
-                        position="relative"
-                        top="2px"
-                        color={theme.palette.gray[500]}
-                      />
-                    </Box>
-                    <Menu
-                      id="simple-menu-4"
-                      anchorEl={anchorEl4}
-                      keepMounted
-                      open={Boolean(anchorEl4)}
-                      onClose={handleClose}
-                    >
-                      <MenuItem onClick={handleClose}>Action</MenuItem>
-                      <MenuItem onClick={handleClose}>Another action</MenuItem>
-                      <MenuItem onClick={handleClose}>
-                        Something else here
-                      </MenuItem>
-                    </Menu>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell
-                    classes={{
-                      root:
-                        classes.tableCellRoot +
-                        " " +
-                        classes.tableCellRootBodyHead,
-                    }}
-                    component="th"
-                    variant="head"
-                    scope="row"
-                  >
-                    <Box alignItems="center" display="flex">
-                      <Box
-                        component={Avatar}
-                        marginRight="1rem"
-                        alt="..."
-                        src={require("assets/img/theme/vue.jpg").default}
-                      />
-                      <Box display="flex" alignItems="flex-start">
-                        <Box fontSize=".875rem" component="span">
-                          Vue Paper UI Kit PRO
-                        </Box>
-                      </Box>
-                    </Box>
-                  </TableCell>
-                  <TableCell
-                    classes={{
-                      root: classes.tableCellRoot,
-                    }}
-                  >
-                    $2,200 USD
-                  </TableCell>
-                  <TableCell classes={{ root: classes.tableCellRoot }}>
-                    <Box paddingTop=".35rem" paddingBottom=".35rem">
-                      <Box
-                        marginRight="10px"
-                        component="i"
-                        width=".375rem"
-                        height=".375rem"
-                        borderRadius="50%"
-                        display="inline-block"
-                        className={
-                          classes.verticalAlignMiddle + " " + classes.bgSuccess
-                        }
-                      ></Box>
-                      completed
-                    </Box>
-                  </TableCell>
-                  <TableCell classes={{ root: classes.tableCellRoot }}>
-                    <AvatarGroup>
-                      <Tooltip title="Ryan Tompson" placement="top">
-                        <Avatar
-                          classes={{ root: classes.avatarRoot }}
-                          alt="..."
-                          src={
-                            require("assets/img/theme/team-1-800x800.jpg")
-                              .default
-                          }
-                        />
-                      </Tooltip>
-                      <Tooltip title="Romina Hadid" placement="top">
-                        <Avatar
-                          classes={{ root: classes.avatarRoot }}
-                          alt="..."
-                          src={
-                            require("assets/img/theme/team-2-800x800.jpg")
-                              .default
-                          }
-                        />
-                      </Tooltip>
-                      <Tooltip title="Alexander Smith" placement="top">
-                        <Avatar
-                          classes={{ root: classes.avatarRoot }}
-                          alt="..."
-                          src={
-                            require("assets/img/theme/team-3-800x800.jpg")
-                              .default
-                          }
-                        />
-                      </Tooltip>
-                      <Tooltip title="Jessica Doe" placement="top">
-                        <Avatar
-                          classes={{ root: classes.avatarRoot }}
-                          alt="..."
-                          src={
-                            require("assets/img/theme/team-4-800x800.jpg")
-                              .default
-                          }
-                        />
-                      </Tooltip>
-                    </AvatarGroup>
-                  </TableCell>
-                  <TableCell
-                    classes={{
-                      root: classes.tableCellRoot,
-                    }}
-                  >
-                    <Box display="flex" alignItems="center">
-                      <Box component="span" marginRight=".5rem">
-                        100%
-                      </Box>
-                      <Box width="100%">
-                        <LinearProgress
-                          variant="determinate"
-                          value={100}
-                          classes={{
-                            root: classes.linearProgressRoot,
-                            bar: classes.bgGradientSuccess,
-                          }}
-                        />
-                      </Box>
-                    </Box>
-                  </TableCell>
-                  <TableCell
-                    classes={{ root: classes.tableCellRoot }}
-                    align="right"
-                  >
-                    <Box
-                      aria-controls="simple-menu-5"
-                      aria-haspopup="true"
-                      onClick={handleClick}
-                      size="small"
-                      component={Button}
-                      width="2rem!important"
-                      height="2rem!important"
-                      minWidth="2rem!important"
-                      minHeight="2rem!important"
-                    >
-                      <Box
-                        component={MoreVert}
-                        width="1.25rem!important"
-                        height="1.25rem!important"
-                        position="relative"
-                        top="2px"
-                        color={theme.palette.gray[500]}
-                      />
-                    </Box>
-                    <Menu
-                      id="simple-menu-5"
-                      anchorEl={anchorEl5}
-                      keepMounted
-                      open={Boolean(anchorEl5)}
-                      onClose={handleClose}
-                    >
-                      <MenuItem onClick={handleClose}>Action</MenuItem>
-                      <MenuItem onClick={handleClose}>Another action</MenuItem>
-                      <MenuItem onClick={handleClose}>
-                        Something else here
-                      </MenuItem>
-                    </Menu>
-                  </TableCell>
-                </TableRow>
+))
+}
+                
               </TableBody>
             </Box>
           </TableContainer>
