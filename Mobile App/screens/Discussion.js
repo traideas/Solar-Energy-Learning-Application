@@ -10,7 +10,7 @@ export default Discussion = ({ route }) => {
   const { title, description, comments, id } = route.params;
   // console.log(comments)
   const [allComments, setAllComments] = useState(comments);
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit, reset } = useForm();
 
   const renderComments = allComments.map((comment, index) => (
     <Text key={index} style={{ margin: 10 }}>
@@ -26,8 +26,8 @@ export default Discussion = ({ route }) => {
         created_by: 10,
       })
       .then((res) => {
-        console.log("Commented");
         setAllComments(prevState => [...prevState, {comment: comment}])
+        reset()
       })
       .catch((err) => console.log(err));
   };
