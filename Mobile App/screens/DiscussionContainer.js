@@ -98,18 +98,21 @@ export default function DiscussionContainer({ navigation }) {
   const [DATA, setDATA] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://127.0.0.1:8000/discussion/")
-      .then(({ data }) => {
-        setDATA(data);
-      })
-      .catch((err) => console.log(err))
-      .finally(() => setLoading(false));
-  }, []);
+    const unsubscribe = navigation.addListener("focus", () => {
+      axios
+        .get("http://127.0.0.1:8000/discussion/")
+        .then(({ data }) => {
+          setDATA(data);
+        })
+        .catch((err) => console.log(err))
+        .finally(() => setLoading(false));
+    });
+    return unsubscribe
+  }, [navigation]);
 
   const renderItem = ({ item }) => {
     const handlePress = (item) => {
-      navigation.navigate("Discussion", item);
+      navigation.push("Discussion", item);
     };
     return <Discussion item={item} onPress={() => handlePress(item)} />;
   };
