@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-import { StyleSheet, TouchableHighlight, TouchableOpacity } from "react-native";
+import {
+  ActivityIndicator,
+  StyleSheet,
+  TouchableHighlight,
+  TouchableOpacity,
+} from "react-native";
 import { Block, Card, Text } from "galio-framework";
 import { FlatList } from "react-native-gesture-handler";
+import axios from "axios";
 
-const DATA = [
+/* const DATA = [
   {
     id: 1,
     title: "Lets Talk about renewable energy",
@@ -75,7 +81,7 @@ const DATA = [
       },
     ],
   },
-];
+]; */
 
 const Discussion = ({ item, onPress }) => {
   const { title, description } = item;
@@ -88,20 +94,37 @@ const Discussion = ({ item, onPress }) => {
 };
 
 export default function DiscussionContainer({ navigation }) {
+  const [isLoading, setLoading] = useState(true);
+  const [DATA, setDATA] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:8000/discussion/")
+      .then(({ data }) => {
+        setDATA(data);
+      })
+      .catch((err) => console.log(err))
+      .finally(() => setLoading(false));
+  }, []);
+
   const renderItem = ({ item }) => {
     const handlePress = (item) => {
-        navigation.navigate("Discussion", item)
+      navigation.navigate("Discussion", item);
     };
     return <Discussion item={item} onPress={() => handlePress(item)} />;
   };
   return (
     <Block style={styles.container}>
       <Text h5>Discussions</Text>
-      <FlatList
-        data={DATA}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={renderItem}
-      />
+      {isLoading ? (
+        <ActivityIndicator />
+      ) : (
+        <FlatList
+          data={DATA}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={renderItem}
+        />
+      )}
     </Block>
   );
 }
