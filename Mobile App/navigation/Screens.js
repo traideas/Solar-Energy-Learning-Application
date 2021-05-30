@@ -18,6 +18,8 @@ import QuizDetails from "../screens/QuizDetails";
 //header for screens
 import { Icon, Header } from "../components";
 import { argonTheme, tabs } from "../constants";
+import DiscussionContainer from "../screens/DiscussionContainer";
+import Discussion from "../screens/Discussion";
 
 const { width } = Dimensions.get("screen");
 
@@ -79,6 +81,17 @@ function HomeStack(props) {
       />
       <Stack.Screen name="Quiz" component={Quiz} />
       <Stack.Screen name="QuizDetails" component={QuizDetails} />
+      <Stack.Screen
+        name="DiscussionContainer"
+        options={{
+          title: "All Discussions",
+        }}
+        component={DiscussionContainer}
+      />
+      <Stack.Screen
+        name="Discussion"
+        component={Discussion}
+      />
     </Stack.Navigator>
   );
 }
@@ -97,7 +110,7 @@ export default function OnBoardingStack(props) {
       {/* Change HomeStack to AuthStack, it is for Mobile Purpose */}
       <Stack.Screen
         name="AuthRoute"
-        component={HomeStack} 
+        component={HomeStack}
         options={{ headerShown: false }}
       />
       <Stack.Screen

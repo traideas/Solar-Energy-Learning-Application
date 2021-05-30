@@ -23,6 +23,9 @@ export default Home = ({ navigation }) => {
         <TouchableOpacity onPress={() => navigation.navigate("Quiz")}>
             <Card title="Quizes" />
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("DiscussionContainer")}>
+            <Card title="Discussions" />
+        </TouchableOpacity>
       </Block>
     </ScrollView>
   );
