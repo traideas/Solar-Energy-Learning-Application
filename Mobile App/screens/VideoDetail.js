@@ -1,28 +1,31 @@
-import React, { useState } from "react";
-import { StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, Dimensions } from "react-native";
 import { Block, Text } from "galio-framework";
 import { Video } from "expo-av";
 
-export default function VideoDetails({ route }) {
+export default VideoDetail = ({ route }) => {
   const { title, description, file } = route.params;
-  console.log(file);
+  // console.log(file);
+  const [videoUrl, setVideoUrl] = useState("")
+  useEffect(() => {
+      setVideoUrl(file)
+  }, [])
+  const { width } = Dimensions.get('window');
   return (
     <Block style={styles.container}>
       <Text h4>{title}</Text>
-      <Text italic>{description}</Text>
+      <Text italic style={{marginBottom: 10}}>{description}</Text>
+      
       <Block>
         <Video
           source={{
-            uri: "file",
+            uri: videoUrl,
           }}
-          rate={1.0}
-          volume={1.0}
-          isMuted={false}
-          resizeMode="cover"
           shouldPlay
-          isLooping
-          style={{ width: 300, height: 300 }}
+          resizeMode="cover"
+          style={{ width: 350, height: 300 }}
         />
+        <Block style={styles.controlBar}></Block>
       </Block>
     </Block>
   );
@@ -30,7 +33,7 @@ export default function VideoDetails({ route }) {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 40,
+    padding: 20,
   },
   backgroundVideo: {
     position: "absolute",
@@ -39,4 +42,15 @@ const styles = StyleSheet.create({
     bottom: 0,
     right: 0,
   },
+  controlBar: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 45,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  }
 });
