@@ -4,9 +4,11 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import { Block, Card, Text } from "galio-framework";
+import { Block, Card, Text, Button } from "galio-framework";
 import { FlatList } from "react-native-gesture-handler";
 import axios from "axios";
+import Input from "../components/Input";
+import { useForm } from "react-hook-form";
 
 /* const DATA = [
   {
@@ -105,7 +107,7 @@ export default function DiscussionContainer({ navigation }) {
         .catch((err) => console.log(err))
         .finally(() => setLoading(false));
     });
-    return unsubscribe
+    return unsubscribe;
   }, [navigation]);
 
   const renderItem = ({ item }) => {
@@ -114,17 +116,23 @@ export default function DiscussionContainer({ navigation }) {
     };
     return <Discussion item={item} onPress={() => handlePress(item)} />;
   };
+
   return (
     <Block style={styles.container}>
       <Text h5>Discussions</Text>
       {isLoading ? (
         <ActivityIndicator />
       ) : (
-        <FlatList
-          data={DATA}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={renderItem}
-        />
+        <Block>
+        <Button onPress={() => navigation.navigate("CreateDiscussion")}>
+          Create a Discussion
+        </Button>
+          <FlatList
+            data={DATA}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={renderItem}
+          />
+        </Block>
       )}
     </Block>
   );

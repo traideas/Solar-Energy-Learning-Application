@@ -23,6 +23,7 @@ import Discussion from "../screens/Discussion";
 import VideoDetails from "../screens/VideoDetail";
 import SlideDetails from "../screens/SlideDetails";
 import ArticleContent from "../screens/ArticleContent";
+import CreateDiscussion from '../screens/CreateDiscussion'
 
 const { width } = Dimensions.get("screen");
 
@@ -109,6 +110,10 @@ function HomeStack(props) {
       <Stack.Screen
         name="SlideDetails"
         component={SlideDetails}
+      />
+      <Stack.Screen
+        name="CreateDiscussion"
+        component={CreateDiscussion}
       />
     </Stack.Navigator>
   );
