@@ -21,6 +21,8 @@ import { argonTheme, tabs } from "../constants";
 import DiscussionContainer from "../screens/DiscussionContainer";
 import Discussion from "../screens/Discussion";
 import VideoDetails from "../screens/VideoDetail";
+import SlideDetails from "../screens/SlideDetails";
+import ArticleContent from "../screens/ArticleContent";
 
 const { width } = Dimensions.get("screen");
 
@@ -80,6 +82,13 @@ function HomeStack(props) {
           title: "Video Contents",
         }}
       />
+      <Stack.Screen
+        name="ArticleContent"
+        component={ArticleContent}
+        options={{
+          title: "Additional Articles"
+        }}
+      />
       <Stack.Screen name="Quiz" component={Quiz} />
       <Stack.Screen name="QuizDetails" component={QuizDetails} />
       <Stack.Screen
@@ -96,6 +105,10 @@ function HomeStack(props) {
       <Stack.Screen
         name="VideoDetails"
         component={VideoDetails}
+      />
+      <Stack.Screen
+        name="SlideDetails"
+        component={SlideDetails}
       />
     </Stack.Navigator>
   );

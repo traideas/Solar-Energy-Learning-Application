@@ -14,7 +14,7 @@ export default Home = ({ navigation }) => {
         <TouchableOpacity onPress={() => navigation.navigate("VideoContent")}>
             <Card title="Watch Videos" />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("ArticleContent")}>
             <Card title="Read Articles" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("SlideContent")}>
