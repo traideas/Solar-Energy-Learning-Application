@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-
 import {
   ActivityIndicator,
   StyleSheet,
-  TouchableHighlight,
   TouchableOpacity,
 } from "react-native";
 import { Block, Card, Text } from "galio-framework";
