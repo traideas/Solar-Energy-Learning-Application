@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, WebView } from "react-native";
 import { Block, Text } from "galio-framework";
+//import { WebView } from "react-native-webview";
 
 export default ArticleDetails = ({ route }) => {
   const { title, description } = route.params;
-  /* // console.log(file);
-  const [videoUrl, setVideoUrl] = useState("")
+  // console.log(file);
+  const [pdfUrl, setPdfUrl] = useState("");
   useEffect(() => {
-      setVideoUrl(file)
-  }, []) */
+    setPdfUrl(file);
+  }, []);
   const { width } = Dimensions.get("window");
   return (
     <Block style={styles.container}>
+      <WebView source={{ uri: 'https://github.com/facebook/react-native' }} />
       <Text h4>{title}</Text>
       <Text italic style={{ marginBottom: 10 }}>
         {description}

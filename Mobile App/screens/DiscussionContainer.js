@@ -82,11 +82,11 @@ import axios from "axios";
 ]; */
 
 const Discussion = ({ item, onPress }) => {
-  const { title, description } = item;
+  const { title, description, comments } = item;
   return (
     <TouchableOpacity style={styles.item} onPress={onPress}>
       <Card title={title} caption={description} />
-      <Card caption={"1 Comment"} borderless={true} />
+      <Card caption={`${comments.length} Comments`} borderless={true} />
     </TouchableOpacity>
   );
 };
