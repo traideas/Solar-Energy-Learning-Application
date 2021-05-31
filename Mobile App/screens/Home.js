@@ -11,13 +11,13 @@ export default Home = ({ navigation }) => {
       <Block center style={{padding: 20}}>
         <Text>This is Home</Text>
       </Block>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("VideoContent")}>
             <Card title="Watch Videos" />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("ArticleContent")}>
             <Card title="Read Articles" />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("SlideContent")}>
             <Card title="View Slides" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("Quiz")}>
