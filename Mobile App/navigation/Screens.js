@@ -20,6 +20,7 @@ import { Icon, Header } from "../components";
 import { argonTheme, tabs } from "../constants";
 import DiscussionContainer from "../screens/DiscussionContainer";
 import Discussion from "../screens/Discussion";
+import VideoDetails from "../screens/VideoDetail";
 
 const { width } = Dimensions.get("screen");
 
@@ -91,6 +92,10 @@ function HomeStack(props) {
       <Stack.Screen
         name="Discussion"
         component={Discussion}
+      />
+      <Stack.Screen
+        name="VideoDetails"
+        component={VideoDetails}
       />
     </Stack.Navigator>
   );

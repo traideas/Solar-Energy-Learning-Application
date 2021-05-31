@@ -1,63 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   SafeAreaView,
   FlatList,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
-import { Block, Card } from "galio-framework";
-
-const DATA = [
-  {
-    title: "Solar 101",
-    description: "Fundamentals of Solar Energy",
-    teacher: 2,
-    photo: null,
-    total_marks: 30,
-    id: 1,
-    questions: [
-      {
-        quiz: 1,
-        question: "What is Solar Energy?",
-        options_1: "natural energy",
-        options_2: "Good",
-        options_3: "Very Good",
-        options_4: "Nice",
-        answer: 1,
-        mark: 1,
-      },
-      {
-        quiz: 1,
-        question: "is Solar Energy expensive to use?",
-        options_1: "yes",
-        options_2: "no",
-        options_3: "Depends on the usage",
-        options_4: "All",
-        answer: 3,
-        mark: 1,
-      },
-      {
-        quiz: 1,
-        question: "Are u having a good time?",
-        options_1: "yes",
-        options_2: "no",
-        options_3: "Depends on the usage",
-        options_4: "All",
-        answer: 3,
-        mark: 1,
-      },
-    ],
-  },
-  {
-    title: "Solar 102",
-    description: "Intermediate Solar Quiz",
-    teacher: 3,
-    photo:
-      "http://127.0.0.1:8000/media/WhatsApp_Image_2021-03-16_at_1.52.20_PM.jpeg",
-    total_marks: 20,
-    id: 2,
-  },
-];
+import { Block, Card, Text } from "galio-framework";
+import axios from 'axios'
 
 const QuizItem = ({ item, onPress }) => {
   const { title, description, photo } = item;
@@ -69,6 +19,22 @@ const QuizItem = ({ item, onPress }) => {
 };
 
 const Quiz = ({ navigation }) => {
+  const [isLoading, setLoading] = useState(true);
+  const [DATA, setDATA] = useState([]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      axios
+        .get("http://127.0.0.1:8000/quiz/")
+        .then(({ data }) => {
+          setDATA(data);
+        })
+        .catch((err) => console.log(err))
+        .finally(() => setLoading(false));
+    });
+    return unsubscribe
+  }, [navigation]);
+
   const handlePress = (item) => {
     navigation.navigate("QuizDetails", item);
   };
@@ -77,13 +43,18 @@ const Quiz = ({ navigation }) => {
   };
   return (
     <Block style={styles.container}>
-      <SafeAreaView>
+    <Text h5>Quizes</Text>
+    {
+      isLoading ? (
+        <ActivityIndicator />
+      ) : (
         <FlatList
           data={DATA}
           renderItem={renderQuizeItem}
           keyExtractor={(item) => item.id.toString()}
         />
-      </SafeAreaView>
+      )
+    }
     </Block>
   );
 };
