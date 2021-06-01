@@ -69,7 +69,7 @@ function DrawerStack() {
       }}
     >
       <Drawer.Screen name="Home" component={TabNavigation} />
-      {/* <Drawer.Screen name="Profile" component={Profile} /> */}
+      <Drawer.Screen name="Profile" component={Profile} />
     </Drawer.Navigator>
   );
 }

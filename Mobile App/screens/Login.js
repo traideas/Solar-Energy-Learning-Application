@@ -31,7 +31,7 @@ export default Login = ({ navigation }) => {
     axios.post("http://127.0.0.1:8000/api/auth/", e)
     .then(({data}) => {
       AsyncStorage.setItem('user_id', JSON.stringify(data.user_id))
-      navigation.replace('HomeRoute')
+      navigation.navigate('Home')
     })
     .catch(err => Alert.alert("Login Failed!"))
   };
