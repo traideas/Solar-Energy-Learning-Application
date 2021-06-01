@@ -29,7 +29,7 @@ export default ArticleContent = ({ navigation }) => {
 
   const renderItem = ({ item }) => {
     const handlePress = (item) => {
-      navigation.push("SlideDetails", item);
+      navigation.navigate("ArticleDetails", item);
     };
     return <SlideCard item={item} onPress={() => handlePress(item)} />;
   };

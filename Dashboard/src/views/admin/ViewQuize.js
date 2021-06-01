@@ -17,25 +17,3 @@ const ViewQuize = () => {
 
 export default ViewQuize;
 
-class ViewQuize extends React.Component() {
-  constructor() {
-    super();
-    this.state = {
-      count: 0,
-      view: null,
-    };
-  }
-
-  handleEvent = () => {
-    this.setState = count + 1;
-  };
-
-  render() {
-    return (
-      <div>
-        My count is {this.state.count}
-        <button onClick={this.handleEvent}>Increase Count</button>
-      </div>
-    );
-  }
-}

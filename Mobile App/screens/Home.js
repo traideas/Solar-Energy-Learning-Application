@@ -11,19 +11,19 @@ export default Home = ({ navigation }) => {
       <Block center style={{padding: 20}}>
         <Text>This is Home</Text>
       </Block>
-        <TouchableOpacity onPress={() => navigation.navigate("VideoContent")}>
+        <TouchableOpacity onPress={() => navigation.navigate("Video")}>
             <Card title="Watch Videos" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("ArticleContent")}>
+        <TouchableOpacity onPress={() => navigation.navigate("Article")}>
             <Card title="Read Articles" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("SlideContent")}>
+        <TouchableOpacity onPress={() => navigation.navigate("Slide")}>
             <Card title="View Slides" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("Quiz")}>
             <Card title="Quizes" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("DiscussionContainer")}>
+        <TouchableOpacity onPress={() => navigation.navigate("Discussion")}>
             <Card title="Discussions" />
         </TouchableOpacity>
       </Block>
