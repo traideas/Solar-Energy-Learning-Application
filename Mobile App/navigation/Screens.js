@@ -1,8 +1,13 @@
-import React from "react";
-import { Easing, Animated, Dimensions } from "react-native";
+import React, { useEffect } from "react";
+import { Easing, Animated, Dimensions, Alert, AsyncStorage } from "react-native";
 
 import { createStackNavigator } from "@react-navigation/stack";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem,
+} from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 //screens
@@ -28,13 +33,14 @@ import { argonTheme, tabs } from "../constants";
 import Profile from "../screens/Profile";
 import IconExtra from "../components/Icon";
 
+//Import Auth
+import AuthService from "../services/auth.service";
+
 const { width } = Dimensions.get("screen");
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-const Drawer = createDrawerNavigator()
-
-const isUserLoggedIn = true;
+const Drawer = createDrawerNavigator();
 
 function TabNavigation(props) {
   return (
@@ -48,12 +54,24 @@ function TabNavigation(props) {
 
 function DrawerStack() {
   return (
-    <Drawer.Navigator initialRouteName="Home">
-      <Drawer.Screen name="Home" component={TabNavigation}
-      />
+    <Drawer.Navigator
+      initialRouteName="Home"
+      drawerContent={(props) => {
+        return (
+          <DrawerContentScrollView {...props}>
+            <DrawerItemList {...props} />
+            <DrawerItem label="Logout" onPress={() => {
+              AsyncStorage.removeItem('user_id')
+              props.navigation.navigate(Onboarding)
+            }} />
+          </DrawerContentScrollView>
+        );
+      }}
+    >
+      <Drawer.Screen name="Home" component={TabNavigation} />
       {/* <Drawer.Screen name="Profile" component={Profile} /> */}
     </Drawer.Navigator>
-  )
+  );
 }
 
 function AuthStack(props) {
@@ -97,8 +115,16 @@ function HomeStack(props) {
       <Stack.Screen name="Video" component={VideoStack} />
       <Stack.Screen name="Article" component={ArticleStack} />
       <Stack.Screen name="Slide" component={SlideStack} />
-      <Stack.Screen name="Quiz" component={QuizStack} options={{headerShown: false}} />
-      <Stack.Screen name="Discussion" component={DiscussionStack} options={{headerShown: false}} />
+      <Stack.Screen
+        name="Quiz"
+        component={QuizStack}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Discussion"
+        component={DiscussionStack}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 }
@@ -107,7 +133,7 @@ function VideoStack() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: false
+        headerShown: false,
       }}
     >
       <Stack.Screen
@@ -132,7 +158,7 @@ function ArticleStack() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: false
+        headerShown: false,
       }}
     >
       <Stack.Screen
@@ -157,7 +183,7 @@ function SlideStack() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: false
+        headerShown: false,
       }}
     >
       <Stack.Screen
@@ -257,12 +283,12 @@ export default function OnBoardingStack(props) {
       {/* Change HomeStack to AuthStack, it is for Mobile Purpose */}
       <Stack.Screen
         name="AuthRoute"
-        component={DrawerStack}
+        component={AuthStack}
         options={{ headerShown: false }}
       />
       <Stack.Screen
         name="HomeRoute"
-        component={HomeStack}
+        component={DrawerStack}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
