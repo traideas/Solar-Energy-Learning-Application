@@ -59,6 +59,13 @@ urlpatterns = format_suffix_patterns([
     path('comment/<int:pk>/',
          views.CommentDetail.as_view(),
          name='comment-detail'),
+    path('score/',
+         views.ScoreList.as_view(),
+         name='score-list'),
+    path('score/<int:pk>',
+         views.ScoreDetail.as_view(),
+         name='score-detail'),
+
 
 
     # path('coursetest/',
