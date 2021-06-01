@@ -15,7 +15,6 @@ import Screens from "./navigation/Screens";
 import { argonTheme } from "./constants";
 
 import { NavigationContainer } from "@react-navigation/native";
-
 export default function App() {
   useEffect(() => {
     Font.loadAsync({

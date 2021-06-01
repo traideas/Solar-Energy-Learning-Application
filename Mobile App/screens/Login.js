@@ -31,9 +31,12 @@ export default Login = ({ navigation }) => {
     axios.post("http://127.0.0.1:8000/api/auth/", e)
       .then(({ data }) => {
         AsyncStorage.setItem('user_id', JSON.stringify(data.user_id))
-        navigation.navigate('Home')
+        navigation.replace('HomeRoute')
       })
-      .catch(err => Alert.alert("Login Failed!"))
+      .catch(err => {
+        Alert.alert("Login Failed!")
+        console.log(err)
+      })
   };
   const onPressRegister = () => {
     navigation.push("Register");
