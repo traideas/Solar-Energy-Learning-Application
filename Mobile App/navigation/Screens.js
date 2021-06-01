@@ -280,7 +280,7 @@ export default function OnBoardingStack(props) {
           headerShown: false,
         }}
       />
-      {/* Change HomeStack to AuthStack, it is for Mobile Purpose */}
+   
       <Stack.Screen
         name="AuthRoute"
         component={AuthStack}
