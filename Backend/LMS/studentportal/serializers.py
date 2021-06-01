@@ -37,14 +37,42 @@ class SchoolSerializer(serializers.ModelSerializer):
 
 
 
+class ScoreSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Score
+        fields = ['id', 'student', 'quiz', 'totalQuestion', 'totalMarks', 'right', 'wrong', 'score', 'date']
+        extra_kwargs = {'id': {'read_only': True},
+                        'totalQuestion': {'required': False},
+                        'totalMarks': {'required': False},
+                        'right': {'required': False},
+                        'wrong': {'required': False},
+                        'date': {'read_only': True, 'required': False},
+                        }
+
+    def validate(self, data):
+        student = data.get('student')
+        quiz = data.get('quiz')
+        # sku = data.get('sku')
+
+        record = Score.objects.filter(student=student, quiz=quiz).first()
+
+        if record:
+            raise serializers.ValidationError("Student already attend this quiz")
+
+        return super().validate(data)
+
+
+
+
 class StudentSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     school_section = SchoolSerializer()
+    studentScore = ScoreSerializer(many=True, read_only=True)
 
     class Meta:
         model = Student
         # fields = ['user', 'school_section', 'school_roll', 'birth_date']
-        fields = ['user', 'school_section', 'school_roll']
+        fields = ['user', 'school_section', 'school_roll', 'studentScore']
 
     def create(self, validated_data):
         user_data = validated_data.pop('user')

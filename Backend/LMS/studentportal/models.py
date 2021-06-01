@@ -142,3 +142,20 @@ class Comment(models.Model):
     comment = models.CharField(max_length=2000)
     created_by = models.ForeignKey('studentportal.User', on_delete=models.CASCADE, related_name='comments')
     created_date = models.DateField(blank=False, auto_now_add=True)
+
+
+class Score(models.Model):
+    student = models.ForeignKey('studentportal.Student', on_delete=models.CASCADE, related_name='studentScore')
+    quiz = models.ForeignKey('studentportal.Quiz', related_name='quizScore', on_delete=models.CASCADE)
+    totalQuestion = models.IntegerField()
+    totalMarks = models.IntegerField()
+    right = models.IntegerField()
+    wrong = models.IntegerField()
+    score = models.IntegerField()
+    date = models.DateField(blank=False, auto_now_add=True)
+
+    # class Meta:
+    #     constraints = [
+    #         models.UniqueConstraint(fields=['student', 'quiz'],
+    #                                 name='unique_student_quiz'),
+    #     ]
