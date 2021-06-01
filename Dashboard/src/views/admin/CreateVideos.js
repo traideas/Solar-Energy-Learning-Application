@@ -36,14 +36,15 @@ function CreateVideos() {
 
   const onSubmit = ({ title, description, file, photo }) => {
     const created_by = AuthService.getUserId()
-    APIService.uploadVideoContent(title, description, created_by, file, photo)
-    .then(function(res) {
+    const status = 1
+    APIService.uploadVideoContent(title, description, created_by, photo, file, status)
+      .then(function (res) {
         reset()
         swal("Success!", "Video Content Created Successfully!", "success")
-    })
-    .catch(function(res) {
+      })
+      .catch(function (res) {
         swal("Failed!", "Please Try Again!", "error");
-    })
+      })
   };
 
   return (
@@ -124,7 +125,7 @@ function CreateVideos() {
                       width="100%"
                       marginBottom="1rem!important"
                     >
-                    {/* Have to use FilledInput, Trying with input for now */}
+                      {/* Have to use FilledInput, Trying with input for now */}
                       <input
                         type="file"
                         name="photo"
@@ -137,7 +138,7 @@ function CreateVideos() {
                 <Grid item xs={12} lg={6}>
                   <FormGroup>
                     <FormLabel>Upload Video</FormLabel>
-                    
+
                     <FormControl
                       variant="filled"
                       component={Box}

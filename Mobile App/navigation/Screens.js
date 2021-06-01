@@ -97,8 +97,8 @@ function HomeStack(props) {
       <Stack.Screen name="Video" component={VideoStack} />
       <Stack.Screen name="Article" component={ArticleStack} />
       <Stack.Screen name="Slide" component={SlideStack} />
-      <Stack.Screen name="Quiz" component={QuizStack} options={{headerShown: false}} />
-      <Stack.Screen name="Discussion" component={DiscussionStack} options={{headerShown: false}} />
+      <Stack.Screen name="Quiz" component={QuizStack} options={{ headerShown: false }} />
+      <Stack.Screen name="Discussion" component={DiscussionStack} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }
@@ -257,12 +257,12 @@ export default function OnBoardingStack(props) {
       {/* Change HomeStack to AuthStack, it is for Mobile Purpose */}
       <Stack.Screen
         name="AuthRoute"
-        component={DrawerStack}
+        component={AuthStack}
         options={{ headerShown: false }}
       />
       <Stack.Screen
         name="HomeRoute"
-        component={HomeStack}
+        component={DrawerStack}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

@@ -7,7 +7,7 @@ const uploadVideoContent = (
   photo,
   //meterial_type,
   file,
-  //status
+  status
 ) => {
   let formData = new FormData();
   formData.append("title", title);
@@ -16,7 +16,7 @@ const uploadVideoContent = (
   formData.append("photo", photo[0]);
   //formData.append("meterial_type", meterial_type);
   formData.append("file", file[0]);
-  //formData.append("status", status);
+  formData.append("status", status);
   return axios.post("http://127.0.0.1:8000/video/", formData);
 };
 
