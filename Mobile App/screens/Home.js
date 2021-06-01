@@ -8,23 +8,21 @@ export default Home = ({ navigation }) => {
   return (
     <ScrollView>
       <Block flex style={styles.home}>
-      <Block center style={{padding: 20}}>
-        <Text>This is Home</Text>
-      </Block>
+
         <TouchableOpacity onPress={() => navigation.navigate("Video")}>
-            <Card title="Watch Videos" />
+          <Card middle style={styles.card} title="Watch Videos" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("Article")}>
-            <Card title="Read Articles" />
+          <Card style={styles.card} title="Read Articles" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("Slide")}>
-            <Card title="View Slides" />
+          <Card title="View Slides" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("Quiz")}>
-            <Card title="Quizes" />
+          <Card title="Quizes" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("Discussion")}>
-            <Card title="Discussions" />
+          <Card title="Discussions" />
         </TouchableOpacity>
       </Block>
     </ScrollView>
@@ -35,5 +33,11 @@ const styles = StyleSheet.create({
   home: {
     width: width,
   },
-  card: {},
+  card: {
+    width: width * 0.9,
+
+    backgroundColor: "#F4F5F7",
+    borderRadius: 4,
+
+  },
 });
