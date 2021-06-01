@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-import { useTheme } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
@@ -11,9 +10,6 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardHeader from "@material-ui/core/CardHeader";
 import Container from "@material-ui/core/Container";
-import LinearProgress from "@material-ui/core/LinearProgress";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -25,7 +21,6 @@ import Tooltip from "@material-ui/core/Tooltip";
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
 import Pagination from "@material-ui/lab/Pagination";
 // @material-ui/icons components
-import MoreVert from "@material-ui/icons/MoreVert";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 // core components
@@ -53,14 +48,7 @@ const Videos = () => {
       mounted = false
     }
   }, [setvideoDetails])
-
-
   const classes = useStyles();
-  const theme = useTheme();
-  const history = useHistory();
-
-
-
 
   return (
     <>
@@ -118,6 +106,14 @@ const Videos = () => {
                         classes.tableCellRoot + " " + classes.tableCellRootHead,
                     }}
                   >
+                    SL
+                  </TableCell>
+                  <TableCell
+                    classes={{
+                      root:
+                        classes.tableCellRoot + " " + classes.tableCellRootHead,
+                    }}
+                  >
                     Title
                   </TableCell>
                   <TableCell
@@ -150,20 +146,15 @@ const Videos = () => {
                         classes.tableCellRoot + " " + classes.tableCellRootHead,
                     }}
                   >
-                    Photo
+                    File
                   </TableCell>
-                  <TableCell
-                    classes={{
-                      root:
-                        classes.tableCellRoot + " " + classes.tableCellRootHead,
-                    }}
-                  ></TableCell>
+
                 </TableRow>
               </TableHead>
               <TableBody>
                 {
                   videoDetails.map((list, index) => (
-                    <TableRow>
+                    <TableRow key={list.id}>
                       <TableCell
                         classes={{
                           root:
@@ -171,13 +162,15 @@ const Videos = () => {
                             " " +
                             classes.tableCellRootBodyHead,
                         }}
-                        component="th"
                         variant="head"
-                        scope="row"
+
                       >
+                        {index = index + 1}
+                      </TableCell>
+                      <TableCell classes={{ root: classes.tableCellRoot }} >
                         {list.title}
                       </TableCell>
-                      <TableCell classes={{ root: classes.tableCellRoot }}>
+                      <TableCell classes={{ root: classes.tableCellRoot }} >
                         {list.description}
                       </TableCell>
                       <TableCell classes={{ root: classes.tableCellRoot }}>
@@ -228,15 +221,9 @@ const Videos = () => {
                         </AvatarGroup>
                       </TableCell>
                       <TableCell classes={{ root: classes.tableCellRoot }}>
-                        <img src={list.photo} style={{ height: "100px" }} />
+                        <a href={list.file} target="_blank"><img src={list.photo} style={{ height: "100px" }} /></a>
                       </TableCell>
-                      <TableCell
-                        classes={{ root: classes.tableCellRoot }}
-                        align="right"
-                      >
 
-
-                      </TableCell>
                     </TableRow>
                   ))
                 }

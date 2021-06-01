@@ -50,9 +50,9 @@ export default Login = ({ navigation }) => {
         <Block safe flex middle>
           <Block style={styles.registerContainer}>
             <Block flex>
-              <Block flex={0.17} middle>
-                <Text color="#8898AA" size={28}>
-                  Login With
+              <Block flex={0.17} middle style={{ marginTop: 15, marginBottom: 15 }}>
+                <Text color="#8898AA" size={30}>
+                  Login
                 </Text>
               </Block>
               <Block flex center>
@@ -96,15 +96,6 @@ export default Login = ({ navigation }) => {
                       control={control}
                     />
                   </Block>
-                  <Block row width={width * 0.75}>
-                    <Checkbox
-                      checkboxStyle={{
-                        borderWidth: 3,
-                      }}
-                      color={argonTheme.COLORS.PRIMARY}
-                      label="Remember Me"
-                    />
-                  </Block>
                   <Block middle>
                     <Button
                       color="primary"
@@ -134,7 +125,7 @@ export default Login = ({ navigation }) => {
 const styles = StyleSheet.create({
   registerContainer: {
     width: width * 0.9,
-    height: height * 0.500,
+    height: height * 0.480,
     backgroundColor: "#F4F5F7",
     borderRadius: 4,
     shadowColor: argonTheme.COLORS.BLACK,

@@ -33,7 +33,7 @@ export default Onboarding = ({ navigation }) => {
           source={Images.Pro}
           style={{ flex: 1, height: height, width, zIndex: 1 }}
         />
-        <Block space="between" style={styles.padded}>
+        <Block style={styles.padded}>
           <Block>
             <Button
               shadowless
@@ -86,8 +86,8 @@ const styles = StyleSheet.create({
     backgroundColor: argonTheme.COLORS.INFO,
     paddingHorizontal: 8,
     marginLeft: 3,
-    borderRadius: 4,
-    height: 22,
+    borderRadius: 0,
+    height: 25,
     marginTop: 15,
   },
 });
