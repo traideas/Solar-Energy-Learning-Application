@@ -23,10 +23,10 @@ export default Discussion = ({ route }) => {
       .post("http://127.0.0.1:8000/comment/", {
         comment: comment,
         discussion: id,
-        created_by: 10,
+        created_by: 1,
       })
       .then((res) => {
-        setAllComments(prevState => [...prevState, {comment: comment}])
+        setAllComments(prevState => [...prevState, { comment: comment }])
         reset()
       })
       .catch((err) => console.log(err));

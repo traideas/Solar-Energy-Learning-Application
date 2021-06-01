@@ -29,17 +29,17 @@ export default Login = ({ navigation }) => {
   const onSubmit = (e) => {
     setLoading(true)
     axios.post("http://127.0.0.1:8000/api/auth/", e)
-    .then(({data}) => {
-      AsyncStorage.setItem('user_id', JSON.stringify(data.user_id))
-      navigation.replace('HomeRoute')
-    })
-    .catch(err => Alert.alert("Login Failed!"))
+      .then(({ data }) => {
+        AsyncStorage.setItem('user_id', JSON.stringify(data.user_id))
+        navigation.replace('HomeRoute')
+      })
+      .catch(err => Alert.alert("Login Failed!"))
   };
   const onPressRegister = () => {
-    navigation.push("Register"); 
+    navigation.push("Register");
     // Check if Stored in AsyncStorage
-      /* AsyncStorage.getItem('user_id')
-      .then(val => console.log(val)) */
+    /* AsyncStorage.getItem('user_id')
+    .then(val => console.log(val)) */
   };
   return (
     <Block flex middle>
@@ -134,7 +134,7 @@ export default Login = ({ navigation }) => {
 const styles = StyleSheet.create({
   registerContainer: {
     width: width * 0.9,
-    height: height * 0.875,
+    height: height * 0.500,
     backgroundColor: "#F4F5F7",
     borderRadius: 4,
     shadowColor: argonTheme.COLORS.BLACK,
