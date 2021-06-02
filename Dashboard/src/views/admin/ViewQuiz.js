@@ -31,23 +31,23 @@ import componentStyles from "assets/theme/views/admin/tables.js";
 import axios from 'axios';
 const useStyles = makeStyles(componentStyles);
 
-const Slides = () => {
+const ViewQuiz = () => {
 
 
-  const [articleDetails, setarticleDetails] = useState([])
+  const [quizDetails, setquizDetails] = useState([])
 
   useEffect(() => {
     let mounted = true
-    axios.get("http://127.0.0.1:8000/document/")
+    axios.get("http://127.0.0.1:8000/quiz/")
       .then(res => {
         if (mounted) {
-          setarticleDetails(res.data)
+          setquizDetails(res.data)
         }
       })
     return () => {
       mounted = false
     }
-  }, [setarticleDetails])
+  }, [setquizDetails])
   const classes = useStyles();
 
   return (
@@ -80,7 +80,7 @@ const Slides = () => {
                 </Grid>
                 <Grid item xs="auto">
                   <Box justifyContent="flex-end" display="flex" flexWrap="wrap">
-                    <Link to='/admin/articles/createarticles'>
+                    <Link to='/admin/createquiz'>
                       <Button variant="contained" color="primary" size="small"
                       >
                         Create New
@@ -146,14 +146,22 @@ const Slides = () => {
                         classes.tableCellRoot + " " + classes.tableCellRootHead,
                     }}
                   >
-                    File
+                    Questions
+                  </TableCell>
+                  <TableCell
+                    classes={{
+                      root:
+                        classes.tableCellRoot + " " + classes.tableCellRootHead,
+                    }}
+                  >
+                    Thumbnil
                   </TableCell>
 
                 </TableRow>
               </TableHead>
               <TableBody>
                 {
-                  articleDetails.map((list, index) => (
+                  quizDetails.map((list, index) => (
                     <TableRow key={list.id}>
                       <TableCell
                         classes={{
@@ -174,7 +182,7 @@ const Slides = () => {
                         {list.description}
                       </TableCell>
                       <TableCell classes={{ root: classes.tableCellRoot }}>
-                        {list.upload_date}
+                        {list.start_date}
                       </TableCell>
                       <TableCell classes={{ root: classes.tableCellRoot }}>
                         <AvatarGroup>
@@ -188,40 +196,13 @@ const Slides = () => {
                               }
                             />
                           </Tooltip>
-                          <Tooltip title="Romina Hadid" placement="top">
-                            <Avatar
-                              classes={{ root: classes.avatarRoot }}
-                              alt="..."
-                              src={
-                                require("assets/img/theme/team-2-800x800.jpg")
-                                  .default
-                              }
-                            />
-                          </Tooltip>
-                          <Tooltip title="Alexander Smith" placement="top">
-                            <Avatar
-                              classes={{ root: classes.avatarRoot }}
-                              alt="..."
-                              src={
-                                require("assets/img/theme/team-3-800x800.jpg")
-                                  .default
-                              }
-                            />
-                          </Tooltip>
-                          <Tooltip title="Jessica Doe" placement="top">
-                            <Avatar
-                              classes={{ root: classes.avatarRoot }}
-                              alt="..."
-                              src={
-                                require("assets/img/theme/team-4-800x800.jpg")
-                                  .default
-                              }
-                            />
-                          </Tooltip>
                         </AvatarGroup>
                       </TableCell>
                       <TableCell classes={{ root: classes.tableCellRoot }}>
-                        <a href={list.file} target="_blank"><img src={list.photo} style={{ height: "100px" }} /></a>
+                        {list.questions.length}
+                      </TableCell>
+                      <TableCell classes={{ root: classes.tableCellRoot }}>
+                        <img src={list.photo} style={{ height: "100px" }} />
                       </TableCell>
 
                     </TableRow>
@@ -244,4 +225,4 @@ const Slides = () => {
   );
 };
 
-export default Slides;
+export default ViewQuiz;

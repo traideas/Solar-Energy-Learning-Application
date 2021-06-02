@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-
+import FilledInput from "@material-ui/core/FilledInput";
 import Header from "components/Headers/Header";
 import componentStyles from "assets/theme/views/admin/elements";
-
+import swal from "sweetalert";
 //meterial UI Components
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -30,7 +30,7 @@ import AuthService from "../../services/auth.service";
 
 const useStyles = makeStyles(componentStyles);
 
-const CreateQuize = () => {
+const CreateQuiz = () => {
   //form schema builder
   const validationSchema = Yup.object().shape({
     numberOfQuize: Yup.string().required("Number of Quize is required"),
@@ -58,15 +58,15 @@ const CreateQuize = () => {
     return [...Array(parseInt(watchNumberOfQuize || 0)).keys()];
   };
 
-  const onSubmit = ({ title, description, quizes }) => {
+  const onSubmit = ({ title, description, photo, quizes }) => {
+    let formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("teacher", AuthService.getUserId());
+    formData.append("photo", photo[0]);
+    formData.append("total_marks", 0)
     axios
-      .post("http://127.0.0.1:8000/quiz/", {
-        title: title,
-        description: description,
-        teacher: AuthService.getUserId(),
-        photo: null,
-        total_marks: Math.floor(Math.random() * 101),
-      })
+      .post("http://127.0.0.1:8000/quiz/", formData)
       .then(({ data }) => {
         quizes.map(({ question, a, b, c, d, correct_option }) => {
           axios.post("http://127.0.0.1:8000/question/", {
@@ -78,10 +78,16 @@ const CreateQuize = () => {
             options_4: d,
             answer: correct_option,
             mark: Math.floor(Math.random() * 101),
-          }).then(res => console.log(res)).then(err => console.log(err));
+          }).then(function (res) {
+            reset()
+            swal("Success!", "Quiz Created Successfully!", "success")
+          })
+            .catch(function (res) {
+              swal("Failed!", "Please Try Again!", "error");
+            })
         });
       })
-      .then((err) => console.log(err));
+      .then((err) => swal("Failed!", "Please Try Again!", "error"));
   };
 
   return (
@@ -96,7 +102,7 @@ const CreateQuize = () => {
         <Card classes={{ root: classes.cardRoot }}>
           <CardHeader
             className={classes.cardHeader}
-            title="Quize Create"
+            title="Create Quiz"
             titleTypographyProps={{
               component: Box,
               marginBottom: "0!important",
@@ -108,45 +114,55 @@ const CreateQuize = () => {
               <Grid container>
                 <Grid item xs={6}>
                   <FormGroup>
-                    <FormLabel>Quize Title</FormLabel>
-                    <FormControl>
-                      <OutlinedInput
-                        fullWidth
+                    <FormLabel>Quiz Title</FormLabel>
+                    <FormControl
+                      variant="filled"
+                      component={Box}
+                      width="100%"
+                      marginBottom="1rem!important"
+                    >
+                      <Box
+                        paddingLeft="0.75rem"
+                        paddingRight="0.75rem"
+                        component={FilledInput}
+                        autoComplete="off"
                         type="text"
-                        className={classes.inputLarge}
-                        placeholder="Quize Question"
+                        placeholder="Quiz Title"
                         name="title"
-                        {...register("title")}
                         required
+                        {...register("title")}
                       />
                     </FormControl>
                   </FormGroup>
                 </Grid>
-                {/* <Grid item xs={6}>
+                <Grid item xs={6}>
                   <FormGroup>
-                    <FormLabel>Upload Quize Thumbnail</FormLabel>
-                    <FormControl>
-                      <OutlinedInput
-                        fullWidth
-                        type="text"
-                        className={classes.inputLarge}
-                        placeholder="Quize Thumbnail"
-                        name="Photo"
-                        {...register("Photo")}
-                        required
+                    <FormLabel>Upload Thumbnil</FormLabel>
+                    <FormControl
+                      variant="filled"
+                      component={Box}
+                      width="100%"
+                      marginBottom="1rem!important"
+                    >
+                      <input
+                        type="file"
+                        name="photo"
+                        accept=".jpg,.jpeg,.png"
+                        {...register("photo")}
                       />
                     </FormControl>
                   </FormGroup>
-                </Grid> */}
-                <Grid item xs={12}>
+                </Grid>
+
+                <Grid item xs={6}>
                   <FormGroup>
                     <FormLabel>Quiz Description</FormLabel>
                     <FormControl>
-                      <OutlinedInput
-                        fullWidth
-                        type="text"
-                        className={classes.inputLarge}
-                        placeholder="Quize Description"
+                      <FilledInput
+                        autoComplete="off"
+                        multiline
+                        placeholder="A brief description about the quiz"
+                        rows="5"
                         name="description"
                         {...register("description")}
                         required
@@ -156,9 +172,9 @@ const CreateQuize = () => {
                 </Grid>
               </Grid>
               <Grid container>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={6}>
                   <FormGroup>
-                    <FormLabel>Select The Number of Quizes</FormLabel>
+                    <FormLabel>Select The Number of Quizs</FormLabel>
                     <FormControl variant="outlined" fullWidth>
                       <Select
                         defaultValue={""}
@@ -180,13 +196,14 @@ const CreateQuize = () => {
                 <Grid container key={i}>
                   <Grid item xs={12}>
                     <FormGroup>
-                      <FormLabel>Quize {i + 1}</FormLabel>
+                      <FormLabel>Quiz {i + 1}</FormLabel>
                       <FormControl>
                         <OutlinedInput
                           fullWidth
                           type="text"
+                          autoComplete="off"
                           className={classes.inputLarge}
-                          placeholder="Quize Question"
+                          placeholder="Quiz Question"
                           name={`quizes[${i}].question`}
                           {...register(`quizes[${i}].question`)}
                           required
@@ -201,8 +218,9 @@ const CreateQuize = () => {
                         <OutlinedInput
                           fullWidth
                           type="text"
+                          autoComplete="off"
                           className={classes.inputLarge}
-                          placeholder="Quize Question"
+                          placeholder="Option A"
                           name={`quizes[${i}].a`}
                           {...register(`quizes[${i}].a`)}
                           required
@@ -217,8 +235,9 @@ const CreateQuize = () => {
                         <OutlinedInput
                           fullWidth
                           type="text"
+                          autoComplete="off"
                           className={classes.inputLarge}
-                          placeholder="Quize Question"
+                          placeholder="Option B"
                           name={`quizes[${i}].b`}
                           {...register(`quizes[${i}].b`)}
                           required
@@ -233,8 +252,9 @@ const CreateQuize = () => {
                         <OutlinedInput
                           fullWidth
                           type="text"
+                          autoComplete="off"
                           className={classes.inputLarge}
-                          placeholder="Quize Question"
+                          placeholder="Option C"
                           name={`quizes[${i}].c`}
                           {...register(`quizes[${i}].c`)}
                           required
@@ -249,8 +269,9 @@ const CreateQuize = () => {
                         <OutlinedInput
                           fullWidth
                           type="text"
+                          autoComplete="off"
                           className={classes.inputLarge}
-                          placeholder="Quize Question"
+                          placeholder="Option D"
                           name={`quizes[${i}].d`}
                           {...register(`quizes[${i}].d`)}
                           required
@@ -284,7 +305,7 @@ const CreateQuize = () => {
                 classes={{ root: classes.buttonRoot }}
                 type="submit"
               >
-                Create Quize
+                Create Quiz
               </Button>
             </form>
           </CardContent>
@@ -294,4 +315,4 @@ const CreateQuize = () => {
   );
 };
 
-export default CreateQuize;
+export default CreateQuiz;
