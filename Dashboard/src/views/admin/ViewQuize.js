@@ -9,7 +9,7 @@ const ViewQuize = () => {
   }
   return (
     <div>
-      My count is {this.state.count}
+      My count is {count}
       <button onClick={handleEvent}>Increase Count</button>
     </div>
   );

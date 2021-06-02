@@ -6,6 +6,7 @@ import axios from "axios";
 const Profile = () => {
   const [userID, setUserID] = useState();
   const [fname, setFname] = useState();
+  
   AuthService.displayData().then((val) => setUserID(val));
   /*   useEffect(() => {
     AuthService.displayData().then((val) => {

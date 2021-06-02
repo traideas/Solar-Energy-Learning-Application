@@ -1,5 +1,12 @@
 import React, { useEffect } from "react";
-import { Easing, Animated, Dimensions, Alert, AsyncStorage } from "react-native";
+import {
+  Easing,
+  Animated,
+  Dimensions,
+  Alert,
+  AsyncStorage,
+  StyleSheet,
+} from "react-native";
 
 import { createStackNavigator } from "@react-navigation/stack";
 import {
@@ -44,8 +51,33 @@ const Drawer = createDrawerNavigator();
 
 function TabNavigation(props) {
   return (
-    <Tab.Navigator initialRouteName="Home">
-      <Tab.Screen name="DiscussionContainer" component={DiscussionStack} />
+    <Tab.Navigator
+      initialRouteName="Home"
+      tabBarOptions={{
+        style: {
+          backgroundColor: "blue",
+          height: 50,
+          justifyContent: "center",
+          alignItems: "center",
+          borderWidth: 0.5,
+          borderColor: "black",
+          borderTopWidth: 2
+        },
+        tabStyle: {
+          flex: 1,
+          backgroundColor: "white",
+          justifyContent: "center",
+          marginBottom: 0,
+          paddingBottom: 0,
+          
+        },
+        labelStyle: {
+          fontSize: 15
+        },
+        showIcon: false,
+      }}
+    >
+      <Tab.Screen name="DiscussionContainer" component={DiscussionStack} options={{title: "Discussions"}} />
       <Tab.Screen name="Home" component={HomeStack} />
       <Tab.Screen name="Quiz" component={QuizStack} />
     </Tab.Navigator>
@@ -60,17 +92,24 @@ function DrawerStack() {
         return (
           <DrawerContentScrollView {...props}>
             <DrawerItemList {...props} />
-            <DrawerItem label="Logout" onPress={() => {
-              AsyncStorage.removeItem('user_id')
-              props.navigation.navigate(Onboarding)
-            }} />
+            <DrawerItem
+              label="Logout"
+              onPress={() => {
+                AsyncStorage.removeItem("user_id");
+                props.navigation.navigate(Onboarding);
+              }}
+            />
           </DrawerContentScrollView>
         );
       }}
     >
-      <Drawer.Screen name="Home" component={TabNavigation} options={{
-        headerLeft: () => null
-      }} />
+      <Drawer.Screen
+        name="Home"
+        component={TabNavigation}
+        options={{
+          headerLeft: () => null,
+        }}
+      />
       <Drawer.Screen name="Profile" component={Profile} />
     </Drawer.Navigator>
   );
@@ -104,7 +143,7 @@ function HomeStack(props) {
     <Stack.Navigator
       screenOptions={{
         headerStyle: {
-          backgroundColor: "#f4511e",
+          backgroundColor: "#4f63f9",
         },
         headerTintColor: "#fff",
         headerTitleStyle: {
@@ -217,7 +256,7 @@ function QuizStack() {
     <Stack.Navigator
       screenOptions={{
         headerStyle: {
-          backgroundColor: "#f4511e",
+          backgroundColor: "#4f63f9",
         },
         headerTintColor: "#fff",
         headerTitleStyle: {
@@ -249,7 +288,7 @@ function DiscussionStack() {
     <Stack.Navigator
       screenOptions={{
         headerStyle: {
-          backgroundColor: "#f4511e",
+          backgroundColor: "#4f63f9",
         },
         headerTintColor: "#fff",
         headerTitleStyle: {
@@ -301,3 +340,28 @@ export default function OnBoardingStack(props) {
     </Stack.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  tabBar: {
+    backgroundColor: "blue",
+    borderWidth: 2,
+    height: 32,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 0,
+  },
+  labelStyle: {
+    backgroundColor: "green",
+  },
+  tabStyle: {
+    backgroundColor: "yellow",
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    borderWidth: 1,
+    borderColor: "black",
+    marginBottom: 0,
+    paddingBottom: 0,
+  },
+});
