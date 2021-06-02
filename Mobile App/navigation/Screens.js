@@ -68,7 +68,9 @@ function DrawerStack() {
         );
       }}
     >
-      <Drawer.Screen name="Home" component={TabNavigation} />
+      <Drawer.Screen name="Home" component={TabNavigation} options={{
+        headerLeft: () => null
+      }} />
       <Drawer.Screen name="Profile" component={Profile} />
     </Drawer.Navigator>
   );
@@ -86,6 +88,12 @@ function AuthStack(props) {
         name="Register"
         component={Register}
         options={{ headerShown: false }}
+      />
+      {/* Test Screen for route annomaly */}
+      <Stack.Screen
+        name="HomeRoute"
+        component={DrawerStack}
+        options={{ headerShown: false, headerLeft: () => null }}
       />
     </Stack.Navigator>
   );
@@ -280,7 +288,6 @@ export default function OnBoardingStack(props) {
           headerShown: false,
         }}
       />
-   
       <Stack.Screen
         name="AuthRoute"
         component={AuthStack}
@@ -289,7 +296,7 @@ export default function OnBoardingStack(props) {
       <Stack.Screen
         name="HomeRoute"
         component={DrawerStack}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, headerLeft: () => null }}
       />
     </Stack.Navigator>
   );
