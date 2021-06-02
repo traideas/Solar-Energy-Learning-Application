@@ -91,6 +91,27 @@ function CreateVideos() {
                       />
                     </FormControl>
                   </FormGroup>
+                  <FormGroup>
+                    <FormLabel>Video Title</FormLabel>
+                    <FormControl
+                      variant="filled"
+                      component={Box}
+                      width="100%"
+                      marginBottom="1rem!important"
+                    >
+                      <Box
+                        paddingLeft="0.75rem"
+                        paddingRight="0.75rem"
+                        component={FilledInput}
+                        autoComplete="off"
+                        type="text"
+                        placeholder="Video Title"
+                        name="title"
+                        required
+                        {...register("title")}
+                      />
+                    </FormControl>
+                  </FormGroup>
                 </Grid>
                 <Grid item xs={12}>
                   <FormGroup>
@@ -108,6 +129,7 @@ function CreateVideos() {
                         rows="5"
                         name="description"
                         {...register("description")}
+                        required
                       />
                     </FormControl>
                   </FormGroup>

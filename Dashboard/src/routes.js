@@ -9,6 +9,12 @@ import Videos from "views/admin/Videos.js";
 import CreateVideos from "views/admin/CreateVideos";
 import Slides from "views/admin/Slides";
 import Articles from "views/admin/Articles";
+import CreateSlides from "views/admin/CreateSlides";
+import CreateArticles from "views/admin/CreateArticles";
+import ViewQuiz from "views/admin/ViewQuiz";
+import CreateQuiz from "views/admin/CreateQuiz";
+
+
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import FlashOn from "@material-ui/icons/FlashOn";
 import FormatListBulleted from "@material-ui/icons/FormatListBulleted";
@@ -19,10 +25,8 @@ import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
-import CreateSlides from "views/admin/CreateSlides";
-import CreateArticles from "views/admin/CreateArticles";
-import ViewQuize from "views/admin/ViewQuize";
-import CreateQuize from "views/admin/CreateQuize";
+import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
+import RateReviewIcon from '@material-ui/icons/RateReview';
 
 var routes = [
   {
@@ -139,18 +143,21 @@ var routes = [
     divider: true,
   },
   {
-    title: "Quize",
+    title: "Quizs",
   },
   {
-    path: "/quize",
-    name: "View Quize",
-    component: ViewQuize,
+    path: "/quiz",
+    name: "Quizs",
+    icon: QuestionAnswerIcon,
+    iconColor: "light",
+    component: ViewQuiz,
     layout: "/admin"
   },
   {
-    path: "/createquize",
-    name: "Create Quize",
-    component: CreateQuize,
+    path: "/createquiz",
+    name: "Create",
+    icon: RateReviewIcon,
+    component: CreateQuiz,
     layout: "/admin"
   },
   /* {
