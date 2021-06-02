@@ -1,5 +1,5 @@
 import React from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import { useTheme } from "@material-ui/core/styles";
@@ -7,9 +7,7 @@ import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import CardHeader from "@material-ui/core/CardHeader";
 import Container from "@material-ui/core/Container";
-import Divider from "@material-ui/core/Divider";
 import FilledInput from "@material-ui/core/FilledInput";
 import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
@@ -19,9 +17,7 @@ import Typography from "@material-ui/core/Typography";
 
 // core components
 import UserHeader from "components/Headers/Header.js";
-
 import componentStyles from "assets/theme/views/admin/profile.js";
-import boxShadows from "assets/theme/box-shadow.js";
 
 import APIService from '../../services/api.service'
 import AuthService from '../../services/auth.service'
@@ -69,7 +65,7 @@ function CreateVideos() {
               marginBottom="1.5rem!important"
               classes={{ root: classes.typographyRootH6 }}
             >
-              Video Content Information
+              Create Video Content
             </Box>
             <form className={classes.plLg4} onSubmit={handleSubmit(onSubmit)}>
               <Grid container>

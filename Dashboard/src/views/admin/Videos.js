@@ -75,7 +75,7 @@ const Videos = () => {
                     variant="h3"
                     marginBottom="0!important"
                   >
-                    Videos
+
                   </Box>
                 </Grid>
                 <Grid item xs="auto">
