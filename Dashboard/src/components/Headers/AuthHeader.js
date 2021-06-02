@@ -38,8 +38,7 @@ const AuthHeader = () => {
                   lineHeight="1.7"
                   fontSize="1rem"
                 >
-                  Use these awesome forms to login or create new account in your
-                  project for free.
+
                 </Box>
               </Grid>
             </Box>

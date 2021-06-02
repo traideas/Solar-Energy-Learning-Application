@@ -2,24 +2,18 @@
 import Dashboard from "views/admin/Dashboard.js";
 import Icons from "views/admin/Icons.js";
 import Login from "views/auth/Login.js";
-import Maps from "views/admin/Maps.js";
 import Profile from "views/admin/Profile.js";
 import Register from "views/auth/Register.js";
 import Tables from "views/admin/Tables.js";
 import Videos from "views/admin/Videos.js";
 import CreateVideos from "views/admin/CreateVideos";
-import Slide from "views/admin/Slide";
-import Article from "views/admin/Article";
-// @material-ui/icons components
+import Slides from "views/admin/Slides";
+import Articles from "views/admin/Articles";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-/* import Dns from "@material-ui/icons/Dns"; */
 import FlashOn from "@material-ui/icons/FlashOn";
 import FormatListBulleted from "@material-ui/icons/FormatListBulleted";
 import Grain from "@material-ui/icons/Grain";
-import LocationOn from "@material-ui/icons/LocationOn";
-/* import Palette from "@material-ui/icons/Palette"; */
 import Person from "@material-ui/icons/Person";
-/* import Tv from "@material-ui/icons/Tv"; */
 import VpnKey from "@material-ui/icons/VpnKey";
 import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
 import DashboardIcon from '@material-ui/icons/Dashboard';
@@ -52,15 +46,8 @@ var routes = [
     iconColor: "Primary",
     component: Icons,
     layout: "/admin",
+    invisible: true
   },
-  /* {
-    path: "/maps",
-    name: "Maps",
-    icon: LocationOn,
-    iconColor: "Warning",
-    component: Maps,
-    layout: "/admin",
-  }, */
   {
     path: "/user-profile",
     name: "User Profile",
@@ -76,6 +63,7 @@ var routes = [
     iconColor: "Error",
     component: Tables,
     layout: "/admin",
+    invisible: true
   },
   {
     path: "/login",
@@ -119,25 +107,25 @@ var routes = [
   },
   {
     path: "/slides",
-    name: "Slide",
+    name: "Slides",
     icon: NoteAddIcon,
     iconColor: "Success",
-    component: Slide,
+    component: Slides,
     layout: "/admin",
   },
   {
     path: "/slides/createslides",
-    name: "Slide",
+    name: "Create Slide",
     component: CreateSlides,
     layout: "/admin",
     invisible: true
   },
   {
     path: "/articles",
-    name: "Article",
+    name: "Articles",
     icon: AttachFileIcon,
     iconColor: "Error",
-    component: Article,
+    component: Articles,
     layout: "/admin",
   },
   {
