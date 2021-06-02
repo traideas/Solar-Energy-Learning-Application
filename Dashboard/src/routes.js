@@ -8,7 +8,7 @@ import Tables from "views/admin/Tables.js";
 import Videos from "views/admin/Videos.js";
 import CreateVideos from "views/admin/CreateVideos";
 import Slides from "views/admin/Slides";
-import Article from "views/admin/Article";
+import Articles from "views/admin/Articles";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import FlashOn from "@material-ui/icons/FlashOn";
 import FormatListBulleted from "@material-ui/icons/FormatListBulleted";
@@ -122,10 +122,10 @@ var routes = [
   },
   {
     path: "/articles",
-    name: "Article",
+    name: "Articles",
     icon: AttachFileIcon,
     iconColor: "Error",
-    component: Article,
+    component: Articles,
     layout: "/admin",
   },
   {

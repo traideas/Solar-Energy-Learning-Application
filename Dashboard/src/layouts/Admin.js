@@ -37,7 +37,7 @@ const Admin = () => {
     return routes.map((prop, key) => {
       if (prop.layout === "/admin") {
         return (
-          <Route 
+          <Route
             exact
             path={prop.layout + prop.path}
             component={prop.component}
@@ -66,7 +66,7 @@ const Admin = () => {
           routes={routes}
           logo={{
             innerLink: "/admin/index",
-            imgSrc: require("../assets/img/brand/argon-react.png").default,
+            imgSrc: require("../assets/img/brand/MyREL.png").default,
             imgAlt: "...",
           }}
           dropdown={<NavbarDropdown />}
@@ -103,7 +103,7 @@ const Admin = () => {
             component={Box}
             classes={{ root: classes.containerRoot }}
           >
-           {/*  <AdminFooter /> */}
+            {/*  <AdminFooter /> */}
           </Container>
         </Box>
       </>

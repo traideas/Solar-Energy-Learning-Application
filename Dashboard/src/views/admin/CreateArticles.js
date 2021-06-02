@@ -1,5 +1,5 @@
 import React from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import { useTheme } from "@material-ui/core/styles";
@@ -7,9 +7,7 @@ import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import CardHeader from "@material-ui/core/CardHeader";
 import Container from "@material-ui/core/Container";
-import Divider from "@material-ui/core/Divider";
 import FilledInput from "@material-ui/core/FilledInput";
 import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
@@ -21,7 +19,7 @@ import Typography from "@material-ui/core/Typography";
 import UserHeader from "components/Headers/Header.js";
 
 import componentStyles from "assets/theme/views/admin/profile.js";
-import boxShadows from "assets/theme/box-shadow.js";
+
 
 import APIService from '../../services/api.service'
 import AuthService from '../../services/auth.service'
@@ -36,14 +34,15 @@ function CreateArticles() {
 
   const onSubmit = ({ title, description, file, photo }) => {
     const created_by = AuthService.getUserId()
-    APIService.uploadVideoContent(title, description, created_by, file, photo)
-    .then(function(res) {
+    const status = 1
+    APIService.uploadArticleContent(title, description, created_by, photo, file, status)
+      .then(function (res) {
         reset()
-        swal("Success!", "Video Content Created Successfully!", "success")
-    })
-    .catch(function(res) {
+        swal("Success!", "Article Content Created Successfully!", "success")
+      })
+      .catch(function (res) {
         swal("Failed!", "Please Try Again!", "error");
-    })
+      })
   };
 
   return (
@@ -68,13 +67,13 @@ function CreateArticles() {
               marginBottom="1.5rem!important"
               classes={{ root: classes.typographyRootH6 }}
             >
-              Video Content Information
+              Create Article Content
             </Box>
             <form className={classes.plLg4} onSubmit={handleSubmit(onSubmit)}>
               <Grid container>
                 <Grid item xs={12} lg={12}>
                   <FormGroup>
-                    <FormLabel>Video Title</FormLabel>
+                    <FormLabel>Article Title</FormLabel>
                     <FormControl
                       variant="filled"
                       component={Box}
@@ -87,7 +86,7 @@ function CreateArticles() {
                         component={FilledInput}
                         autoComplete="off"
                         type="text"
-                        placeholder="lucky.jesse"
+                        placeholder="Article Title"
                         name="title"
                         required
                         {...register("title")}
@@ -97,7 +96,7 @@ function CreateArticles() {
                 </Grid>
                 <Grid item xs={12}>
                   <FormGroup>
-                    <FormLabel>Video Description</FormLabel>
+                    <FormLabel>Article Description</FormLabel>
                     <FormControl
                       variant="filled"
                       component={Box}
@@ -107,7 +106,7 @@ function CreateArticles() {
                       <FilledInput
                         autoComplete="off"
                         multiline
-                        placeholder="A brief Description about the content of the video"
+                        placeholder="A brief description about the content of the article"
                         rows="5"
                         name="description"
                         {...register("description")}
@@ -124,10 +123,11 @@ function CreateArticles() {
                       width="100%"
                       marginBottom="1rem!important"
                     >
-                    {/* Have to use FilledInput, Trying with input for now */}
+                      {/* Have to use FilledInput, Trying with input for now */}
                       <input
                         type="file"
                         name="photo"
+                        accept=".jpg,.jpeg,.png"
                         {...register("photo")}
                       />
                     </FormControl>
@@ -135,8 +135,8 @@ function CreateArticles() {
                 </Grid>
                 <Grid item xs={12} lg={6}>
                   <FormGroup>
-                    <FormLabel>Upload Video</FormLabel>
-                    
+                    <FormLabel>Upload Article</FormLabel>
+
                     <FormControl
                       variant="filled"
                       component={Box}
@@ -147,6 +147,7 @@ function CreateArticles() {
                         autoComplete="off"
                         type="file"
                         name="file"
+                        accept=".pdf"
                         {...register("file")}
                       />
                     </FormControl>
@@ -157,7 +158,7 @@ function CreateArticles() {
                   classes={{ root: classes.buttonRoot }}
                   type="submit"
                 >
-                  Create Video
+                  Create Article
                 </Button>
               </Grid>
             </form>
