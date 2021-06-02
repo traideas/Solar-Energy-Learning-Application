@@ -53,31 +53,55 @@ function TabNavigation(props) {
   return (
     <Tab.Navigator
       initialRouteName="Home"
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color }) => {
+          let iconName;
+          if (route.name === "Home") {
+            iconName = "home";
+          } else if (route.name === "Quiz") {
+            iconName = "news";
+          } else if (route.name === "DiscussionContainer") {
+            iconName = "list"
+          }
+          return (
+            <Icon
+              name={iconName}
+              family="entypo"
+              size={22}
+              color={color}
+              style={{ marginTop: 10 }}
+            />
+          );
+        },
+      })}
       tabBarOptions={{
         style: {
           backgroundColor: "blue",
-          height: 50,
+          height: 60,
           justifyContent: "center",
           alignItems: "center",
           borderWidth: 0.5,
           borderColor: "black",
-          borderTopWidth: 2
+          borderTopWidth: 2,
         },
         tabStyle: {
           flex: 1,
           backgroundColor: "white",
           justifyContent: "center",
           marginBottom: 0,
-          paddingBottom: 0,
-          
+          paddingBottom: 8,
         },
         labelStyle: {
-          fontSize: 15
+          fontSize: 15,
         },
-        showIcon: false,
+        showIcon: true,
       }}
     >
-      <Tab.Screen name="DiscussionContainer" component={DiscussionStack} options={{title: "Discussions"}} />
+      <Tab.Screen
+        name="DiscussionContainer"
+        component={DiscussionStack}
+        options={{ title: "Discussions" }}
+      />
       <Tab.Screen name="Home" component={HomeStack} />
       <Tab.Screen name="Quiz" component={QuizStack} />
     </Tab.Navigator>
