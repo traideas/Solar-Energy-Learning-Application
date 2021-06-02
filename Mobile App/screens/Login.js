@@ -33,7 +33,10 @@ export default Login = ({ navigation }) => {
         AsyncStorage.setItem('user_id', JSON.stringify(data.user_id))
         navigation.replace('HomeRoute')
       })
-      .catch(err => Alert.alert("Login Failed!"))
+      .catch(err => {
+        Alert.alert("Login Failed!")
+        console.log(err)
+      })
   };
   const onPressRegister = () => {
     navigation.push("Register");
