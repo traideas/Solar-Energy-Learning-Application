@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -25,6 +25,8 @@ import {
   Button,
 } from "@material-ui/core";
 import { KeyboardArrowDown } from "@material-ui/icons";
+import axios from "axios";
+import AuthService from "../../services/auth.service";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -39,7 +41,7 @@ const CreateQuize = () => {
         b: Yup.string(),
         c: Yup.string(),
         d: Yup.string(),
-        correct_option: Yup.string()
+        correct_option: Yup.string(),
       })
     ),
   });
@@ -56,9 +58,30 @@ const CreateQuize = () => {
     return [...Array(parseInt(watchNumberOfQuize || 0)).keys()];
   };
 
-  const onSubmit = (data) => {
-    //alert("SUCCESS!! :-)\n\n" + JSON.stringify(data, null, 4));
-    alert("SUCCESS!! :-)\n\n" + JSON.stringify(data));
+  const onSubmit = ({ title, description, quizes }) => {
+    axios
+      .post("http://127.0.0.1:8000/quiz/", {
+        title: title,
+        description: description,
+        teacher: AuthService.getUserId(),
+        photo: null,
+        total_marks: Math.floor(Math.random() * 101),
+      })
+      .then(({ data }) => {
+        quizes.map(({ question, a, b, c, d, correct_option }) => {
+          axios.post("http://127.0.0.1:8000/question/", {
+            quiz: data.id,
+            question: question,
+            options_1: a,
+            options_2: b,
+            options_3: c,
+            options_4: d,
+            answer: correct_option,
+            mark: Math.floor(Math.random() * 101),
+          }).then(res => console.log(res)).then(err => console.log(err));
+        });
+      })
+      .then((err) => console.log(err));
   };
 
   return (
@@ -82,6 +105,56 @@ const CreateQuize = () => {
           ></CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit(onSubmit)}>
+              <Grid container>
+                <Grid item xs={6}>
+                  <FormGroup>
+                    <FormLabel>Quize Title</FormLabel>
+                    <FormControl>
+                      <OutlinedInput
+                        fullWidth
+                        type="text"
+                        className={classes.inputLarge}
+                        placeholder="Quize Question"
+                        name="title"
+                        {...register("title")}
+                        required
+                      />
+                    </FormControl>
+                  </FormGroup>
+                </Grid>
+                {/* <Grid item xs={6}>
+                  <FormGroup>
+                    <FormLabel>Upload Quize Thumbnail</FormLabel>
+                    <FormControl>
+                      <OutlinedInput
+                        fullWidth
+                        type="text"
+                        className={classes.inputLarge}
+                        placeholder="Quize Thumbnail"
+                        name="Photo"
+                        {...register("Photo")}
+                        required
+                      />
+                    </FormControl>
+                  </FormGroup>
+                </Grid> */}
+                <Grid item xs={12}>
+                  <FormGroup>
+                    <FormLabel>Quiz Description</FormLabel>
+                    <FormControl>
+                      <OutlinedInput
+                        fullWidth
+                        type="text"
+                        className={classes.inputLarge}
+                        placeholder="Quize Description"
+                        name="description"
+                        {...register("description")}
+                        required
+                      />
+                    </FormControl>
+                  </FormGroup>
+                </Grid>
+              </Grid>
               <Grid container>
                 <Grid item xs={12} md={6}>
                   <FormGroup>
@@ -196,10 +269,10 @@ const CreateQuize = () => {
                           {...register(`quizes[${i}].correct_option`)}
                           required
                         >
-                          <MenuItem value="a">A</MenuItem>
-                          <MenuItem value="b">B</MenuItem>
-                          <MenuItem value="c">C</MenuItem>
-                          <MenuItem value="d">D</MenuItem>
+                          <MenuItem value="1">A</MenuItem>
+                          <MenuItem value="2">B</MenuItem>
+                          <MenuItem value="3">C</MenuItem>
+                          <MenuItem value="4">D</MenuItem>
                         </Select>
                       </FormControl>
                     </FormGroup>
