@@ -58,14 +58,14 @@ export default Home = ({ navigation }) => {
         <TouchableOpacity onPress={() => navigation.navigate("Slide")}>
           <Block flex card style={[styles.category, styles.shadow]}>
             <ImageBackground
-              source={Images.Pro}
+              source={Images.Solar3}
               style={[
                 styles.imageBlock,
                 { width: width - theme.SIZES.BASE * 2, height: 180 }
               ]}
               imageStyle={{
                 width: width - theme.SIZES.BASE * 2,
-                height: 252
+                height: 180
               }}
             >
               <Block style={styles.categoryTitle}>

@@ -11,6 +11,7 @@ const androidLogo = require("../assets/imgs/android.png");
 const ProfilePicture = require("../assets/imgs/profile-img.jpg")
 const Solar1 = require("../assets/imgs/Solar-1-min.jpg");
 const Solar2 = require("../assets/imgs/Solar-2.jpg");
+const Solar3 = require("../assets/imgs/Solar-3-min.jpg");
 // internet imgs
 const ProfileChat = 'https://images.unsplash.com/photo-1500522144261-ea64433bbe27?fit=crop&w=1051&q=80'
 
@@ -63,5 +64,6 @@ export default {
   Music,
   ProfileChat,
   Solar1,
-  Solar2
+  Solar2,
+  Solar3
 };

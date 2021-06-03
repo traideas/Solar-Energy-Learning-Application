@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Dimensions } from "react-native";
 import { Block, Text } from "galio-framework";
 import { WebView } from "react-native-webview";
-import Pdf from "react-native-pdf";
+
 
 export default ArticleDetails = ({ route }) => {
   const { title, description, file } = route.params;
@@ -14,11 +14,11 @@ export default ArticleDetails = ({ route }) => {
   const { width } = Dimensions.get("window");
   return (
     <Block style={styles.container}>
-    <Block>
-      <Text>{title}</Text>
-      <Text>{description}</Text>
-    </Block>
-     {/*  <WebView
+      <Block>
+        <Text>{title}</Text>
+        <Text>{description}</Text>
+      </Block>
+      {/*  <WebView
         scalesPageToFit={true}
         bounces={false}
         javaScriptEnabled
