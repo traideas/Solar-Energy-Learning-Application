@@ -43,18 +43,18 @@ const Quiz = ({ navigation }) => {
   };
   return (
     <Block style={styles.container}>
-    <Text h5>Quizes</Text>
-    {
-      isLoading ? (
-        <ActivityIndicator />
-      ) : (
-        <FlatList
-          data={DATA}
-          renderItem={renderQuizeItem}
-          keyExtractor={(item) => item.id.toString()}
-        />
-      )
-    }
+
+      {
+        isLoading ? (
+          <ActivityIndicator />
+        ) : (
+          <FlatList
+            data={DATA}
+            renderItem={renderQuizeItem}
+            keyExtractor={(item) => item.id.toString()}
+          />
+        )
+      }
     </Block>
   );
 };
