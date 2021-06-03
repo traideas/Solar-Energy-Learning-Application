@@ -1,5 +1,10 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity, Linking } from "react-native";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  Linking,
+  AsyncStorage,
+} from "react-native";
 import { Block, Text, theme } from "galio-framework";
 
 import Icon from "./Icon";
@@ -19,7 +24,7 @@ class DrawerItem extends React.Component {
             color={focused ? "white" : argonTheme.COLORS.PRIMARY}
           />
         );
-      case "Elements":
+      case "Video":
         return (
           <Icon
             name="map-big"
@@ -28,7 +33,7 @@ class DrawerItem extends React.Component {
             color={focused ? "white" : argonTheme.COLORS.ERROR}
           />
         );
-      case "Articles":
+      case "Article":
         return (
           <Icon
             name="spaceship"
@@ -37,7 +42,7 @@ class DrawerItem extends React.Component {
             color={focused ? "white" : argonTheme.COLORS.PRIMARY}
           />
         );
-      case "Profile":
+      case "Slide":
         return (
           <Icon
             name="chart-pie-35"
@@ -46,7 +51,7 @@ class DrawerItem extends React.Component {
             color={focused ? "white" : argonTheme.COLORS.WARNING}
           />
         );
-      case "Account":
+      case "DiscussionContainer":
         return (
           <Icon
             name="calendar-date"
@@ -55,7 +60,7 @@ class DrawerItem extends React.Component {
             color={focused ? "white" : argonTheme.COLORS.INFO}
           />
         );
-      case "Settings":
+      case "Quiz":
         return (
           <Icon
             name="calendar-date"
@@ -64,7 +69,16 @@ class DrawerItem extends React.Component {
             color={focused ? "white" : argonTheme.COLORS.DEFAULT}
           />
         );
-      case "Getting Started":
+      case "Profile":
+        return (
+          <Icon
+            name="calendar-date"
+            family="ArgonExtra"
+            size={14}
+            color={focused ? "white" : argonTheme.COLORS.DEFAULT}
+          />
+        );
+      case "Log out":
         return (
           <Icon
             name="spaceship"
@@ -73,8 +87,6 @@ class DrawerItem extends React.Component {
             color={focused ? "white" : "rgba(0,0,0,0.5)"}
           />
         );
-      case "Log out":
-        return <Icon />;
       default:
         return null;
     }
@@ -85,13 +97,19 @@ class DrawerItem extends React.Component {
 
     const containerStyles = [
       styles.defaultStyle,
-      focused ? [styles.activeStyle, styles.shadow] : null
+      focused ? [styles.activeStyle, styles.shadow] : null,
     ];
 
     return (
       <TouchableOpacity
         style={{ height: 60 }}
-        onPress={() => title == 'Getting Started' ? Linking.openURL('https://demos.creative-tim.com/argon-pro-react-native/docs/').catch((err) => console.error('An error occurred', err)) : navigation.navigate(title)}
+        onPress={() =>
+          title == "Log out"
+            ? AsyncStorage.removeItem("user_id").then(() =>
+                navigation.navigate("Onboarding")
+              )
+            : navigation.navigate(title)
+        }
       >
         <Block flex row style={containerStyles}>
           <Block middle flex={0.1} style={{ marginRight: 5 }}>
@@ -117,21 +135,21 @@ const styles = StyleSheet.create({
   defaultStyle: {
     paddingVertical: 16,
     paddingHorizontal: 16,
-    marginBottom: 2
+    marginBottom: 2,
   },
   activeStyle: {
     backgroundColor: argonTheme.COLORS.ACTIVE,
-    borderRadius: 4
+    borderRadius: 4,
   },
   shadow: {
     shadowColor: theme.COLORS.BLACK,
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 2,
     },
     shadowRadius: 8,
-    shadowOpacity: 0.1
-  }
+    shadowOpacity: 0.1,
+  },
 });
 
 export default DrawerItem;

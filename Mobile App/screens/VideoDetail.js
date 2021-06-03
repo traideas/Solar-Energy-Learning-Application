@@ -1,35 +1,40 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Dimensions } from "react-native";
+import React, { useEffect, useState, useRef } from "react";
+import { StyleSheet, Dimensions, Button } from "react-native";
 import { Block, Text } from "galio-framework";
-import { Video } from "expo-av";
+import { Video, AVPlaybackStatus } from "expo-av";
 
 export default VideoDetail = ({ route }) => {
   const { title, description, file } = route.params;
-  // console.log(file);
-  const [videoUrl, setVideoUrl] = useState("")
+  const [videoUrl, setVideoUrl] = useState("");
+  const video = useRef(null);
+
   useEffect(() => {
-      setVideoUrl(file)
-  }, [])
-  const { width } = Dimensions.get('window');
+    setVideoUrl(file);
+  }, []);
+  const { width } = Dimensions.get("window");
   return (
     <Block style={styles.container}>
       <Text h4>{title}</Text>
-      <Text italic style={{marginBottom: 10}}>{description}</Text>
-      
       <Block>
         <Video
+          ref={video}
           source={{
             uri: videoUrl,
           }}
           shouldPlay
           resizeMode="cover"
-          style={{ width: 350, height: 300 }}
+          style={{ height: 300 }}
+          useNativeControls
+          resizeMode="contain"
+          isLooping
         />
-        <Block style={styles.controlBar}></Block>
+        <Text italic style={{ marginBottom: 10 }}>
+          {description}
+        </Text>
       </Block>
     </Block>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -43,14 +48,14 @@ const styles = StyleSheet.create({
     right: 0,
   },
   controlBar: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,
     height: 45,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     backgroundColor: "rgba(0, 0, 0, 0.5)",
-  }
+  },
 });
