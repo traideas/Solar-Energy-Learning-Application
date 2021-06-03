@@ -16,19 +16,19 @@ export default Home = ({ navigation }) => {
         <TouchableOpacity onPress={() => navigation.navigate("Video")}>
           <Block flex card style={[styles.category, styles.shadow]}>
             <ImageBackground
-              source={Images.Pro}
+              source={Images.Solar1}
               style={[
                 styles.imageBlock,
                 { width: width - theme.SIZES.BASE * 2, height: 180 }
               ]}
               imageStyle={{
                 width: width - theme.SIZES.BASE * 2,
-                height: 252
+                height: 180
               }}
             >
               <Block style={styles.categoryTitle}>
-                <Text style={{ fontFamily: 'open-sans-bold' }} size={18} color={theme.COLORS.WHITE}>
-                  Videos
+                <Text style={{ fontFamily: 'open-sans-bold' }} size={22} color={theme.COLORS.WHITE}>
+                  Watch Videos
                 </Text>
               </Block>
             </ImageBackground>
@@ -37,19 +37,19 @@ export default Home = ({ navigation }) => {
         <TouchableOpacity onPress={() => navigation.navigate("Article")}>
           <Block flex card style={[styles.category, styles.shadow]}>
             <ImageBackground
-              source={Images.Pro}
+              source={Images.Solar2}
               style={[
                 styles.imageBlock,
                 { width: width - theme.SIZES.BASE * 2, height: 180 }
               ]}
               imageStyle={{
                 width: width - theme.SIZES.BASE * 2,
-                height: 252
+                height: 180
               }}
             >
               <Block style={styles.categoryTitle}>
-                <Text style={{ fontFamily: 'open-sans-bold' }} size={18} color={theme.COLORS.WHITE}>
-                  Articles
+                <Text style={{ fontFamily: 'open-sans-bold' }} size={22} color={theme.COLORS.WHITE}>
+                  Read Articles
                 </Text>
               </Block>
             </ImageBackground>
@@ -58,19 +58,19 @@ export default Home = ({ navigation }) => {
         <TouchableOpacity onPress={() => navigation.navigate("Slide")}>
           <Block flex card style={[styles.category, styles.shadow]}>
             <ImageBackground
-              source={Images.Pro}
+              source={Images.Solar3}
               style={[
                 styles.imageBlock,
                 { width: width - theme.SIZES.BASE * 2, height: 180 }
               ]}
               imageStyle={{
                 width: width - theme.SIZES.BASE * 2,
-                height: 252
+                height: 180
               }}
             >
               <Block style={styles.categoryTitle}>
-                <Text style={{ fontFamily: 'open-sans-bold' }} size={18} color={theme.COLORS.WHITE}>
-                  Slides
+                <Text style={{ fontFamily: 'open-sans-bold' }} size={22} color={theme.COLORS.WHITE}>
+                  View Slides
                 </Text>
               </Block>
             </ImageBackground>
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   categoryTitle: {
     height: "100%",
     paddingHorizontal: theme.SIZES.BASE,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
     justifyContent: "center",
     alignItems: "center"
   },
