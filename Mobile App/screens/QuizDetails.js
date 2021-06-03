@@ -1,7 +1,11 @@
 import React, { useState } from "react";
-import { Alert, StyleSheet, TouchableOpacity } from "react-native";
-import { Block, Button, Text } from "galio-framework";
+import { Alert, StyleSheet, TouchableOpacity, Image, Dimensions } from "react-native";
+import { Block, Button, Text, theme } from "galio-framework";
 import { FlatList } from "react-native-gesture-handler";
+import { block } from "react-native-reanimated";
+import Images from "../constants/Images";
+
+const { width } = Dimensions.get("screen");
 
 export default QuizDetails = ({ navigation, route }) => {
   const { title, description, questions } = route.params;
@@ -25,11 +29,11 @@ export default QuizDetails = ({ navigation, route }) => {
   };
   const onSubmitAnswer = () => {
     if (selectedOption === quizQuestions[currentQuestion].answer) {
-      Alert.alert("Your Answer is correct");
+      Alert.alert("Correct Answer");
       setScore(score + 1);
     } else {
       Alert.alert(
-        "Wrong Answer, correct answer is: ",
+        "Opps, correct answer is: \n",
         getCorrectAnswer(quizQuestions[currentQuestion].answer)
       );
     }
@@ -41,70 +45,105 @@ export default QuizDetails = ({ navigation, route }) => {
   };
   return (
     <Block style={styles.container}>
-      <Text>Take Quize: {title}</Text>
-      <Text>{description}</Text>
+      {startQuiz ? null : (
+        <>
+          <Text>{title}</Text>
+          <Text>{description}</Text>
+        </>
+      )}
+
       <Block style={styles.quizContainer}>
+
         {startQuiz ? (
           showscore ? (
-            <Block>
-              <Text>Your Total Score is {score}</Text>
+            <Block style={{ alignItems: "center" }}>
+              <Image
+                source={Images.QuizEnd}
+                style={{ height: 400, width: width - theme.SIZES.BASE * 2, }}
+              >
+              </Image>
+              <Block style={styles.score}>
+                <Text h4>Your Score: {score}</Text>
+              </Block>
             </Block>
           ) : (
             <Block>
               <Block style={styles.question}>
-                <Text h3>{quizQuestions[currentQuestion].question}</Text>
+                <Text p>{quizQuestions[currentQuestion].question}</Text>
               </Block>
               <Block style={styles.optionsContainer}>
                 <TouchableOpacity onPress={() => setSelectedOption(1)}>
-                  <Text
-                    h5
-                    style={
-                      selectedOption === 1
-                        ? { color: "#0000FF" }
-                        : { color: "#000000" }
-                    }
+                  <Block style={selectedOption === 1
+                    ? styles.optionsBlockSelected
+                    : styles.optionsBlock}
                   >
-                    Option 1: {quizQuestions[currentQuestion].options_1}
-                  </Text>
+                    <Text
+                      size={17}
+                      style={
+                        selectedOption === 1
+                          ? { color: "#0000FF" }
+                          : { color: "white" }
+                      }
+                    >
+                      {quizQuestions[currentQuestion].options_1}
+                    </Text>
+                  </Block>
+
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => setSelectedOption(2)}>
-                  <Text
-                    h5
-                    style={
-                      selectedOption === 2
-                        ? { color: "#0000FF" }
-                        : { color: "#000000" }
-                    }
-                  >
-                    Option 2: {quizQuestions[currentQuestion].options_2}
-                  </Text>
+                  <Block style={selectedOption === 2
+                    ? styles.optionsBlockSelected
+                    : styles.optionsBlock
+                  }>
+                    <Text
+                      size={17}
+                      style={
+                        selectedOption === 2
+                          ? { color: "#0000FF" }
+                          : { color: "white" }
+                      }
+                    >
+                      {quizQuestions[currentQuestion].options_2}
+                    </Text>
+                  </Block>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => setSelectedOption(3)}>
-                  <Text
-                    h5
-                    style={
-                      selectedOption === 3
-                        ? { color: "#0000FF" }
-                        : { color: "#000000" }
-                    }
-                  >
-                    Option 3: {quizQuestions[currentQuestion].options_3}
-                  </Text>
+                  <Block style={selectedOption === 3
+                    ? styles.optionsBlockSelected
+                    : styles.optionsBlock}>
+                    <Text
+                      size={17}
+                      style={
+                        selectedOption === 3
+                          ? { color: "#0000FF" }
+                          : { color: "white" }
+                      }
+                    >
+                      {quizQuestions[currentQuestion].options_3}
+                    </Text>
+                  </Block>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => setSelectedOption(4)}>
-                  <Text
-                    h5
-                    style={
-                      selectedOption === 4
-                        ? { color: "#0000FF" }
-                        : { color: "#000000" }
-                    }
-                  >
-                    Option 4: {quizQuestions[currentQuestion].options_4}
-                  </Text>
+                  <Block style={selectedOption === 4
+                    ? styles.optionsBlockSelected
+                    : styles.optionsBlock}>
+                    <Text
+                      size={17}
+                      style={
+                        selectedOption === 4
+                          ? { color: "#0000FF" }
+                          : { color: "white" }
+                      }
+                    >
+                      {quizQuestions[currentQuestion].options_4}
+                    </Text>
+                  </Block>
                 </TouchableOpacity>
               </Block>
-              <Button onPress={onSubmitAnswer}>Submit Answer</Button>
+              <Block style={styles.submitBtn}>
+                <Button style={{ borderRadius: 20 }} onPress={onSubmitAnswer}>Submit</Button>
+              </Block>
+
             </Block>
           )
         ) : (
@@ -117,16 +156,43 @@ export default QuizDetails = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 40,
+    padding: 30,
   },
   quizContainer: {
-    marginTop: 50,
-    alignItems: "center",
-    justifyContent: "center",
+
+    justifyContent: "center"
+
   },
-  question: {},
+  question: {
+    marginBottom: 30,
+
+
+  },
   optionsContainer: {
-    flex: 0.8,
     justifyContent: "space-evenly",
   },
+  optionsBlock: {
+    padding: 6,
+    borderRadius: 5,
+    backgroundColor: "#7D71FF",
+    alignItems: "center",
+    marginTop: 20,
+  },
+  optionsBlockSelected: {
+    padding: 6,
+    borderRadius: 5,
+    backgroundColor: "#dbd8ff",
+    alignItems: "center",
+    marginTop: 20,
+  },
+  submitBtn: {
+    marginTop: 50,
+    alignItems: "center",
+  },
+  score: {
+    marginTop: 30,
+    backgroundColor: "#dbd8ff",
+    padding: 30,
+    borderRadius: 50,
+  }
 });
