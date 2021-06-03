@@ -109,21 +109,35 @@ function TabNavigation(props) {
   );
 }
 
-function DrawerStack() {
+function DrawerStack(props) {
   return (
     <Drawer.Navigator
       initialRouteName="Home"
       style={{ flex: 1 }}
       drawerStyle={{
         backgroundColor: "white",
-        width: width * .7,
+        width: width * 0.7,
       }}
-      drawerContent={(props) => {
-        return (
-          <DrawerContentScrollView {...props}>
-            <CustomDrawerContent {...props} />
-          </DrawerContentScrollView>
-        );
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
+      drawerContentOptions={{
+        activeTintcolor: "white",
+        inactiveTintColor: "#000",
+        activeBackgroundColor: "transparent",
+        itemStyle: {
+          width: width * 0.75,
+          backgroundColor: "transparent",
+          paddingVertical: 16,
+          paddingHorizonal: 12,
+          justifyContent: "center",
+          alignContent: "center",
+          alignItems: "center",
+          overflow: "hidden",
+        },
+        labelStyle: {
+          fontSize: 18,
+          marginLeft: 12,
+          fontWeight: "normal",
+        },
       }}
     >
       <Drawer.Screen
@@ -170,6 +184,7 @@ function HomeStack(props) {
         },
         headerTintColor: "#fff",
         headerTitleStyle: {
+          width: '100%',
           fontWeight: "bold",
         },
         headerTitleAlign: "center",
@@ -207,7 +222,7 @@ function VideoStack() {
       }}
     >
       <Stack.Screen
-        name="VideoContent"
+        name="Video"
         component={VideoContent}
         options={{
           title: "Video Contents",
