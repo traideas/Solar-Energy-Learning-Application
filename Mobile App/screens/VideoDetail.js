@@ -14,7 +14,7 @@ export default VideoDetail = ({ route }) => {
   const { width } = Dimensions.get("window");
   return (
     <Block style={styles.container}>
-      <Text h4>{title}</Text>
+      <Text p>{title}</Text>
       <Block>
         <Video
           ref={video}
@@ -28,7 +28,7 @@ export default VideoDetail = ({ route }) => {
           resizeMode="contain"
           isLooping
         />
-        <Text italic style={{ marginBottom: 10 }}>
+        <Text style={{ marginBottom: 10 }}>
           {description}
         </Text>
       </Block>

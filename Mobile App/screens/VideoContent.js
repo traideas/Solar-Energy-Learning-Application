@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { ActivityIndicator, StyleSheet, TouchableOpacity } from "react-native";
-import { Block, Card, Text } from "galio-framework";
+import { Block, Card } from "galio-framework";
+
 import { FlatList } from "react-native-gesture-handler";
 import axios from "axios";
-
+import Images from "../constants/Images";
 const VideoCard = ({ item, onPress }) => {
-  const { title, description, photo } = item;
+  const { title, upload_date, photo } = item;
   return (
     <TouchableOpacity onPress={onPress} style={styles.item}>
-      <Card title={title} caption={description} avatar={photo} />
+      <Card
+        title={title} image={photo} avatar="http://i.pravatar.cc/100?id=skater" caption={upload_date} />
     </TouchableOpacity>
   );
 };
@@ -35,7 +37,7 @@ export default VideoContent = ({ navigation }) => {
   };
   return (
     <Block style={styles.container}>
-      <Text h5>Videos</Text>
+
       {isLoading ? (
         <ActivityIndicator />
       ) : (
@@ -43,6 +45,8 @@ export default VideoContent = ({ navigation }) => {
           data={DATA}
           renderItem={renderItem}
           keyExtractor={(item) => item.id.toString()}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
         />
       )}
     </Block>
@@ -52,12 +56,15 @@ export default VideoContent = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 40,
+    paddingTop: 10,
     paddingHorizontal: 20,
     backgroundColor: "#fff",
   },
   item: {
     flex: 1,
     marginTop: 20,
+    marginBottom: 20,
   },
+
+
 });

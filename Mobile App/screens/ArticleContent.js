@@ -5,10 +5,10 @@ import { FlatList } from "react-native-gesture-handler";
 import axios from "axios";
 
 const SlideCard = ({ item, onPress }) => {
-  const { title, description, photo } = item;
+  const { title, upload_date, photo } = item;
   return (
     <TouchableOpacity onPress={onPress} style={styles.item}>
-      <Card title={title} caption={description} avatar={photo} />
+      <Card title={title} avatar="http://i.pravatar.cc/100?id=skater" caption={upload_date} />
     </TouchableOpacity>
   );
 };
@@ -35,7 +35,7 @@ export default ArticleContent = ({ navigation }) => {
   };
   return (
     <Block style={styles.container}>
-      <Text h5>Additional Readings</Text>
+
       {isLoading ? (
         <ActivityIndicator />
       ) : (
@@ -43,6 +43,8 @@ export default ArticleContent = ({ navigation }) => {
           data={DATA}
           renderItem={renderItem}
           keyExtractor={(item) => item.id.toString()}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
         />
       )}
     </Block>
@@ -52,12 +54,13 @@ export default ArticleContent = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 40,
+    paddingTop: 10,
     paddingHorizontal: 20,
     backgroundColor: "#fff",
   },
   item: {
     flex: 1,
     marginTop: 20,
+    marginBottom: 20,
   },
 });
