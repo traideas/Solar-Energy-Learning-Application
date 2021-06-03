@@ -119,18 +119,22 @@ export default function DiscussionContainer({ navigation }) {
 
   return (
     <Block style={styles.container}>
-      <Text h5>Discussions</Text>
       {isLoading ? (
         <ActivityIndicator />
       ) : (
         <Block>
-        <Button onPress={() => navigation.navigate("CreateDiscussion")}>
-          Create a Discussion
-        </Button>
+          <Block style={styles.btn}>
+            <Button onPress={() => navigation.navigate("CreateDiscussion")} style={{ width: "100%", borderRadius: 5 }}>
+              Create a Discussion
+            </Button>
+          </Block>
+
           <FlatList
             data={DATA}
             keyExtractor={(item) => item.id.toString()}
             renderItem={renderItem}
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
           />
         </Block>
       )}
@@ -141,7 +145,7 @@ export default function DiscussionContainer({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 40,
+    paddingTop: 10,
     paddingHorizontal: 20,
     backgroundColor: "#fff",
   },
@@ -149,4 +153,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 20,
   },
+  btn: {
+    alignItems: "center",
+  }
 });
