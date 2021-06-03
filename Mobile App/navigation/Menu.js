@@ -83,6 +83,9 @@ const styles = StyleSheet.create({
     paddingTop: theme.SIZES.BASE * 3,
     justifyContent: "center",
   },
+  logo:{
+    width:100,
+  }
 });
 
 export default CustomDrawerContent;

@@ -194,7 +194,7 @@ function HomeStack(props) {
         name="Home"
         component={Home}
         options={{
-          title: "MyRel",
+          title: "MyREL",
         }}
       />
       <Stack.Screen name="Video" component={VideoStack} />
