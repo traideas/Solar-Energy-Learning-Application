@@ -8,7 +8,7 @@ import Images from "../constants/Images";
 const { width } = Dimensions.get("screen");
 
 export default QuizDetails = ({ navigation, route }) => {
-  const { title, description, questions } = route.params;
+  const { title, description, photo, questions } = route.params;
   const [quizQuestions] = useState(questions);
   const [startQuiz, setStartQuiz] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -47,8 +47,20 @@ export default QuizDetails = ({ navigation, route }) => {
     <Block style={styles.container}>
       {startQuiz ? null : (
         <>
-          <Text>{title}</Text>
-          <Text>{description}</Text>
+
+          <Block style={{ alignItems: "center", }}>
+            <Image
+              source={{ uri: photo }}
+              style={{ height: 250, width: width - theme.SIZES.BASE * 2, }}
+            >
+            </Image>
+
+          </Block>
+          <Block style={{ marginTop: 30 }}>
+            <Text h5>{title}</Text>
+            <Text p style={{ marginTop: 10 }}>{description}</Text>
+          </Block>
+
         </>
       )}
 
@@ -147,7 +159,10 @@ export default QuizDetails = ({ navigation, route }) => {
             </Block>
           )
         ) : (
-          <Button onPress={startQuizHandler}>Start Quiz</Button>
+          <Block style={styles.submitBtn}>
+            <Button onPress={startQuizHandler}>Start Quiz</Button>
+          </Block>
+
         )}
       </Block>
     </Block>
@@ -156,7 +171,7 @@ export default QuizDetails = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 30,
+    padding: 20,
   },
   quizContainer: {
 
