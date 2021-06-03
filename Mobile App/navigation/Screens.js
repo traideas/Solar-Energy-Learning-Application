@@ -42,6 +42,7 @@ import IconExtra from "../components/Icon";
 
 //Import Auth
 import AuthService from "../services/auth.service";
+import CustomDrawerContent from "./Menu";
 
 const { width } = Dimensions.get("screen");
 
@@ -61,7 +62,7 @@ function TabNavigation(props) {
           } else if (route.name === "Quiz") {
             iconName = "news";
           } else if (route.name === "DiscussionContainer") {
-            iconName = "list"
+            iconName = "list";
           }
           return (
             <Icon
@@ -112,17 +113,15 @@ function DrawerStack() {
   return (
     <Drawer.Navigator
       initialRouteName="Home"
+      style={{ flex: 1 }}
+      drawerStyle={{
+        backgroundColor: "white",
+        width: width * .7,
+      }}
       drawerContent={(props) => {
         return (
           <DrawerContentScrollView {...props}>
-            <DrawerItemList {...props} />
-            <DrawerItem
-              label="Logout"
-              onPress={() => {
-                AsyncStorage.removeItem("user_id");
-                props.navigation.navigate(Onboarding);
-              }}
-            />
+            <CustomDrawerContent {...props} />
           </DrawerContentScrollView>
         );
       }}
