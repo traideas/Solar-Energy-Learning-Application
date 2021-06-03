@@ -72,8 +72,8 @@ class DrawerItem extends React.Component {
       case "Profile":
         return (
           <Icon
-            name="calendar-date"
-            family="ArgonExtra"
+            name="user"
+            family="AntDesign"
             size={14}
             color={focused ? "white" : argonTheme.COLORS.DEFAULT}
           />
@@ -81,8 +81,8 @@ class DrawerItem extends React.Component {
       case "Log out":
         return (
           <Icon
-            name="spaceship"
-            family="ArgonExtra"
+            name="logout"
+            family="MeterialIcons"
             size={14}
             color={focused ? "white" : "rgba(0,0,0,0.5)"}
           />

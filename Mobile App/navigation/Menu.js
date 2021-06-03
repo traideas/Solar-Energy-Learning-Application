@@ -25,11 +25,13 @@ function CustomDrawerContent({
   const insets = useSafeArea();
   const screens = [
     "Home",
+    /* 
     "Video",
+    "Quiz",
     "Article",
     "Slide",
     "DiscussionContainer",
-    "Quiz",
+     */
     "Profile"
   ];
   return (
@@ -81,6 +83,9 @@ const styles = StyleSheet.create({
     paddingTop: theme.SIZES.BASE * 3,
     justifyContent: "center",
   },
+  logo:{
+    width:100,
+  }
 });
 
 export default CustomDrawerContent;
