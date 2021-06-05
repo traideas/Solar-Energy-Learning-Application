@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import { useTheme } from "@material-ui/core/styles";
@@ -25,11 +25,31 @@ import UserHeader from "components/Headers/UserHeader.js";
 import componentStyles from "assets/theme/views/admin/profile.js";
 import boxShadows from "assets/theme/box-shadow.js";
 
+//Api Services
+import ApiService from "../../services/api.service";
+import AuthService from "../../services/auth.service";
+
 const useStyles = makeStyles(componentStyles);
 
 function Profile() {
   const classes = useStyles();
   const theme = useTheme();
+  const [userDetails, setUserDetails] = useState({
+    user: {
+      first_name: "",
+      last_name: "",
+      username: "",
+      email: "",
+      password: "",
+    },
+    institute_name: "",
+  });
+  useEffect(() => {
+    ApiService.getUserDetails(AuthService.getUserId())
+      .then((res) => setUserDetails(res.data))
+      .catch((err) => console.log(err));
+  }, []);
+  const { user, institute_name } = userDetails;
   return (
     <>
       <UserHeader />
@@ -71,21 +91,6 @@ function Profile() {
                         My Account
                       </Box>
                     </Grid>
-                    <Grid item xs="auto">
-                      <Box
-                        justifyContent="flex-end"
-                        display="flex"
-                        flexWrap="wrap"
-                      >
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          size="small"
-                        >
-                          Settings
-                        </Button>
-                      </Box>
-                    </Grid>
                   </Grid>
                 }
                 classes={{ root: classes.cardHeaderRoot }}
@@ -115,13 +120,13 @@ function Profile() {
                           width="100%"
                           marginBottom="1rem!important"
                         >
-                          <Box
+                          <FilledInput
                             paddingLeft="0.75rem"
                             paddingRight="0.75rem"
                             component={FilledInput}
                             autoComplete="off"
                             type="text"
-                            defaultValue="lucky.jesse"
+                            defaultValue="This is "
                           />
                         </FormControl>
                       </FormGroup>
@@ -354,9 +359,7 @@ function Profile() {
                   <Box position="relative">
                     <Box
                       component="img"
-                      src={
-                        require("assets/img/theme/team-4-800x800.jpg").default
-                      }
+                      src={require("assets/img/theme/defaultImage.jpg").default}
                       alt="..."
                       maxWidth="180px"
                       borderRadius="50%"
@@ -375,24 +378,6 @@ function Profile() {
                 paddingBottom="0!important"
                 paddingTop="8rem!important"
                 classes={{ root: classes.cardHeaderRootProfile }}
-                subheader={
-                  <Box display="flex" justifyContent="space-between">
-                    <Button
-                      variant="contained"
-                      size="small"
-                      classes={{ root: classes.buttonRootInfo }}
-                    >
-                      Connect
-                    </Button>
-                    <Button
-                      variant="contained"
-                      size="small"
-                      classes={{ root: classes.buttonRootDark }}
-                    >
-                      Message
-                    </Button>
-                  </Box>
-                }
               ></Box>
               <Box
                 component={CardContent}
@@ -411,76 +396,19 @@ function Profile() {
                         textAlign="center"
                         marginRight="1rem"
                         padding=".875rem"
-                      >
-                        <Box
-                          component="span"
-                          fontSize="1.1rem"
-                          fontWeight="700"
-                          display="block"
-                          letterSpacing=".025em"
-                          className={classes.typographyRootH6}
-                        >
-                          22
-                        </Box>
-                        <Box
-                          component="span"
-                          fontSize=".875rem"
-                          color={theme.palette.gray[500]}
-                        >
-                          Friends
-                        </Box>
-                      </Box>
+                      ></Box>
                       <Box
                         textAlign="center"
                         marginRight="1rem"
                         padding=".875rem"
-                      >
-                        <Box
-                          component="span"
-                          fontSize="1.1rem"
-                          fontWeight="700"
-                          display="block"
-                          letterSpacing=".025em"
-                          className={classes.typographyRootH6}
-                        >
-                          10
-                        </Box>
-                        <Box
-                          component="span"
-                          fontSize=".875rem"
-                          color={theme.palette.gray[500]}
-                        >
-                          Photos
-                        </Box>
-                      </Box>
-                      <Box textAlign="center" padding=".875rem">
-                        <Box
-                          component="span"
-                          fontSize="1.1rem"
-                          fontWeight="700"
-                          display="block"
-                          letterSpacing=".025em"
-                          className={classes.typographyRootH6}
-                        >
-                          89
-                        </Box>
-                        <Box
-                          component="span"
-                          fontSize=".875rem"
-                          color={theme.palette.gray[500]}
-                        >
-                          Comments
-                        </Box>
-                      </Box>
+                      ></Box>
+                      <Box textAlign="center" padding=".875rem"></Box>
                     </Box>
                   </Grid>
                 </Grid>
                 <Box textAlign="center">
                   <Typography variant="h3">
-                    Jessica Jones
-                    <Box component="span" fontWeight="300">
-                      , 27
-                    </Box>
+                    {user.first_name} {user.last_name}
                   </Typography>
                   <Box
                     component={Typography}
@@ -490,19 +418,17 @@ function Profile() {
                     alignItems="center"
                     justifyContent="center"
                   >
-                    <Box
-                      component={LocationOn}
-                      width="1.25rem!important"
-                      height="1.25rem!important"
-                    ></Box>
-                    Bucharest, Romania
+                    User Name: {user.username}
                   </Box>
                   <Box
                     component={Typography}
                     variant="h5"
-                    marginTop="3rem!important"
+                    fontWeight="300!important"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
                   >
-                    Solution Manager - Creative Tim Officer
+                    Email: {user.email}
                   </Box>
                   <Box
                     display="flex"
@@ -516,31 +442,8 @@ function Profile() {
                       height="1.25rem!important"
                       marginRight=".5rem"
                     ></Box>
-                    University of Computer Science
+                    {institute_name}
                   </Box>
-                  <Box
-                    component={Divider}
-                    marginTop="1.5rem!important"
-                    marginBottom="1.5rem!important"
-                  ></Box>
-                  <Box
-                    component="p"
-                    fontWeight="300"
-                    lineHeight="1.7"
-                    marginBottom="1rem"
-                    fontSize="1rem"
-                  >
-                    Ryan — the name taken by Melbourne-raised, Brooklyn-based
-                    Nick Murphy — writes, performs and records all of his own
-                    music.
-                  </Box>
-                  <a
-                    href="#mui"
-                    className={classes.cardProfileLink}
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    Show More
-                  </a>
                 </Box>
               </Box>
             </Card>

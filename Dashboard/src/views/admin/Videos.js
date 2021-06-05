@@ -25,14 +25,13 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 // core components
 import Header from "components/Headers/Header.js";
-
 import componentStyles from "assets/theme/views/admin/tables.js";
-
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import Icon from '@material-ui/core/Icon';
 import axios from 'axios';
 const useStyles = makeStyles(componentStyles);
 
 const Videos = () => {
-
 
   const [videoDetails, setvideoDetails] = useState([])
 
@@ -146,6 +145,15 @@ const Videos = () => {
                         classes.tableCellRoot + " " + classes.tableCellRootHead,
                     }}
                   >
+                    Thumbnil
+                  </TableCell>
+
+                  <TableCell
+                    classes={{
+                      root:
+                        classes.tableCellRoot + " " + classes.tableCellRootHead,
+                    }}
+                  >
                     File
                   </TableCell>
 
@@ -221,7 +229,12 @@ const Videos = () => {
                         </AvatarGroup>
                       </TableCell>
                       <TableCell classes={{ root: classes.tableCellRoot }}>
-                        <a href={list.file} target="_blank"><img src={list.photo} style={{ height: "100px" }} /></a>
+                        <img src={list.photo} style={{ height: "100px" }} />
+                      </TableCell>
+                      <TableCell classes={{ root: classes.tableCellRoot }}>
+                        <a href={list.file} target="_blank" style={{ color: "gray" }}>
+                          <Icon component={VisibilityIcon} ></Icon>
+                        </a>
                       </TableCell>
 
                     </TableRow>
