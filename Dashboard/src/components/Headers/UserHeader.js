@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -11,10 +11,28 @@ import Typography from "@material-ui/core/Typography";
 
 // core components
 import componentStyles from "assets/theme/components/user-header.js";
+//Api Services
+import ApiService from "../../services/api.service";
+import AuthService from "../../services/auth.service";
 
 const useStyles = makeStyles(componentStyles);
 
 const UserHeader = () => {
+  const [userDetails, setUserDetails] = useState({
+    user: {
+      first_name: "",
+      last_name: "",
+      username: "",
+      email: "",
+      password: "",
+    },
+    institute_name: "",
+  });
+  useEffect(() => {
+    ApiService.getUserDetails(AuthService.getUserId())
+      .then((res) => setUserDetails(res.data))
+      .catch((err) => console.log(err));
+  }, []);
   const classes = useStyles();
   const theme = useTheme();
   return (
@@ -49,7 +67,7 @@ const UserHeader = () => {
                 variant="h1"
                 classes={{ root: classes.typographyRootH1 }}
               >
-                Hello Jesse
+                Hello, {userDetails.user.first_name} {userDetails.user.last_name}
               </Typography>
               <Box
                 component="p"
@@ -58,8 +76,7 @@ const UserHeader = () => {
                 lineHeight="1.7"
                 fontSize="1rem"
               >
-                This is your profile page. You can see the progress you've made
-                with your work and manage your projects or assigned tasks
+                This is your profile page. You can Update and edit your profile details from this page.
               </Box>
               <Button
                 variant="contained"

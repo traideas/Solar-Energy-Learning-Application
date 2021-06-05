@@ -61,8 +61,15 @@ const uploadArticleContent = (
   return axios.post("http://127.0.0.1:8000/document/", formData);
 };
 
+const getUserDetails = (id) => {
+  return (
+    axios.get("http://127.0.0.1:8000/teacher/" + id + "/")
+  )
+}
+
 export default {
   uploadVideoContent,
   uploadSlideContent,
-  uploadArticleContent
+  uploadArticleContent,
+  getUserDetails
 };
