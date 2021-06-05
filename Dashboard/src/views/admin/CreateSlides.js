@@ -73,7 +73,7 @@ function CreateSlides() {
               <Grid container>
                 <Grid item xs={12} lg={12}>
                   <FormGroup>
-                    <FormLabel>Slide Title</FormLabel>
+                    <FormLabel>Slide Title <b style={{ color: "red" }}>*</b></FormLabel>
                     <FormControl
                       variant="filled"
                       component={Box}
@@ -96,7 +96,7 @@ function CreateSlides() {
                 </Grid>
                 <Grid item xs={12}>
                   <FormGroup>
-                    <FormLabel>Slide Description</FormLabel>
+                    <FormLabel>Slide Description <b style={{ color: "red" }}>*</b></FormLabel>
                     <FormControl
                       variant="filled"
                       component={Box}
@@ -110,6 +110,7 @@ function CreateSlides() {
                         rows="5"
                         name="description"
                         {...register("description")}
+                        required
                       />
                     </FormControl>
                   </FormGroup>
@@ -135,7 +136,7 @@ function CreateSlides() {
                 </Grid>
                 <Grid item xs={12} lg={6}>
                   <FormGroup>
-                    <FormLabel>Upload Slide</FormLabel>
+                    <FormLabel>Upload Slide <b style={{ color: "red" }}>*</b></FormLabel>
 
                     <FormControl
                       variant="filled"
@@ -149,6 +150,7 @@ function CreateSlides() {
                         name="file"
                         accept=".pptx"
                         {...register("file")}
+                        required
                       />
                     </FormControl>
                   </FormGroup>

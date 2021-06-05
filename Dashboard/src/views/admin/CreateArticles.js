@@ -73,7 +73,7 @@ function CreateArticles() {
               <Grid container>
                 <Grid item xs={12} lg={12}>
                   <FormGroup>
-                    <FormLabel>Article Title</FormLabel>
+                    <FormLabel>Article Title <b style={{ color: "red" }}>*</b></FormLabel>
                     <FormControl
                       variant="filled"
                       component={Box}
@@ -96,7 +96,7 @@ function CreateArticles() {
                 </Grid>
                 <Grid item xs={12}>
                   <FormGroup>
-                    <FormLabel>Article Description</FormLabel>
+                    <FormLabel>Article Description <b style={{ color: "red" }}>*</b></FormLabel>
                     <FormControl
                       variant="filled"
                       component={Box}
@@ -110,6 +110,7 @@ function CreateArticles() {
                         rows="5"
                         name="description"
                         {...register("description")}
+                        required
                       />
                     </FormControl>
                   </FormGroup>
@@ -135,7 +136,7 @@ function CreateArticles() {
                 </Grid>
                 <Grid item xs={12} lg={6}>
                   <FormGroup>
-                    <FormLabel>Upload Article</FormLabel>
+                    <FormLabel>Upload Article <b style={{ color: "red" }}>*</b></FormLabel>
 
                     <FormControl
                       variant="filled"
@@ -149,6 +150,7 @@ function CreateArticles() {
                         name="file"
                         accept=".pdf"
                         {...register("file")}
+                        required
                       />
                     </FormControl>
                   </FormGroup>

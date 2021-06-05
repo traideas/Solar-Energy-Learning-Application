@@ -71,28 +71,7 @@ function CreateVideos() {
               <Grid container>
                 <Grid item xs={12} lg={12}>
                   <FormGroup>
-                    <FormLabel>Video Title</FormLabel>
-                    <FormControl
-                      variant="filled"
-                      component={Box}
-                      width="100%"
-                      marginBottom="1rem!important"
-                    >
-                      <Box
-                        paddingLeft="0.75rem"
-                        paddingRight="0.75rem"
-                        component={FilledInput}
-                        autoComplete="off"
-                        type="text"
-                        placeholder="Video Title"
-                        name="title"
-                        required
-                        {...register("title")}
-                      />
-                    </FormControl>
-                  </FormGroup>
-                  <FormGroup>
-                    <FormLabel>Video Title</FormLabel>
+                    <FormLabel>Video Title <b style={{ color: "red" }}>*</b></FormLabel>
                     <FormControl
                       variant="filled"
                       component={Box}
@@ -115,7 +94,7 @@ function CreateVideos() {
                 </Grid>
                 <Grid item xs={12}>
                   <FormGroup>
-                    <FormLabel>Video Description</FormLabel>
+                    <FormLabel>Video Description <b style={{ color: "red" }}>*</b></FormLabel>
                     <FormControl
                       variant="filled"
                       component={Box}
@@ -143,7 +122,6 @@ function CreateVideos() {
                       width="100%"
                       marginBottom="1rem!important"
                     >
-                      {/* Have to use FilledInput, Trying with input for now */}
                       <input
                         type="file"
                         name="photo"
@@ -155,7 +133,7 @@ function CreateVideos() {
                 </Grid>
                 <Grid item xs={12} lg={6}>
                   <FormGroup>
-                    <FormLabel>Upload Video</FormLabel>
+                    <FormLabel>Upload Video <b style={{ color: "red" }}>*</b></FormLabel>
 
                     <FormControl
                       variant="filled"
@@ -169,6 +147,7 @@ function CreateVideos() {
                         name="file"
                         accept=".mp4"
                         {...register("file")}
+                        required
                       />
                     </FormControl>
                   </FormGroup>

@@ -13,7 +13,9 @@ const uploadVideoContent = (
   formData.append("title", title);
   formData.append("description", description);
   formData.append("created_by", created_by);
-  formData.append("photo", photo[0]);
+  if (photo[0] != undefined) {
+    formData.append("photo", photo[0]);
+  }
   //formData.append("meterial_type", meterial_type);
   formData.append("file", file[0]);
   formData.append("status", status);
@@ -34,7 +36,9 @@ const uploadSlideContent = (
   formData.append("title", title);
   formData.append("description", description);
   formData.append("created_by", created_by);
-  formData.append("photo", photo[0]);
+  if (photo[0] != undefined) {
+    formData.append("photo", photo[0]);
+  }
   //formData.append("meterial_type", meterial_type);
   formData.append("file", file[0]);
   formData.append("status", status);
@@ -54,7 +58,10 @@ const uploadArticleContent = (
   formData.append("title", title);
   formData.append("description", description);
   formData.append("created_by", created_by);
-  formData.append("photo", photo[0]);
+  if (photo[0] != undefined) {
+    formData.append("photo", photo[0]);
+  }
+
   //formData.append("meterial_type", meterial_type);
   formData.append("file", file[0]);
   formData.append("status", status);
