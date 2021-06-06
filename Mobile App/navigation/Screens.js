@@ -147,7 +147,8 @@ function DrawerStack(props) {
           headerLeft: () => null,
         }}
       />
-      <Drawer.Screen name="Profile" component={Profile} />
+      {/* Fix Profile First than add the route in drawer */}
+      {/* <Drawer.Screen name="Profile" component={Profile} /> */}
     </Drawer.Navigator>
   );
 }
