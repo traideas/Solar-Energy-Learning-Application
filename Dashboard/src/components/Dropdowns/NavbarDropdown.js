@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
@@ -19,14 +19,31 @@ import Settings from "@material-ui/icons/Settings";
 // core components
 import componentStyles from "assets/theme/components/navbar-dropdown.js";
 
-//AuthServie
-import AuthServive from '../../services/auth.service'
+//Api Services
+import ApiService from "../../services/api.service";
+import AuthService from "../../services/auth.service";
+import { Link, Redirect } from "react-router-dom";
 
 const useStyles = makeStyles(componentStyles);
 
 export default function NavbarDropdown() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [userDetails, setUserDetails] = useState({
+    user: {
+      first_name: "",
+      last_name: "",
+      username: "",
+      email: "",
+      password: "",
+    },
+    institute_name: "",
+  });
+  useEffect(() => {
+    ApiService.getUserDetails(AuthService.getUserId())
+      .then((res) => setUserDetails(res.data))
+      .catch((err) => console.log(err));
+  }, []);
 
   const isMenuOpen = Boolean(anchorEl);
 
@@ -39,9 +56,9 @@ export default function NavbarDropdown() {
   };
 
   const handleLogout = () => {
-    AuthServive.logout()
-    window.location.reload()
-  }
+    AuthService.logout();
+    window.location.reload();
+  };
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -73,9 +90,11 @@ export default function NavbarDropdown() {
           height="1.25rem!important"
           marginRight="1rem"
         />
-        <span>My profile</span>
+        <Link style={{textDecoration: "none"}} to="/admin/user-profile">
+          <span>My profile</span>
+        </Link>
       </Box>
-      <Box
+      {/* <Box
         display="flex!important"
         alignItems="center!important"
         component={MenuItem}
@@ -88,7 +107,7 @@ export default function NavbarDropdown() {
           marginRight="1rem"
         />
         <span>Settings</span>
-      </Box>
+      </Box> */}
       {/* <Box
         display="flex!important"
         alignItems="center!important"
@@ -151,12 +170,14 @@ export default function NavbarDropdown() {
       >
         <Avatar
           alt="..."
-          src={require("assets/img/theme/team-4-800x800.jpg").default}
+          src={require("assets/img/theme/defaultImage.jpg").default}
           classes={{
             root: classes.avatarRoot,
           }}
         />
-        <Hidden smDown>Jessica Jones</Hidden>
+        <Hidden smDown>
+          {userDetails.user.first_name} {userDetails.user.last_name}
+        </Hidden>
       </Button>
       {renderMenu}
     </>
