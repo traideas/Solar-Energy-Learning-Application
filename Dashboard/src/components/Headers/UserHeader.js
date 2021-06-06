@@ -43,7 +43,7 @@ const UserHeader = () => {
         alignItems="center"
         display="flex"
         className={classes.wrapperBox}
-        minHeight="200px"
+        minHeight="400px"
         position="relative"
       >
         <Box
