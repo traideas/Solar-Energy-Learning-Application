@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-import Avatar from "@material-ui/core/Avatar";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
@@ -16,9 +15,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Tooltip from "@material-ui/core/Tooltip";
 // @material-ui/lab components
-import AvatarGroup from "@material-ui/lab/AvatarGroup";
 import Pagination from "@material-ui/lab/Pagination";
 // @material-ui/icons components
 import Grid from "@material-ui/core/Grid";
@@ -30,6 +27,59 @@ import componentStyles from "assets/theme/views/admin/tables.js";
 
 import axios from 'axios';
 const useStyles = makeStyles(componentStyles);
+
+const TableList = ({ list, index }) => {
+  const classes = useStyles()
+  const [userDetails, setUserDetails] = useState({
+
+    user: {
+      first_name: "",
+      last_name: "",
+    }
+  })
+  useEffect(() => {
+    axios.get("http://127.0.0.1:8000/teacher/" + list.teacher + "/")
+      .then(res => {
+        setUserDetails(res.data)
+      })
+  }, [setUserDetails])
+  return (
+    <TableRow key={list.id}>
+      <TableCell
+        classes={{
+          root:
+            classes.tableCellRoot +
+            " " +
+            classes.tableCellRootBodyHead,
+        }}
+        variant="head"
+
+      >
+        {index = index + 1}
+      </TableCell>
+      <TableCell classes={{ root: classes.tableCellRoot }} >
+        {list.title}
+      </TableCell>
+      <TableCell classes={{ root: classes.tableCellRoot }} >
+        {list.description}
+      </TableCell>
+      <TableCell classes={{ root: classes.tableCellRoot }}>
+        {list.start_date}
+      </TableCell>
+      <TableCell classes={{ root: classes.tableCellRoot }}>
+        {userDetails.user.first_name} {userDetails.user.last_name}
+      </TableCell>
+      <TableCell classes={{ root: classes.tableCellRoot }}>
+        {list.questions.length}
+      </TableCell>
+      <TableCell classes={{ root: classes.tableCellRoot }}>
+        <img src={list.photo} style={{ height: "100px" }} />
+      </TableCell>
+
+    </TableRow>
+
+  )
+}
 
 const ViewQuiz = () => {
 
@@ -162,50 +212,7 @@ const ViewQuiz = () => {
               <TableBody>
                 {
                   quizDetails.map((list, index) => (
-                    <TableRow key={list.id}>
-                      <TableCell
-                        classes={{
-                          root:
-                            classes.tableCellRoot +
-                            " " +
-                            classes.tableCellRootBodyHead,
-                        }}
-                        variant="head"
-
-                      >
-                        {index = index + 1}
-                      </TableCell>
-                      <TableCell classes={{ root: classes.tableCellRoot }} >
-                        {list.title}
-                      </TableCell>
-                      <TableCell classes={{ root: classes.tableCellRoot }} >
-                        {list.description}
-                      </TableCell>
-                      <TableCell classes={{ root: classes.tableCellRoot }}>
-                        {list.start_date}
-                      </TableCell>
-                      <TableCell classes={{ root: classes.tableCellRoot }}>
-                        <AvatarGroup>
-                          <Tooltip title="Ryan Tompson" placement="top">
-                            <Avatar
-                              classes={{ root: classes.avatarRoot }}
-                              alt="..."
-                              src={
-                                require("assets/img/theme/team-1-800x800.jpg")
-                                  .default
-                              }
-                            />
-                          </Tooltip>
-                        </AvatarGroup>
-                      </TableCell>
-                      <TableCell classes={{ root: classes.tableCellRoot }}>
-                        {list.questions.length}
-                      </TableCell>
-                      <TableCell classes={{ root: classes.tableCellRoot }}>
-                        <img src={list.photo} style={{ height: "100px" }} />
-                      </TableCell>
-
-                    </TableRow>
+                    <TableList list={list} key={list.id} />
                   ))
                 }
 
