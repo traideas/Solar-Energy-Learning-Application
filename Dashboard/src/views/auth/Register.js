@@ -8,11 +8,9 @@ import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-/* import CardHeader from "@material-ui/core/CardHeader"; */
-/* import Checkbox from "@material-ui/core/Checkbox";
- */import FilledInput from "@material-ui/core/FilledInput";
+import FilledInput from "@material-ui/core/FilledInput";
 import FormControl from "@material-ui/core/FormControl";
-/* import FormControlLabel from "@material-ui/core/FormControlLabel";*/
+
 import Grid from "@material-ui/core/Grid";
 import InputAdornment from "@material-ui/core/InputAdornment";
 // @material-ui/icons components
@@ -33,7 +31,7 @@ function Register() {
   const theme = useTheme();
   const { register, handleSubmit, reset } = useForm()
   const onSubmit = ({ first_name, last_name, username, email, password, institute_name }) => {
-      AuthService.register(first_name, last_name, username, email, password, institute_name)
+    AuthService.register(first_name, last_name, username, email, password, institute_name)
       .then(function (response) {
         reset()
         swal("Congratulations!", "Account Created Successfully!", "success")
@@ -183,44 +181,7 @@ function Register() {
                   }
                 />
               </FormControl>
-              {/* <Box
-                fontStyle="italic"
-                fontSize="1rem"
-                color={theme.palette.gray[600]}
-                marginBottom=".5rem"
-              >
-                <Box component="small" fontSize="80%">
-                  password strength:{" "}
-                  <Box
-                    component="span"
-                    fontWeight="700"
-                    color={theme.palette.success.main}
-                  >
-                    strong
-                </Box>
-                </Box>
-              </Box> */}
-              {/*  <FormControlLabel
-                value="end"
-                control={<Checkbox color="primary" />}
-                label={
-                  <>
-                    I agree with the{" "}
-                    <Box
-                      color={theme.palette.primary.main}
-                      component="a"
-                      textDecoration="none"
-                    >
-                      Privacy Policy
-                  </Box>
-                  </>
-                }
-                labelPlacement="end"
-                classes={{
-                  root: classes.formControlLabelRoot,
-                  label: classes.formControlLabelLabel,
-                }}
-              /> */}
+
               <Box textAlign="center" marginTop="1.5rem" marginBottom="1.5rem">
                 <Button color="primary" variant="contained" type="submit">
                   Create account

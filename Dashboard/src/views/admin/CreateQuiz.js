@@ -63,7 +63,9 @@ const CreateQuiz = () => {
     formData.append("title", title);
     formData.append("description", description);
     formData.append("teacher", AuthService.getUserId());
-    formData.append("photo", photo[0]);
+    if (photo[0] != undefined) {
+      formData.append("photo", photo[0]);
+    }
     formData.append("total_marks", 0)
     axios
       .post("http://127.0.0.1:8000/quiz/", formData)
@@ -114,7 +116,7 @@ const CreateQuiz = () => {
               <Grid container>
                 <Grid item xs={6}>
                   <FormGroup>
-                    <FormLabel>Quiz Title</FormLabel>
+                    <FormLabel>Quiz Title <b style={{ color: "red" }}>*</b></FormLabel>
                     <FormControl
                       variant="filled"
                       component={Box}
@@ -156,7 +158,7 @@ const CreateQuiz = () => {
 
                 <Grid item xs={6}>
                   <FormGroup>
-                    <FormLabel>Quiz Description</FormLabel>
+                    <FormLabel>Quiz Description <b style={{ color: "red" }}>*</b></FormLabel>
                     <FormControl>
                       <FilledInput
                         autoComplete="off"
