@@ -184,7 +184,7 @@ function Register() {
 
               <Box textAlign="center" marginTop="1.5rem" marginBottom="1.5rem">
                 <Button color="primary" variant="contained" type="submit">
-                  Create account
+                  Create Account
                 </Button>
               </Box>
             </form>
