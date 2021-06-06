@@ -23,7 +23,7 @@ import School from "@material-ui/icons/School";
 
 // core components
 import UserHeader from "components/Headers/UserHeader.js";
-
+import axios from "axios";
 import componentStyles from "assets/theme/views/admin/profile.js";
 import boxShadows from "assets/theme/box-shadow.js";
 import swal from 'sweetalert';
@@ -37,19 +37,38 @@ function Profile() {
   const classes = useStyles();
   const theme = useTheme();
   const { register, handleSubmit, reset } = useForm()
-  const onSubmit = ({ first_name, last_name, username, email, password, institute_name }) => {
-    AuthService.register(first_name, last_name, username, email, password, institute_name)
-      .then(function (response) {
-        reset()
-        swal("Congratulations!", "Account Created Successfully!", "success")
-      })
+  const onSubmit = (data) => {
+    const { first_name, last_name, email, photo, institute_name, password } = data
+
+    let formData = new FormData()
+    formData.append("user.id", user.id)
+    formData.append("user.first_name", (first_name == "") ? user.first_name : first_name)
+    formData.append("user.last_name", (last_name == "") ? user.last_name : last_name)
+    formData.append("user.username", user.username)
+    formData.append("user.email", (email == "") ? user.email : email)
+    formData.append("user.password", password)
+    formData.append("is_verified", userDetails.is_verified)
+    formData.append("institute_name", (institute_name == "") ? userDetails.institute_name : institute_name)
+
+    if (photo[0] != undefined) {
+      formData.append("user.photo", photo[0])
+    }
+
+
+    return axios.put("http://127.0.0.1:8000/teacher/" + AuthService.getUserId() + "/", formData
+    ).then(function (response) {
+
+      swal("Success!", "Profile Updated Successfully!", "success")
+    })
       .catch(function (error) {
-        swal("Registration Failed!", "Please Try Again!", "error");
+        swal("Failed!", "Please Try Again!", "error");
       });
+
   }
 
   const [userDetails, setUserDetails] = useState({
     user: {
+      id: "",
       first_name: "",
       last_name: "",
       username: "",
@@ -73,6 +92,7 @@ function Profile() {
         maxWidth={false}
         component={Box}
         marginTop="-6rem"
+        marginBottom="5rem"
         classes={{ root: classes.containerRoot }}
       >
         <Grid container>
@@ -136,10 +156,10 @@ function Profile() {
                             width="100%"
                             marginBottom="1rem!important"
                           >
-                            <FilledInput
+                            <input
                               paddingLeft="0.75rem"
                               paddingRight="0.75rem"
-
+                              className="MuiInputBase-input"
                               autoComplete="off"
                               type="text"
                               value={user.username}
@@ -157,10 +177,10 @@ function Profile() {
                             width="100%"
                             marginBottom="1rem!important"
                           >
-                            <FilledInput
+                            <input
                               paddingLeft="0.75rem"
                               paddingRight="0.75rem"
-
+                              className="MuiInputBase-input"
                               autoComplete="off"
                               type="email"
                               defaultValue={user.email}
@@ -182,10 +202,10 @@ function Profile() {
                             width="100%"
                             marginBottom="1rem!important"
                           >
-                            <FilledInput
+                            <input
                               paddingLeft="0.75rem"
                               paddingRight="0.75rem"
-
+                              className="MuiInputBase-input"
                               autoComplete="off"
                               type="text"
                               defaultValue={user.first_name}
@@ -204,10 +224,10 @@ function Profile() {
                             width="100%"
                             marginBottom="1rem!important"
                           >
-                            <FilledInput
+                            <input
                               paddingLeft="0.75rem"
                               paddingRight="0.75rem"
-
+                              className="MuiInputBase-input"
                               autoComplete="off"
                               type="text"
                               defaultValue={user.last_name}
@@ -218,6 +238,78 @@ function Profile() {
                         </FormGroup>
                       </Grid>
                     </Grid>
+                    <Grid container>
+                      <Grid item xs={12} lg={6}>
+                        <FormGroup>
+                          <FormLabel>Institute</FormLabel>
+                          <FormControl
+                            variant="filled"
+                            component={Box}
+                            width="100%"
+                            marginBottom="1rem!important"
+                          >
+                            <input
+                              paddingLeft="0.75rem"
+                              paddingRight="0.75rem"
+                              className="MuiInputBase-input"
+                              autoComplete="off"
+                              type="text"
+                              defaultValue={institute_name}
+                              required
+                              {...register("institute_name")}
+                            />
+                          </FormControl>
+                        </FormGroup>
+                      </Grid>
+                      <Grid item xs={12} lg={6}>
+                        <FormGroup>
+                          <FormLabel>New Password</FormLabel>
+                          <FormControl
+                            variant="filled"
+                            component={Box}
+                            width="100%"
+                            marginBottom="1rem!important"
+                          >
+                            <input
+                              paddingLeft="0.75rem"
+                              paddingRight="0.75rem"
+                              className="MuiInputBase-input"
+                              autoComplete="off"
+                              type="password"
+                              placeholder="Password"
+
+                              {...register("password")}
+                            />
+                          </FormControl>
+                        </FormGroup>
+                      </Grid>
+                    </Grid>
+                    <Grid container>
+                      <Grid item xs={12} lg={6}>
+                        <FormGroup>
+                          <FormLabel>Profile Photo</FormLabel>
+                          <FormControl
+                            variant="filled"
+                            component={Box}
+                            width="100%"
+                            marginBottom="1rem!important"
+                          >
+                            <input
+                              type="file"
+                              name="photo"
+                              accept=".jpg,.jpeg,.png"
+                              {...register("photo")}
+                            />
+                          </FormControl>
+                        </FormGroup>
+                      </Grid>
+                    </Grid>
+                    <Box textAlign="center" marginTop="1.5rem" marginBottom="1.5rem">
+                      <Button color="primary" variant="contained" type="submit">
+                        Update Profile
+                      </Button>
+                    </Box>
+
                   </form>
                 </div>
               </CardContent>
