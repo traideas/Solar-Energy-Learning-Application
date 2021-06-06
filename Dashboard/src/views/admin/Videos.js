@@ -31,6 +31,61 @@ import Icon from '@material-ui/core/Icon';
 import axios from 'axios';
 const useStyles = makeStyles(componentStyles);
 
+const TableList = ({ list, index }) => {
+  const classes = useStyles()
+  const [userDetails, setUserDetails] = useState({
+
+    user: {
+      first_name: "",
+      last_name: "",
+    }
+  })
+  useEffect(() => {
+    axios.get("http://127.0.0.1:8000/teacher/" + list.created_by + "/")
+      .then(res => {
+        setUserDetails(res.data)
+      })
+  }, [setUserDetails])
+  return (
+
+    <TableRow hover key={list.id}>
+      <TableCell
+        classes={{
+          root:
+            classes.tableCellRoot +
+            " " +
+            classes.tableCellRootBodyHead,
+        }}
+        variant="head"
+
+      >
+        {index = index + 1}
+      </TableCell>
+      <TableCell classes={{ root: classes.tableCellRoot }} >
+        {list.title}
+      </TableCell>
+      <TableCell classes={{ root: classes.tableCellRoot }} >
+        {list.description}
+      </TableCell>
+      <TableCell classes={{ root: classes.tableCellRoot }}>
+        {list.upload_date}
+      </TableCell>
+      <TableCell classes={{ root: classes.tableCellRoot }}>
+        {userDetails.user.first_name} {userDetails.user.last_name}
+      </TableCell>
+      <TableCell classes={{ root: classes.tableCellRoot }}>
+        <img src={list.photo} style={{ height: "100px" }} />
+      </TableCell>
+      <TableCell classes={{ root: classes.tableCellRoot }}>
+        <a href={list.file} target="_blank" style={{ color: "gray" }}>
+          <Icon component={VisibilityIcon} ></Icon>
+        </a>
+      </TableCell>
+
+    </TableRow>
+  )
+}
+
 const Videos = () => {
 
   const [videoDetails, setvideoDetails] = useState([])
@@ -162,82 +217,8 @@ const Videos = () => {
               <TableBody>
                 {
                   videoDetails.map((list, index) => (
-                    <TableRow key={list.id}>
-                      <TableCell
-                        classes={{
-                          root:
-                            classes.tableCellRoot +
-                            " " +
-                            classes.tableCellRootBodyHead,
-                        }}
-                        variant="head"
+                    <TableList list={list} key={list.id} />
 
-                      >
-                        {index = index + 1}
-                      </TableCell>
-                      <TableCell classes={{ root: classes.tableCellRoot }} >
-                        {list.title}
-                      </TableCell>
-                      <TableCell classes={{ root: classes.tableCellRoot }} >
-                        {list.description}
-                      </TableCell>
-                      <TableCell classes={{ root: classes.tableCellRoot }}>
-                        {list.upload_date}
-                      </TableCell>
-                      <TableCell classes={{ root: classes.tableCellRoot }}>
-                        <AvatarGroup>
-                          <Tooltip title="Ryan Tompson" placement="top">
-                            <Avatar
-                              classes={{ root: classes.avatarRoot }}
-                              alt="..."
-                              src={
-                                require("assets/img/theme/team-1-800x800.jpg")
-                                  .default
-                              }
-                            />
-                          </Tooltip>
-                          <Tooltip title="Romina Hadid" placement="top">
-                            <Avatar
-                              classes={{ root: classes.avatarRoot }}
-                              alt="..."
-                              src={
-                                require("assets/img/theme/team-2-800x800.jpg")
-                                  .default
-                              }
-                            />
-                          </Tooltip>
-                          <Tooltip title="Alexander Smith" placement="top">
-                            <Avatar
-                              classes={{ root: classes.avatarRoot }}
-                              alt="..."
-                              src={
-                                require("assets/img/theme/team-3-800x800.jpg")
-                                  .default
-                              }
-                            />
-                          </Tooltip>
-                          <Tooltip title="Jessica Doe" placement="top">
-                            <Avatar
-                              classes={{ root: classes.avatarRoot }}
-                              alt="..."
-                              src={
-                                require("assets/img/theme/team-4-800x800.jpg")
-                                  .default
-                              }
-                            />
-                          </Tooltip>
-                        </AvatarGroup>
-                      </TableCell>
-                      <TableCell classes={{ root: classes.tableCellRoot }}>
-                        <img src={list.photo} style={{ height: "100px" }} />
-                      </TableCell>
-                      <TableCell classes={{ root: classes.tableCellRoot }}>
-                        <a href={list.file} target="_blank" style={{ color: "gray" }}>
-                          <Icon component={VisibilityIcon} ></Icon>
-                        </a>
-                      </TableCell>
-
-                    </TableRow>
                   ))
                 }
 

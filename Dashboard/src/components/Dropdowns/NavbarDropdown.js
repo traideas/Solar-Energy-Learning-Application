@@ -36,6 +36,7 @@ export default function NavbarDropdown() {
       username: "",
       email: "",
       password: "",
+      photo: "",
     },
     institute_name: "",
   });
@@ -90,8 +91,8 @@ export default function NavbarDropdown() {
           height="1.25rem!important"
           marginRight="1rem"
         />
-        <Link style={{textDecoration: "none"}} to="/admin/user-profile">
-          <span>My profile</span>
+        <Link style={{ textDecoration: "none" }} to="/admin/user-profile">
+          <span>My Profile</span>
         </Link>
       </Box>
       {/* <Box
@@ -170,7 +171,7 @@ export default function NavbarDropdown() {
       >
         <Avatar
           alt="..."
-          src={require("assets/img/theme/defaultImage.jpg").default}
+          src={(userDetails.user.photo == null) ? require("assets/img/theme/defaultImage.png").default : userDetails.user.photo}
           classes={{
             root: classes.avatarRoot,
           }}

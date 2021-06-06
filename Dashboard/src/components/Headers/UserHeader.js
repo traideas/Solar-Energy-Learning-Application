@@ -69,7 +69,7 @@ const UserHeader = () => {
               >
                 Hello, {userDetails.user.first_name} {userDetails.user.last_name}
               </Typography>
-              <Box
+              {/* <Box
                 component="p"
                 marginBottom="3rem"
                 color={theme.palette.white.main}
@@ -77,13 +77,8 @@ const UserHeader = () => {
                 fontSize="1rem"
               >
                 This is your profile page. You can Update and edit your profile details from this page.
-              </Box>
-              <Button
-                variant="contained"
-                classes={{ root: classes.buttonRoot }}
-              >
-                Edit profile
-              </Button>
+              </Box> */}
+
             </Grid>
           </Grid>
         </Container>
