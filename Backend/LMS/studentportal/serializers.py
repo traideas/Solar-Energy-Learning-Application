@@ -23,9 +23,11 @@ class UserSerializer(serializers.ModelSerializer):
     discussions = DiscussionSerializer(many=True, read_only=True)
     class Meta:
         model = User
-        fields = ['id','first_name', 'last_name', 'username', 'email', 'password', 'discussions']
+        fields = ['id','first_name', 'last_name', 'username', 'email', 'password', 'discussions', 'photo']
         extra_kwargs = {'id': {'read_only': True}, 'password': {'write_only': True, 'required': False},
-                        'username': {'required': False}}
+                        'username': {'required': False},
+                        'photo': {'required': False},
+                        }
 
 
 
@@ -146,15 +148,19 @@ class TeacherSerializer(serializers.ModelSerializer):
     # courseteachers = serializers.HyperlinkedRelatedField(many=True, view_name='coursemanagement-detail', read_only=True)
     class Meta:
         model = Teacher
-        fields = ['user', 'institute_name']
+        fields = ['user', 'institute_name', 'is_verified']
+        # extra_kwargs = {'is_verified': {'read_only': True}}
 
     def create(self, validated_data):
         user_data = validated_data.pop('user')
         user = User.objects.create(**user_data)
         user.is_teacher = True
+
         user.set_password(user_data['password'])
         user.save()
         teacher = Teacher.objects.create(user=user,**validated_data)
+        teacher.is_verified = False
+        teacher.save()
         return teacher
 
     def update(self, instance, validated_data):
@@ -174,7 +180,9 @@ class TeacherSerializer(serializers.ModelSerializer):
 
         user.save()
         instance.institute_name = validated_data.get('institute_name', instance.institute_name)
+        instance.is_verified = validated_data.get('is_verified', instance.is_verified)
         instance.save()
+
         return instance
 
 
