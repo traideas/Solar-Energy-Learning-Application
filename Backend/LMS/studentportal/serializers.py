@@ -149,7 +149,7 @@ class TeacherSerializer(serializers.ModelSerializer):
     class Meta:
         model = Teacher
         fields = ['user', 'institute_name', 'is_verified']
-        extra_kwargs = {'is_verified': {'read_only': True}}
+        # extra_kwargs = {'is_verified': {'read_only': True}}
 
     def create(self, validated_data):
         user_data = validated_data.pop('user')
