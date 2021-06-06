@@ -8,6 +8,7 @@ class User(AbstractUser):
     is_student = models.BooleanField(default=False)
     is_teacher = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
+    photo = models.FileField(blank=True, null=True)
 
 class SchoolSection(models.Model):
     # Section_Choices = (
@@ -35,6 +36,8 @@ class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     school_section = models.ForeignKey(SchoolSection, on_delete=models.CASCADE)
     school_roll = models.CharField(max_length=10)
+
+
     # birth_date = models.DateField(blank=False)
 
 

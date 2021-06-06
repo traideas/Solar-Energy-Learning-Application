@@ -80,13 +80,20 @@ class StudentDetail(generics.RetrieveUpdateDestroyAPIView):
 class TeacherList(generics.ListCreateAPIView):
     # permission_classes = [permissions.IsAuthenticatedOrReadOnly,
     #                       IsOwnerOrReadOnly]
-    queryset = Teacher.objects.all()
+    queryset = Teacher.objects.filter(is_verified=True).all()
     serializer_class = TeacherSerializer
 
     # def perform_create(self, serializer):
     #     instance = serializer.save()
     #     instance.set_password(instance.password)
     #     instance.save()
+
+
+class TeacherListAll(generics.ListCreateAPIView):
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+    #                       IsOwnerOrReadOnly]
+    queryset = Teacher.objects.all()
+    serializer_class = TeacherSerializer
 
 
 class TeacherDetail(generics.RetrieveUpdateDestroyAPIView):
