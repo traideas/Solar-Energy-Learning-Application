@@ -164,9 +164,9 @@ class StudentSerializer(serializers.ModelSerializer):
         user.first_name = user_data['first_name']
         user.last_name = user_data['last_name']
         user.email = user_data['email']
-        user.photo = user_data['photo']
+
         # user = User.objects.update(**user_data)
-        user.set_password(user_data['password'])
+        # user.set_password(user_data['password'])
 
 
 
@@ -176,6 +176,11 @@ class StudentSerializer(serializers.ModelSerializer):
             print(user_data['password'])
         except:
             pass
+
+        try:
+            if(user_data['photo']!=None):
+                user.photo = user_data['photo']
+        except: pass
 
 
 
@@ -230,8 +235,8 @@ class TeacherSerializer(serializers.ModelSerializer):
         user.first_name = user_data['first_name']
         user.last_name = user_data['last_name']
         user.email = user_data['email']
-        user.photo = user_data['photo']
-        user.set_password(user_data['password'])
+        # user.photo = user_data['photo']
+        # user.set_password(user_data['password'])
 
 
         try:
@@ -239,6 +244,11 @@ class TeacherSerializer(serializers.ModelSerializer):
             print(user_data['password'])
         except:
             pass
+
+        try:
+            if(user_data['photo']!=None):
+                user.photo = user_data['photo']
+        except: pass
 
 
         user.save()
