@@ -110,7 +110,7 @@ class TeacherDetail(generics.RetrieveUpdateDestroyAPIView):
 class VideoList(generics.ListCreateAPIView):
     # permission_classes = [permissions.IsAuthenticatedOrReadOnly,
     #                       IsOwnerOrReadOnly]
-    queryset = VideoMaterial.objects.all()
+    queryset = VideoMaterial.objects.all().order_by('-id')
     serializer_class = VideoSerializer
 
 
@@ -124,7 +124,7 @@ class VideoDetail(generics.RetrieveUpdateDestroyAPIView):
 class PPTXList(generics.ListCreateAPIView):
     # permission_classes = [permissions.IsAuthenticatedOrReadOnly,
     #                       IsOwnerOrReadOnly]
-    queryset = PPTXMaterial.objects.all()
+    queryset = PPTXMaterial.objects.all().order_by('-id')
     serializer_class = PPTXSerializer
 
 
@@ -137,7 +137,7 @@ class PPTXDetail(generics.RetrieveUpdateDestroyAPIView):
 class DocList(generics.ListCreateAPIView):
     # permission_classes = [permissions.IsAuthenticatedOrReadOnly,
     #                       IsOwnerOrReadOnly]
-    queryset = DocMaterial.objects.all()
+    queryset = DocMaterial.objects.all().order_by('-id')
     serializer_class = DocSerializer
 
 
@@ -150,7 +150,7 @@ class DocDetail(generics.RetrieveUpdateDestroyAPIView):
 class QuizList(generics.ListCreateAPIView):
     # permission_classes = [permissions.IsAuthenticatedOrReadOnly,
     #                       IsOwnerOrReadOnly]
-    queryset = Quiz.objects.all()
+    queryset = Quiz.objects.all().order_by('-start_date')
     serializer_class = QuizSerializer
 
 
@@ -175,7 +175,7 @@ class QuestionDetail(generics.RetrieveUpdateDestroyAPIView):
 class DiscussionList(generics.ListCreateAPIView):
     # permission_classes = [permissions.IsAuthenticatedOrReadOnly,
     #                       IsOwnerOrReadOnly]
-    queryset = Discussion.objects.all()
+    queryset = Discussion.objects.all().order_by('-id')
     serializer_class = DiscussionSerializer
 
 
@@ -189,7 +189,7 @@ class DiscussionDetail(generics.RetrieveUpdateDestroyAPIView):
 class CommentList(generics.ListCreateAPIView):
     # permission_classes = [permissions.IsAuthenticatedOrReadOnly,
     #                       IsOwnerOrReadOnly]
-    queryset = Comment.objects.all()
+    queryset = Comment.objects.all().order_by('-id')
     serializer_class = CommentSerializer
 
 
