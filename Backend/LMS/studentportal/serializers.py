@@ -2,7 +2,7 @@ from rest_framework import serializers
 from studentportal.models import *
 import json
 from django.forms.models import model_to_dict
-
+import os
 
 
 #
@@ -37,14 +37,15 @@ class CommentSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         data = super(CommentSerializer, self).to_representation(instance)
-        print(data)
-        print( model_to_dict(instance.created_by))
+        # print(data)
+        # print( model_to_dict(instance.created_by))
         user  = model_to_dict(instance.created_by)
         # user['photo'] = None
         created_by = {
-            'name': user["first_name"]+" "+user["last_name"],
-            # 'photo': 'http://127.0.0.1:8000/media/'+ user['photo']
+            'name': user["first_name"]+" "+ user["last_name"],
+            'photo': 'http://127.0.0.1:8000/media/'+ str(instance.created_by.photo)
         }
+        # print(str(instance.created_by.photo))
 
         data['created_by'] = created_by
 
@@ -64,8 +65,8 @@ class DiscussionSerializer(serializers.ModelSerializer):
         user  = model_to_dict(instance.created_by)
         # user['photo'] = None
         created_by = {
-            'name': user["first_name"]+" "+user["last_name"],
-            # 'photo': 'http://127.0.0.1:8000/media/'+ user['photo']
+            'name': user["first_name"] + " " + user["last_name"],
+            'photo': 'http://127.0.0.1:8000/media/' + str(instance.created_by.photo)
         }
 
         data['created_by'] = created_by
