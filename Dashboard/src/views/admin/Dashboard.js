@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom'
 // javascipt plugin for creating charts
 import Chart from "chart.js";
@@ -21,11 +21,15 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 // @material-ui/icons components
+import Avatar from "@material-ui/core/Avatar";
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import Icon from '@material-ui/core/Icon';
+import Tooltip from "@material-ui/core/Tooltip";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
 // core components
 import Header from "components/Headers/Header.js";
-
+import axios from 'axios';
 import {
   chartOptions,
   parseOptions,
@@ -41,16 +45,22 @@ function Dashboard() {
   const classes = useStyles();
   const theme = useTheme();
   const [activeNav, setActiveNav] = React.useState(1);
-  const [chartExample1Data, setChartExample1Data] = React.useState("data1");
 
-  if (window.Chart) {
-    parseOptions(Chart, chartOptions());
-  }
+  const [discussionDetails, setdiscussionDetails] = useState([])
 
-  const toggleNavs = (index) => {
-    setActiveNav(index);
-    setChartExample1Data("data" + index);
-  };
+  useEffect(() => {
+    let mounted = true
+    axios.get("http://127.0.0.1:8000/discussion/")
+      .then(res => {
+        if (mounted) {
+          setdiscussionDetails(res.data)
+        }
+      })
+    return () => {
+      mounted = false
+    }
+  }, [setdiscussionDetails])
+
   return (
     <>
       <Header />
@@ -131,6 +141,16 @@ function Dashboard() {
                             classes.tableCellRootHead,
                         }}
                       >
+                        SL
+                      </TableCell>
+                      <TableCell
+                        classes={{
+                          root:
+                            classes.tableCellRoot +
+                            " " +
+                            classes.tableCellRootHead,
+                        }}
+                      >
                         Title
                       </TableCell>
                       <TableCell
@@ -161,206 +181,77 @@ function Dashboard() {
                             classes.tableCellRootHead,
                         }}
                       >
+                        Created By
+                      </TableCell>
+                      <TableCell
+                        classes={{
+                          root:
+                            classes.tableCellRoot +
+                            " " +
+                            classes.tableCellRootHead,
+                        }}
+                      >
                         Comments
+                      </TableCell>
+                      <TableCell
+                        classes={{
+                          root:
+                            classes.tableCellRoot +
+                            " " +
+                            classes.tableCellRootHead,
+                        }}
+                      >
+                        Details
                       </TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    <TableRow>
-                      <TableCell
-                        classes={{
-                          root:
-                            classes.tableCellRoot +
-                            " " +
-                            classes.tableCellRootBodyHead,
-                        }}
-                        component="th"
-                        variant="head"
-                        scope="row"
-                      >
-                        /argon/
-                      </TableCell>
-                      <TableCell classes={{ root: classes.tableCellRoot }}>
-                        4,569
-                      </TableCell>
-                      <TableCell classes={{ root: classes.tableCellRoot }}>
-                        340
-                      </TableCell>
-                      <Box
-                        component={TableCell}
-                        className={classes.tableCellRoot}
-                        marginBottom="-2px"
-                      >
-                        <Box
-                          component={ArrowUpward}
-                          width="1rem!important"
-                          height="1rem!important"
-                          marginRight="1rem"
-                          color={theme.palette.success.main}
-                        />
-                        46,53%
-                      </Box>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell
-                        classes={{
-                          root:
-                            classes.tableCellRoot +
-                            " " +
-                            classes.tableCellRootBodyHead,
-                        }}
-                        component="th"
-                        variant="head"
-                        scope="row"
-                      >
-                        /argon/index.html
-                      </TableCell>
-                      <TableCell classes={{ root: classes.tableCellRoot }}>
-                        3,985
-                      </TableCell>
-                      <TableCell classes={{ root: classes.tableCellRoot }}>
-                        319
-                      </TableCell>
-                      <Box
-                        component={TableCell}
-                        className={classes.tableCellRoot}
-                        marginBottom="-2px"
-                      >
-                        <Box
-                          component={ArrowDownward}
-                          width="1rem!important"
-                          height="1rem!important"
-                          marginRight="1rem"
-                          color={theme.palette.warning.main}
-                        />
-                        46,53%
-                      </Box>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell
-                        classes={{
-                          root:
-                            classes.tableCellRoot +
-                            " " +
-                            classes.tableCellRootBodyHead,
-                        }}
-                        component="th"
-                        variant="head"
-                        scope="row"
-                      >
-                        /argon/charts.html
-                      </TableCell>
-                      <TableCell classes={{ root: classes.tableCellRoot }}>
-                        3,513
-                      </TableCell>
-                      <TableCell classes={{ root: classes.tableCellRoot }}>
-                        294
-                      </TableCell>
-                      <Box
-                        component={TableCell}
-                        className={classes.tableCellRoot}
-                        marginBottom="-2px"
-                      >
-                        <Box
-                          component={ArrowDownward}
-                          width="1rem!important"
-                          height="1rem!important"
-                          marginRight="1rem"
-                          color={theme.palette.warning.main}
-                        />
-                        36,49%
-                      </Box>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell
-                        classes={{
-                          root:
-                            classes.tableCellRoot +
-                            " " +
-                            classes.tableCellRootBodyHead,
-                        }}
-                        component="th"
-                        variant="head"
-                        scope="row"
-                      >
-                        /argon/tables.html
-                      </TableCell>
-                      <TableCell classes={{ root: classes.tableCellRoot }}>
-                        2,050
-                      </TableCell>
-                      <TableCell classes={{ root: classes.tableCellRoot }}>
-                        147
-                      </TableCell>
-                      <Box
-                        component={TableCell}
-                        className={classes.tableCellRoot}
-                        marginBottom="-2px"
-                      >
-                        <Box
-                          component={ArrowUpward}
-                          width="1rem!important"
-                          height="1rem!important"
-                          marginRight="1rem"
-                          color={theme.palette.success.main}
-                        />
-                        50,87%
-                      </Box>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell
-                        classes={{
-                          root:
-                            classes.tableCellRoot +
-                            " " +
-                            classes.tableCellRootBodyHead +
-                            " " +
-                            classes.borderBottomUnset,
-                        }}
-                        component="th"
-                        variant="head"
-                        scope="row"
-                      >
-                        /argon/profile.html
-                      </TableCell>
-                      <TableCell
-                        classes={{
-                          root:
-                            classes.tableCellRoot +
-                            " " +
-                            classes.borderBottomUnset,
-                        }}
-                      >
-                        1,795
-                      </TableCell>
-                      <TableCell
-                        classes={{
-                          root:
-                            classes.tableCellRoot +
-                            " " +
-                            classes.borderBottomUnset,
-                        }}
-                      >
-                        190
-                      </TableCell>
-                      <Box
-                        component={TableCell}
-                        className={
-                          classes.tableCellRoot +
-                          " " +
-                          classes.borderBottomUnset
-                        }
-                        marginBottom="-2px"
-                      >
-                        <Box
-                          component={ArrowDownward}
-                          width="1rem!important"
-                          height="1rem!important"
-                          marginRight="1rem"
-                          color={theme.palette.error.main}
-                        />
-                        46,53%
-                      </Box>
-                    </TableRow>
+                    {
+                      discussionDetails.map((list, index) => (
+                        <TableRow hover key={list.id}>
+                          <TableCell
+                            classes={{
+                              root:
+                                classes.tableCellRoot +
+                                " " +
+                                classes.tableCellRootBodyHead,
+                            }}
+                            variant="head"
+
+                          >
+                            {index = index + 1}
+                          </TableCell>
+                          <TableCell classes={{ root: classes.tableCellRoot }} >
+                            {list.title}
+                          </TableCell>
+                          <TableCell classes={{ root: classes.tableCellRoot }} >
+                            {list.description.substring(0, 50)} ....
+                          </TableCell>
+                          <TableCell classes={{ root: classes.tableCellRoot }}>
+                            {list.created_date}
+                          </TableCell>
+                          <TableCell classes={{ root: classes.tableCellRoot }}>
+                            <Tooltip title={list.created_by.name} placement="top">
+                              <Avatar
+                                classes={{ root: classes.avatarRoot }}
+                                alt="..."
+                                src={(list.created_by.photo == null) ? require("assets/img/theme/defaultImage.png").default : list.created_by.photo}
+                              />
+                            </Tooltip>
+
+
+                          </TableCell>
+                          <TableCell classes={{ root: classes.tableCellRoot }}>
+                            {list.comments.length}
+                          </TableCell>
+                          <TableCell classes={{ root: classes.tableCellRoot }}>
+                            <Link to={"/admin/discussion/details/" + list.id} style={{ color: "gray" }}>
+                              <Icon component={VisibilityIcon} ></Icon>
+                            </Link>
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    }
                   </TableBody>
                 </Box>
               </TableContainer>

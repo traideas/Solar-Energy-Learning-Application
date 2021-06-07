@@ -53,9 +53,6 @@ function Profile() {
     if (photo[0] != undefined) {
       formData.append("user.photo", photo[0])
     }
-
-
-
     return axios.put("http://127.0.0.1:8000/teacher/" + AuthService.getUserId() + "/", formData
     ).then(function (response) {
 
