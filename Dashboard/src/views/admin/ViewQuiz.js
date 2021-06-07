@@ -212,7 +212,7 @@ const ViewQuiz = () => {
               <TableBody>
                 {
                   quizDetails.map((list, index) => (
-                    <TableList list={list} key={list.id} />
+                    <TableList list={list} key={list.id} index={index} />
                   ))
                 }
 

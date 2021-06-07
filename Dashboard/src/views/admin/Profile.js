@@ -53,12 +53,11 @@ function Profile() {
     if (photo[0] != undefined) {
       formData.append("user.photo", photo[0])
     }
-
-
     return axios.put("http://127.0.0.1:8000/teacher/" + AuthService.getUserId() + "/", formData
     ).then(function (response) {
 
       swal("Success!", "Profile Updated Successfully!", "success")
+      window.location.reload();
     })
       .catch(function (error) {
         swal("Failed!", "Please Try Again!", "error");
@@ -331,8 +330,9 @@ function Profile() {
                       component="img"
                       src={(user.photo == null) ? require("assets/img/theme/defaultImage.png").default : user.photo}
                       alt="..."
-                      maxWidth="180px"
-                      borderRadius="50%"
+                      maxWidth="200px"
+                      height="200px"
+                      borderRadius="100%"
                       position="absolute"
                       left="50%"
                       boxShadow={boxShadows.boxShadow + "!important"}
