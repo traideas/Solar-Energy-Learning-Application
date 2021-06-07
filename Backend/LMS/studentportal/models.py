@@ -10,8 +10,8 @@ class User(AbstractUser):
     is_admin = models.BooleanField(default=False)
     photo = models.FileField(blank=True, null=True)
 
-    def filename(self):
-        return os.path.basename(self.photo.name)
+    # def filename(self):
+    #     return os.path.basename(self.photo.name)
 
     def __str__(self):
         # user = {
