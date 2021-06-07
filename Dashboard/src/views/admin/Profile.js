@@ -55,6 +55,7 @@ function Profile() {
     }
 
 
+
     return axios.put("http://127.0.0.1:8000/teacher/" + AuthService.getUserId() + "/", formData
     ).then(function (response) {
 
