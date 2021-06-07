@@ -1,19 +1,18 @@
 import React from "react";
+import { Link } from 'react-router-dom'
 // javascipt plugin for creating charts
 import Chart from "chart.js";
 // react plugin used to create charts
-import { Line, Bar } from "react-chartjs-2";
+
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import { useTheme } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import LinearProgress from "@material-ui/core/LinearProgress";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -24,15 +23,6 @@ import Typography from "@material-ui/core/Typography";
 // @material-ui/icons components
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
-
-
-
-import EmojiEvents from "@material-ui/icons/EmojiEvents";
-import GroupAdd from "@material-ui/icons/GroupAdd";
-import InsertChartOutlined from "@material-ui/icons/InsertChartOutlined";
-import PieChart from "@material-ui/icons/PieChart";
-import CardStats from "components/Cards/CardStats.js";
-
 // core components
 import Header from "components/Headers/Header.js";
 
@@ -101,7 +91,7 @@ function Dashboard() {
                         variant="h3"
                         marginBottom="0!important"
                       >
-                        Page visits
+                        Discussion
                       </Box>
                     </Grid>
                     <Grid item xs="auto">
@@ -110,13 +100,15 @@ function Dashboard() {
                         display="flex"
                         flexWrap="wrap"
                       >
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          size="small"
-                        >
-                          See all
+                        <Link to='/admin/creatediscussion'>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            size="small"
+                          >
+                            Create New
                         </Button>
+                        </Link>
                       </Box>
                     </Grid>
                   </Grid>
