@@ -13,7 +13,7 @@ import CreateSlides from "views/admin/CreateSlides";
 import CreateArticles from "views/admin/CreateArticles";
 import ViewQuiz from "views/admin/ViewQuiz";
 import CreateQuiz from "views/admin/CreateQuiz";
-
+import CreateDiscussion from "views/admin/CreateDiscussion"
 
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import FlashOn from "@material-ui/icons/FlashOn";
@@ -42,6 +42,13 @@ var routes = [
     iconColor: "Primary",
     component: Dashboard,
     layout: "/admin",
+  },
+  {
+    path: "/creatediscussion",
+    name: "Create Discussion",
+    component: CreateDiscussion,
+    layout: "/admin",
+    invisible: true
   },
   {
     path: "/icons",

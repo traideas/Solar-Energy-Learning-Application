@@ -68,6 +68,20 @@ const uploadArticleContent = (
   return axios.post("http://127.0.0.1:8000/document/", formData);
 };
 
+const uploadDiscussion = (
+  title,
+  description,
+  created_by,
+  status
+) => {
+  let formData = new FormData();
+  formData.append("title", title);
+  formData.append("description", description);
+  formData.append("created_by", created_by);
+  formData.append("status", status);
+  return axios.post("http://127.0.0.1:8000/discussion/", formData);
+};
+
 const getUserDetails = (id) => {
   return (
     axios.get("http://127.0.0.1:8000/teacher/" + id + "/")
@@ -78,5 +92,6 @@ export default {
   uploadVideoContent,
   uploadSlideContent,
   uploadArticleContent,
+  uploadDiscussion,
   getUserDetails
 };
