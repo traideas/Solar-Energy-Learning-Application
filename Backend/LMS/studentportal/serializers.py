@@ -1,5 +1,32 @@
 from rest_framework import serializers
 from studentportal.models import *
+import json
+from django.forms.models import model_to_dict
+
+
+
+#
+#
+# class CreatedByField(serializers.PrimaryKeyRelatedField):
+#     def to_representation(self, value):
+#         pk = super(CreatedByField, self).to_representation(value)
+#         try:
+#            item = User.objects.get(pk=pk)
+#            serializer = UserSerializer(item)
+#            return serializer.data
+#         except Discussion.DoesNotExist:
+#            return None
+#
+#     def get_choices(self, cutoff=None):
+#         queryset = self.get_queryset()
+#         if queryset is None:
+#             return {}
+#
+#         return OrderedDict([(item.id, str(item)) for item in queryset])
+#
+#
+
+
 
 
 
@@ -8,12 +35,42 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
         fields = '__all__'
 
+    def to_representation(self, instance):
+        data = super(CommentSerializer, self).to_representation(instance)
+        print(data)
+        print( model_to_dict(instance.created_by))
+        user  = model_to_dict(instance.created_by)
+        # user['photo'] = None
+        created_by = {
+            'name': user["first_name"]+" "+user["last_name"],
+            # 'photo': 'http://127.0.0.1:8000/media/'+ user['photo']
+        }
+
+        data['created_by'] = created_by
+
+        return data
+
+
 class DiscussionSerializer(serializers.ModelSerializer):
     comments = CommentSerializer(many=True, read_only=True)
     class Meta:
         model = Discussion
         fields = ['id','title', 'description', 'created_by', 'created_date', 'status', 'comments']
 
+    def to_representation(self, instance):
+        data = super(DiscussionSerializer, self).to_representation(instance)
+        print(data)
+        print( model_to_dict(instance.created_by))
+        user  = model_to_dict(instance.created_by)
+        # user['photo'] = None
+        created_by = {
+            'name': user["first_name"]+" "+user["last_name"],
+            # 'photo': 'http://127.0.0.1:8000/media/'+ user['photo']
+        }
+
+        data['created_by'] = created_by
+
+        return data
 
 
 
@@ -106,6 +163,7 @@ class StudentSerializer(serializers.ModelSerializer):
         user.first_name = user_data['first_name']
         user.last_name = user_data['last_name']
         user.email = user_data['email']
+        user.photo = user_data['photo']
         # user = User.objects.update(**user_data)
 
 
@@ -135,7 +193,7 @@ class StudentSerializer(serializers.ModelSerializer):
             pass
 
         instance.school_section = school_section
-        instance.birth_date = validated_data.get('birth_date', instance.birth_date)
+        # instance.birth_date = validated_data.get('birth_date', instance.birth_date)
         instance.save()
         return instance
 
@@ -169,6 +227,7 @@ class TeacherSerializer(serializers.ModelSerializer):
         user.first_name = user_data['first_name']
         user.last_name = user_data['last_name']
         user.email = user_data['email']
+        user.photo = user_data['photo']
 
 
         try:

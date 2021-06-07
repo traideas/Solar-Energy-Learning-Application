@@ -2,13 +2,24 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
-
+import os
 
 class User(AbstractUser):
     is_student = models.BooleanField(default=False)
     is_teacher = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     photo = models.FileField(blank=True, null=True)
+
+    def filename(self):
+        return os.path.basename(self.photo.name)
+
+    def __str__(self):
+        # user = {
+        #     username: ,
+        #     photo:
+        # }
+        return self.username+" "
+
 
 class SchoolSection(models.Model):
     # Section_Choices = (
@@ -138,6 +149,8 @@ class Discussion(models.Model):
     created_date = models.DateField(blank=False, auto_now_add=True)
     status = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.title
 
 
 class Comment(models.Model):
