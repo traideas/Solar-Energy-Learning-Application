@@ -166,6 +166,8 @@ class StudentSerializer(serializers.ModelSerializer):
         user.email = user_data['email']
         user.photo = user_data['photo']
         # user = User.objects.update(**user_data)
+        user.set_password(user_data['password'])
+
 
 
 
@@ -229,6 +231,7 @@ class TeacherSerializer(serializers.ModelSerializer):
         user.last_name = user_data['last_name']
         user.email = user_data['email']
         user.photo = user_data['photo']
+        user.set_password(user_data['password'])
 
 
         try:
