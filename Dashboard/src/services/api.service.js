@@ -1,11 +1,11 @@
 import axios from "axios";
+import configData from '../configData.json'
 
 const uploadVideoContent = (
   title,
   description,
   created_by,
   photo,
-  //meterial_type,
   file,
   status
 ) => {
@@ -16,10 +16,9 @@ const uploadVideoContent = (
   if (photo[0] != undefined) {
     formData.append("photo", photo[0]);
   }
-  //formData.append("meterial_type", meterial_type);
   formData.append("file", file[0]);
   formData.append("status", status);
-  return axios.post("http://127.0.0.1:8000/video/", formData);
+  return axios.post(configData.SERVER_URL + "video/", formData);
 };
 
 
@@ -28,7 +27,6 @@ const uploadSlideContent = (
   description,
   created_by,
   photo,
-  //meterial_type,
   file,
   status
 ) => {
@@ -39,10 +37,9 @@ const uploadSlideContent = (
   if (photo[0] != undefined) {
     formData.append("photo", photo[0]);
   }
-  //formData.append("meterial_type", meterial_type);
   formData.append("file", file[0]);
   formData.append("status", status);
-  return axios.post("http://127.0.0.1:8000/pptx/", formData);
+  return axios.post(configData.SERVER_URL + "pptx/", formData);
 };
 
 const uploadArticleContent = (
@@ -50,7 +47,6 @@ const uploadArticleContent = (
   description,
   created_by,
   photo,
-  //meterial_type,
   file,
   status
 ) => {
@@ -61,11 +57,9 @@ const uploadArticleContent = (
   if (photo[0] != undefined) {
     formData.append("photo", photo[0]);
   }
-
-  //formData.append("meterial_type", meterial_type);
   formData.append("file", file[0]);
   formData.append("status", status);
-  return axios.post("http://127.0.0.1:8000/document/", formData);
+  return axios.post(configData.SERVER_URL + "document/", formData);
 };
 
 const uploadDiscussion = (
@@ -79,7 +73,7 @@ const uploadDiscussion = (
   formData.append("description", description);
   formData.append("created_by", created_by);
   formData.append("status", status);
-  return axios.post("http://127.0.0.1:8000/discussion/", formData);
+  return axios.post(configData.SERVER_URL + "discussion/", formData);
 };
 
 const uploadComment = (
@@ -91,12 +85,12 @@ const uploadComment = (
   formData.append("comment", comment);
   formData.append("discussion", discussion);
   formData.append("created_by", created_by);
-  return axios.post("http://127.0.0.1:8000/comment/", formData);
+  return axios.post(configData.SERVER_URL + "comment/", formData);
 };
 
 const getUserDetails = (id) => {
   return (
-    axios.get("http://127.0.0.1:8000/teacher/" + id + "/")
+    axios.get(configData.SERVER_URL + "teacher/" + id + "/")
   )
 }
 
