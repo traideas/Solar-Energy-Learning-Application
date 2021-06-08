@@ -5,20 +5,16 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useTheme } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
-import FilledInput from "@material-ui/core/FilledInput";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
 import Container from "@material-ui/core/Container";
-import Divider from "@material-ui/core/Divider";
-
 import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormLabel from "@material-ui/core/FormLabel";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 // @material-ui/icons components
-import LocationOn from "@material-ui/icons/LocationOn";
 import School from "@material-ui/icons/School";
 
 // core components
@@ -30,13 +26,14 @@ import swal from 'sweetalert';
 //Api Services
 import ApiService from "../../services/api.service";
 import AuthService from "../../services/auth.service";
+import configData from '../../configData.json'
 
 const useStyles = makeStyles(componentStyles);
 
 function Profile() {
   const classes = useStyles();
   const theme = useTheme();
-  const { register, handleSubmit, reset } = useForm()
+  const { register, handleSubmit } = useForm()
   const onSubmit = (data) => {
     const { first_name, last_name, email, photo, institute_name, password } = data
 
@@ -53,7 +50,7 @@ function Profile() {
     if (photo[0] != undefined) {
       formData.append("user.photo", photo[0])
     }
-    return axios.put("http://127.0.0.1:8000/teacher/" + AuthService.getUserId() + "/", formData
+    return axios.put(configData.SERVER_URL + "teacher/" + AuthService.getUserId() + "/", formData
     ).then(function (response) {
 
       swal("Success!", "Profile Updated Successfully!", "success")

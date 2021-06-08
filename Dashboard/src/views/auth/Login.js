@@ -29,16 +29,16 @@ const useStyles = makeStyles(componentStyles);
 function Login({ history }) {
   const classes = useStyles();
   const theme = useTheme();
-  const { register, handleSubmit, reset } = useForm()
+  const { register, handleSubmit } = useForm()
   const onSubmit = ({ username, password }) => {
     AuthService.login(username, password)
-    .then(function (response) {
-      history.push('/admin/index')
-      /* swal("Congratulations!", "Account Created Successfully!", "success") */
-    })
-    .catch(function (error) {
-      swal("Login Failed!", "Please Check Your Credentials!", "error");
-    })
+      .then(function (response) {
+        history.push('/admin/index')
+        /* swal("Congratulations!", "Account Created Successfully!", "success") */
+      })
+      .catch(function (error) {
+        swal("Login Failed!", "Please Check Your Credentials!", "error");
+      })
   }
   return (
     <>
@@ -113,7 +113,7 @@ function Login({ history }) {
                 </Button>
               </Box>
             </form>
-            
+
           </CardContent>
         </Card>
         <Grid container component={Box} marginTop="1rem">

@@ -1,4 +1,5 @@
 import axios from "axios";
+import configData from '../configData.json'
 
 const register = (
   first_name,
@@ -8,7 +9,7 @@ const register = (
   password,
   institute_name
 ) => {
-  return axios.post("http://127.0.0.1:8000/teacher/", {
+  return axios.post(configData.SERVER_URL + "teacher/", {
     user: {
       first_name,
       last_name,
@@ -22,7 +23,7 @@ const register = (
 
 const login = (username, password) => {
   return axios
-    .post("http://127.0.0.1:8000/api/auth/", {
+    .post(configData.SERVER_URL + "api/auth/", {
       username,
       password,
     })

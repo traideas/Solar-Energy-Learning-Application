@@ -19,7 +19,7 @@ import Typography from "@material-ui/core/Typography";
 import UserHeader from "components/Headers/Header.js";
 import componentStyles from "assets/theme/views/admin/profile.js";
 
-import APIService from '../../services/api.service'
+import ApiService from '../../services/api.service'
 import AuthService from '../../services/auth.service'
 import swal from "sweetalert";
 
@@ -28,12 +28,12 @@ const useStyles = makeStyles(componentStyles);
 function CreateVideos() {
   const classes = useStyles();
   const theme = useTheme();
-  const { register, handleSubmit, reset, control } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   const onSubmit = ({ title, description, file, photo }) => {
     const created_by = AuthService.getUserId()
     const status = 1
-    APIService.uploadVideoContent(title, description, created_by, photo, file, status)
+    ApiService.uploadVideoContent(title, description, created_by, photo, file, status)
       .then(function (res) {
         reset()
         swal("Success!", "Video Content Created Successfully!", "success")
