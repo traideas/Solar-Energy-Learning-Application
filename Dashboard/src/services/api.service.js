@@ -94,6 +94,30 @@ const getUserDetails = (id) => {
   )
 };
 
+const getArticleDetails = () => {
+  return (
+    axios.get(configData.SERVER_URL + "document/")
+  )
+};
+
+const getSlideDetails = () => {
+  return (
+    axios.get(configData.SERVER_URL + "pptx/")
+  )
+};
+
+const getVideoDetails = () => {
+  return (
+    axios.get(configData.SERVER_URL + "video/")
+  )
+};
+
+const getQuizDetails = () => {
+  return (
+    axios.get(configData.SERVER_URL + "quiz/")
+  )
+};
+
 const getDiscussionDetails = () => {
   return (
     axios.get(configData.SERVER_URL + "discussion/")
@@ -114,5 +138,9 @@ export default {
   uploadComment,
   getUserDetails,
   getDiscussionDetails,
-  getDiscussionById
+  getDiscussionById,
+  getArticleDetails,
+  getSlideDetails,
+  getVideoDetails,
+  getQuizDetails
 };
