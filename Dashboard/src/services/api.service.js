@@ -94,11 +94,18 @@ const getUserDetails = (id) => {
   )
 }
 
+const getDiscussionDetails = () => {
+  return (
+    axios.get(configData.SERVER_URL + "discussion/")
+  )
+}
+
 export default {
   uploadVideoContent,
   uploadSlideContent,
   uploadArticleContent,
   uploadDiscussion,
   uploadComment,
-  getUserDetails
+  getUserDetails,
+  getDiscussionDetails
 };
