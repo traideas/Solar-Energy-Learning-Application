@@ -30,7 +30,7 @@ const useStyles = makeStyles(componentStyles);
 function CreateArticles() {
   const classes = useStyles();
   const theme = useTheme();
-  const { register, handleSubmit, reset, control } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   const onSubmit = ({ title, description, file, photo }) => {
     const created_by = AuthService.getUserId()

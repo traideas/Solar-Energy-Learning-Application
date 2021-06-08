@@ -2,7 +2,6 @@ import React from "react";
 import { useForm } from "react-hook-form";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-import { useTheme } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
@@ -15,9 +14,7 @@ import FormLabel from "@material-ui/core/FormLabel";
 import Grid from "@material-ui/core/Grid";
 // core components
 import UserHeader from "components/Headers/Header.js";
-
 import componentStyles from "assets/theme/views/admin/profile.js";
-
 
 import APIService from '../../services/api.service'
 import AuthService from '../../services/auth.service'
@@ -27,10 +24,9 @@ const useStyles = makeStyles(componentStyles);
 
 function CreateDiscussion() {
   const classes = useStyles();
-  const theme = useTheme();
-  const { register, handleSubmit, reset, control } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
-  const onSubmit = ({ title, description, file, photo }) => {
+  const onSubmit = ({ title, description }) => {
     const created_by = AuthService.getUserId()
     const status = 1
     APIService.uploadDiscussion(title, description, created_by, status)

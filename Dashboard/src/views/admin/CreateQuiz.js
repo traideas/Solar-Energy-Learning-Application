@@ -27,6 +27,7 @@ import {
 import { KeyboardArrowDown } from "@material-ui/icons";
 import axios from "axios";
 import AuthService from "../../services/auth.service";
+import configData from '../../configData.json'
 
 const useStyles = makeStyles(componentStyles);
 
@@ -46,7 +47,7 @@ const CreateQuiz = () => {
     ),
   });
   const classes = useStyles();
-  const { register, handleSubmit, reset, errors, watch } = useForm({
+  const { register, handleSubmit, reset, watch } = useForm({
     resolver: yupResolver(validationSchema),
   });
 
@@ -68,10 +69,10 @@ const CreateQuiz = () => {
     }
     formData.append("total_marks", 0)
     axios
-      .post("http://127.0.0.1:8000/quiz/", formData)
+      .post(configData.SERVER_URL + "quiz/", formData)
       .then(({ data }) => {
         quizes.map(({ question, a, b, c, d, correct_option }) => {
-          axios.post("http://127.0.0.1:8000/question/", {
+          axios.post(configData.SERVER_URL + "question/", {
             quiz: data.id,
             question: question,
             options_1: a,
