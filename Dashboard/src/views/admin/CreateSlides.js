@@ -17,11 +17,9 @@ import Typography from "@material-ui/core/Typography";
 
 // core components
 import UserHeader from "components/Headers/Header.js";
-
 import componentStyles from "assets/theme/views/admin/profile.js";
 
-
-import APIService from '../../services/api.service'
+import ApiService from '../../services/api.service'
 import AuthService from '../../services/auth.service'
 import swal from "sweetalert";
 
@@ -35,7 +33,7 @@ function CreateSlides() {
   const onSubmit = ({ title, description, file, photo }) => {
     const created_by = AuthService.getUserId()
     const status = 1
-    APIService.uploadSlideContent(title, description, created_by, photo, file, status)
+    ApiService.uploadSlideContent(title, description, created_by, photo, file, status)
       .then(function (res) {
         reset()
         swal("Success!", "Slide Content Created Successfully!", "success")

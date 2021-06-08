@@ -16,7 +16,7 @@ import Grid from "@material-ui/core/Grid";
 import UserHeader from "components/Headers/Header.js";
 import componentStyles from "assets/theme/views/admin/profile.js";
 
-import APIService from '../../services/api.service'
+import ApiService from '../../services/api.service'
 import AuthService from '../../services/auth.service'
 import swal from "sweetalert";
 
@@ -29,7 +29,7 @@ function CreateDiscussion() {
   const onSubmit = ({ title, description }) => {
     const created_by = AuthService.getUserId()
     const status = 1
-    APIService.uploadDiscussion(title, description, created_by, status)
+    ApiService.uploadDiscussion(title, description, created_by, status)
       .then(function (res) {
         reset()
         swal("Success!", "Discussion Created Successfully!", "success")

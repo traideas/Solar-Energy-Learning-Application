@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import axios from 'axios';
 import FilledInput from "@material-ui/core/FilledInput";
 import { useForm } from "react-hook-form";
+
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-import { useTheme } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -17,16 +15,13 @@ import CardActions from '@material-ui/core/CardActions';
 import Avatar from "@material-ui/core/Avatar";
 import Tooltip from "@material-ui/core/Tooltip";
 import FormControl from "@material-ui/core/FormControl";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormLabel from "@material-ui/core/FormLabel";
 import Grid from "@material-ui/core/Grid";
+
 // core components
 import Header from "components/Headers/Header.js";
-
 import componentStyles from "assets/theme/views/admin/profile.js";
 
-
-import APIService from '../../services/api.service'
+import ApiService from '../../services/api.service'
 import AuthService from '../../services/auth.service'
 import swal from "sweetalert";
 
@@ -38,13 +33,10 @@ const CommentList = ({ list }) => {
     return (
         <Card classes={{ root: classes.cardRoot }} style={{ marginTop: "20px" }}>
 
-
             <CardContent>
                 <p>{list.comment}</p>
             </CardContent>
-            <CardActions
-
-            >
+            <CardActions>
                 <Grid
                     container
                     component={Box}
@@ -79,15 +71,13 @@ const CommentList = ({ list }) => {
 
 function CreateDiscussion() {
     const classes = useStyles();
-    const theme = useTheme();
     let { id } = useParams()
-
     const { register, handleSubmit, reset } = useForm();
 
     const onSubmit = ({ comment }) => {
         const created_by = AuthService.getUserId()
         const discussion = id
-        APIService.uploadComment(comment, discussion, created_by)
+        ApiService.uploadComment(comment, discussion, created_by)
             .then(function (res) {
                 reset()
                 swal("Success!", "Comment added Successfully!", "success")
@@ -98,8 +88,6 @@ function CreateDiscussion() {
             })
     };
     const [discussionDetails, setdiscussionDetails] = useState({
-
-
         title: "",
         description: "",
         created_by: {
@@ -120,17 +108,11 @@ function CreateDiscussion() {
             }]
     });
     useEffect(() => {
-        let mounted = true
-        axios.get("http://127.0.0.1:8000/discussion/" + id + "/")
-            .then(res => {
-                if (mounted) {
-                    setdiscussionDetails(res.data)
-                }
-            })
-        return () => {
-            mounted = false
-        }
-    }, [setdiscussionDetails])
+        ApiService.getDiscussionById(id)
+            .then((res) => setdiscussionDetails(res.data))
+            .catch((err) => console.log(err));
+    }, []);
+
     const { title, description, created_by, created_date, comments } = discussionDetails;
     return (
         <>

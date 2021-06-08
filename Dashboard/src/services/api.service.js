@@ -92,13 +92,19 @@ const getUserDetails = (id) => {
   return (
     axios.get(configData.SERVER_URL + "teacher/" + id + "/")
   )
-}
+};
 
 const getDiscussionDetails = () => {
   return (
     axios.get(configData.SERVER_URL + "discussion/")
   )
-}
+};
+
+const getDiscussionById = (id) => {
+  return (
+    axios.get(configData.SERVER_URL + "discussion/" + id + "/")
+  )
+};
 
 export default {
   uploadVideoContent,
@@ -107,5 +113,6 @@ export default {
   uploadDiscussion,
   uploadComment,
   getUserDetails,
-  getDiscussionDetails
+  getDiscussionDetails,
+  getDiscussionById
 };
