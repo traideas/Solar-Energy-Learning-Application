@@ -1,6 +1,5 @@
 // core components
 import Dashboard from "views/admin/Dashboard.js";
-import Icons from "views/admin/Icons.js";
 import Login from "views/auth/Login.js";
 import Profile from "views/admin/Profile.js";
 import Register from "views/auth/Register.js";
@@ -19,7 +18,6 @@ import DiscussionDetails from "views/admin/DiscussionDetails"
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import FlashOn from "@material-ui/icons/FlashOn";
 import FormatListBulleted from "@material-ui/icons/FormatListBulleted";
-import Grain from "@material-ui/icons/Grain";
 import Person from "@material-ui/icons/Person";
 import VpnKey from "@material-ui/icons/VpnKey";
 import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
@@ -55,15 +53,6 @@ var routes = [
     path: "/discussion/details/:id",
     name: "Discussion Details",
     component: DiscussionDetails,
-    layout: "/admin",
-    invisible: true
-  },
-  {
-    path: "/icons",
-    name: "Icons",
-    icon: Grain,
-    iconColor: "Primary",
-    component: Icons,
     layout: "/admin",
     invisible: true
   },
