@@ -22,10 +22,12 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 // core components
 import Header from "components/Headers/Header.js";
-
 import componentStyles from "assets/theme/views/admin/tables.js";
 
 import axios from 'axios';
+//Api Services
+import ApiService from "../../services/api.service";
+
 const useStyles = makeStyles(componentStyles);
 
 const TableList = ({ list, index }) => {
@@ -85,19 +87,11 @@ const ViewQuiz = () => {
 
 
   const [quizDetails, setquizDetails] = useState([])
-
   useEffect(() => {
-    let mounted = true
-    axios.get("http://127.0.0.1:8000/quiz/")
-      .then(res => {
-        if (mounted) {
-          setquizDetails(res.data)
-        }
-      })
-    return () => {
-      mounted = false
-    }
-  }, [setquizDetails])
+    ApiService.getQuizDetails()
+      .then((res) => setquizDetails(res.data))
+      .catch((err) => console.log(err));
+  }, []);
   const classes = useStyles();
 
   return (

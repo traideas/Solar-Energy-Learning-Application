@@ -25,14 +25,16 @@ import Header from "components/Headers/Header.js";
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import Icon from '@material-ui/core/Icon';
 import componentStyles from "assets/theme/views/admin/tables.js";
-import ApiService from '../../services/api.service'
 import axios from 'axios';
+
+//Api Services
+import ApiService from "../../services/api.service";
+
 const useStyles = makeStyles(componentStyles);
 
 const TableList = ({ list, index }) => {
   const classes = useStyles()
   const [userDetails, setUserDetails] = useState({
-
     user: {
       first_name: "",
       last_name: "",
@@ -85,22 +87,13 @@ const TableList = ({ list, index }) => {
 }
 
 const Articles = () => {
-
-
   const [articleDetails, setarticleDetails] = useState([])
-
   useEffect(() => {
-    let mounted = true
-    axios.get("http://127.0.0.1:8000/document/")
-      .then(res => {
-        if (mounted) {
-          setarticleDetails(res.data)
-        }
-      })
-    return () => {
-      mounted = false
-    }
-  }, [setarticleDetails])
+    ApiService.getArticleDetails()
+      .then((res) => setarticleDetails(res.data))
+      .catch((err) => console.log(err));
+  }, []);
+
   const classes = useStyles();
 
   return (

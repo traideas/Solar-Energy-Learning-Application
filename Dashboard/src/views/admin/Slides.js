@@ -27,6 +27,9 @@ import Icon from '@material-ui/core/Icon';
 import componentStyles from "assets/theme/views/admin/tables.js";
 
 import axios from 'axios';
+//Api Services
+import ApiService from "../../services/api.service";
+
 const useStyles = makeStyles(componentStyles);
 
 const TableList = ({ list, index }) => {
@@ -90,17 +93,10 @@ const Slides = () => {
   const [slideDetails, setslideDetails] = useState([])
 
   useEffect(() => {
-    let mounted = true
-    axios.get("http://127.0.0.1:8000/pptx/")
-      .then(res => {
-        if (mounted) {
-          setslideDetails(res.data)
-        }
-      })
-    return () => {
-      mounted = false
-    }
-  }, [setslideDetails])
+    ApiService.getSlideDetails()
+      .then((res) => setslideDetails(res.data))
+      .catch((err) => console.log(err));
+  }, []);
   const classes = useStyles();
 
   return (

@@ -26,6 +26,10 @@ import componentStyles from "assets/theme/views/admin/tables.js";
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import Icon from '@material-ui/core/Icon';
 import axios from 'axios';
+
+//Api Services
+import ApiService from "../../services/api.service";
+
 const useStyles = makeStyles(componentStyles);
 
 const TableList = ({ list, index }) => {
@@ -88,17 +92,10 @@ const Videos = () => {
   const [videoDetails, setvideoDetails] = useState([])
 
   useEffect(() => {
-    let mounted = true
-    axios.get("http://127.0.0.1:8000/video/")
-      .then(res => {
-        if (mounted) {
-          setvideoDetails(res.data)
-        }
-      })
-    return () => {
-      mounted = false
-    }
-  }, [setvideoDetails])
+    ApiService.getVideoDetails()
+      .then((res) => setvideoDetails(res.data))
+      .catch((err) => console.log(err));
+  }, []);
   const classes = useStyles();
 
   return (
