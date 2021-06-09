@@ -71,7 +71,8 @@ var routes = [
     iconColor: "Error",
     component: Tables,
     layout: "/admin",
-    invisible: true
+    adminOnly: true,
+
   },
   {
     path: "/login",

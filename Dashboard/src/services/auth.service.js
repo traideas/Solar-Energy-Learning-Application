@@ -45,6 +45,16 @@ const logout = () => {
 };
 
 const isLogedin = () => {
+  if (hasToken() && isTeacher()) {
+    return true;
+  }
+  else {
+    return false;
+  }
+
+};
+
+const hasToken = () => {
   return JSON.parse(localStorage.getItem("userToken"));
 };
 
@@ -73,4 +83,5 @@ export default {
   isTeacher,
   getUserId,
   isAdmin,
+  hasToken
 };
