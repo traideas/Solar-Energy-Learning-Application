@@ -20,6 +20,7 @@ import NavbarDropdown from "components/Dropdowns/NavbarDropdown.js";
 import routes from "routes.js";
 
 import componentStyles from "assets/theme/layouts/admin.js";
+import AuthService from "../services/auth.service"
 
 const useStyles = makeStyles(componentStyles);
 
@@ -36,6 +37,21 @@ const Admin = () => {
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
       if (prop.layout === "/admin") {
+        if (prop.adminOnly) {
+          if (AuthService.isAdmin() == false) {
+            return null;
+          }
+          else {
+            return (
+              <Route
+                exact
+                path={prop.layout + prop.path}
+                component={prop.component}
+                key={key}
+              />
+            );
+          }
+        }
         return (
           <Route
             exact
