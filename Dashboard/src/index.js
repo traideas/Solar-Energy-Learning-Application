@@ -17,8 +17,8 @@ import AuthLayout from "layouts/Auth.js";
 import AuthService from "./services/auth.service";
 
 const requireLogin = (to, from, next) => {
-  if(to.meta.auth) {
-    if(AuthService.isLogedin()) {
+  if (to.meta.auth) {
+    if (AuthService.isLogedin()) {
       next()
     }
     next.redirect("/auth/login")
@@ -32,13 +32,13 @@ ReactDOM.render(
     {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
     <CssBaseline />
     <BrowserRouter>
-    <GuardProvider guards={[requireLogin]}>
-      <Switch>
-        <GuardedRoute path="/admin" render={(props) => <AdminLayout {...props} />} meta={{ auth: true }} />
-        <GuardedRoute path="/auth" render={(props) => <AuthLayout {...props} />} />
-        <Redirect from="/" to="/admin/index" />
-      </Switch>
-    </GuardProvider>
+      <GuardProvider guards={[requireLogin]}>
+        <Switch>
+          <GuardedRoute path="/admin" render={(props) => <AdminLayout {...props} />} meta={{ auth: true }} />
+          <GuardedRoute path="/auth" render={(props) => <AuthLayout {...props} />} />
+          <Redirect from="/" to="/admin/index" />
+        </Switch>
+      </GuardProvider>
     </BrowserRouter>
   </ThemeProvider>,
   document.querySelector("#root")

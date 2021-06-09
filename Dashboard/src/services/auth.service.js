@@ -1,5 +1,6 @@
 import axios from "axios";
 import configData from '../configData.json'
+import { useAsync } from 'react-async';
 
 const register = (
   first_name,
@@ -27,12 +28,15 @@ const login = (username, password) => {
       username,
       password,
     })
-    .then(({ data }) => {
+    .then(async ({ data }) => {
+      const result = await axios.get(configData.SERVER_URL + "teacher/" + data.user_id + "/")
+      localStorage.setItem("teacherStatus", JSON.stringify(result.data.is_verified));
       localStorage.setItem("userToken", JSON.stringify(data.token));
       localStorage.setItem("userTypeStudent", JSON.stringify(data.is_student));
       localStorage.setItem("userTypeTeacher", JSON.stringify(data.is_teacher));
       localStorage.setItem("userTypeAdmin", JSON.stringify(data.is_admin));
       localStorage.setItem("userId", JSON.stringify(data.user_id));
+
     });
 };
 
@@ -42,10 +46,12 @@ const logout = () => {
   localStorage.removeItem("userTypeTeacher");
   localStorage.removeItem("userId");
   localStorage.removeItem("userTypeAdmin");
+  localStorage.removeItem("teacherStatus");
 };
 
 const isLogedin = () => {
-  if (hasToken() && isTeacher()) {
+
+  if (hasToken() && isTeacher() && isValidTeacher()) {
     return true;
   }
   else {
@@ -66,6 +72,10 @@ const isTeacher = () => {
   return JSON.parse(localStorage.getItem("userTypeTeacher"));
 };
 
+const isValidTeacher = () => {
+  return JSON.parse(localStorage.getItem("teacherStatus"))
+};
+
 const isAdmin = () => {
   return JSON.parse(localStorage.getItem("userTypeAdmin"));
 };
@@ -83,5 +93,6 @@ export default {
   isTeacher,
   getUserId,
   isAdmin,
-  hasToken
+  hasToken,
+  isValidTeacher
 };
