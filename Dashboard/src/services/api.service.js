@@ -130,6 +130,12 @@ const getDiscussionById = (id) => {
   )
 };
 
+const getTeacherById = (id) => {
+  return (
+    axios.get(configData.SERVER_URL + "teacher/" + id + "/")
+  )
+};
+
 export default {
   uploadVideoContent,
   uploadSlideContent,
@@ -142,5 +148,6 @@ export default {
   getArticleDetails,
   getSlideDetails,
   getVideoDetails,
-  getQuizDetails
+  getQuizDetails,
+  getTeacherById
 };

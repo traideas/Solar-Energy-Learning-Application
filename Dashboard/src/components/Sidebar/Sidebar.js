@@ -21,6 +21,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 // core components
 import componentStyles from "assets/theme/components/sidebar.js";
 
+import AuthService from "../../services/auth.service"
+
 const useStyles = makeStyles(componentStyles);
 
 export default function Sidebar({ routes, logo, dropdown, input }) {
@@ -42,6 +44,11 @@ export default function Sidebar({ routes, logo, dropdown, input }) {
   // creates the links that appear in the left menu / Sidebar
   const createLinks = (routes) => {
     return routes.map((prop, key) => {
+      if (prop.adminOnly) {
+        if (AuthService.isAdmin() == false) {
+          return null;
+        }
+      }
       if (prop.invisible) return null;
       if (prop.divider) {
         return <Divider key={key} classes={{ root: classes.divider }} />;
