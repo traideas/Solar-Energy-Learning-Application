@@ -130,9 +130,9 @@ const getDiscussionById = (id) => {
   )
 };
 
-const getTeacherById = (id) => {
+const getTeacherList = () => {
   return (
-    axios.get(configData.SERVER_URL + "teacher/" + id + "/")
+    axios.get(configData.SERVER_URL + "teacherall/")
   )
 };
 
@@ -149,5 +149,5 @@ export default {
   getSlideDetails,
   getVideoDetails,
   getQuizDetails,
-  getTeacherById
+  getTeacherList
 };
