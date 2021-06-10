@@ -70,8 +70,11 @@ const TableList = ({ list, index }) => {
         <img src={list.photo} style={{ height: "80px" }} />
       </TableCell>
       <TableCell classes={{ root: classes.tableCellRoot }}>
-        <a href={list.file} target="_blank" style={{ color: "gray" }}>
-          <Icon component={VisibilityIcon} ></Icon>
+        <a href={list.file} target="_blank">
+          <Button variant="contained" size="small" color="primary">
+            <Box component={VisibilityIcon} position="relative" top="2px" />{" "}
+                  View
+          </Button>
         </a>
       </TableCell>
 
