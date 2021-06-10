@@ -136,6 +136,27 @@ const getTeacherList = () => {
   )
 };
 
+const changeInstructorStatus = (
+  id,
+  first_name,
+  last_name,
+  username,
+  email,
+  is_verified,
+  institute_name,
+) => {
+  let formData = new FormData()
+  formData.append("user.id", id)
+  formData.append("user.first_name", first_name)
+  formData.append("user.last_name", last_name)
+  formData.append("user.username", username)
+  formData.append("user.email", email)
+  formData.append("is_verified", is_verified)
+  formData.append("institute_name", institute_name)
+  return axios.put(configData.SERVER_URL + "teacher/" + id + "/", formData
+  )
+}
+
 export default {
   uploadVideoContent,
   uploadSlideContent,
@@ -149,5 +170,6 @@ export default {
   getSlideDetails,
   getVideoDetails,
   getQuizDetails,
-  getTeacherList
+  getTeacherList,
+  changeInstructorStatus
 };
