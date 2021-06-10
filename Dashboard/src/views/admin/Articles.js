@@ -15,17 +15,16 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-// @material-ui/lab components
 import Pagination from "@material-ui/lab/Pagination";
-// @material-ui/icons components
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import Tooltip from "@material-ui/core/Tooltip";
+import Avatar from "@material-ui/core/Avatar";
 // core components
 import Header from "components/Headers/Header.js";
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import Icon from '@material-ui/core/Icon';
 import componentStyles from "assets/theme/views/admin/tables.js";
-import axios from 'axios';
 
 //Api Services
 import ApiService from "../../services/api.service";
@@ -34,18 +33,7 @@ const useStyles = makeStyles(componentStyles);
 
 const TableList = ({ list, index }) => {
   const classes = useStyles()
-  const [userDetails, setUserDetails] = useState({
-    user: {
-      first_name: "",
-      last_name: "",
-    }
-  })
-  useEffect(() => {
-    axios.get("http://127.0.0.1:8000/teacher/" + list.created_by + "/")
-      .then(res => {
-        setUserDetails(res.data)
-      })
-  }, [setUserDetails])
+
   return (
 
     <TableRow hover key={list.id}>
@@ -71,14 +59,23 @@ const TableList = ({ list, index }) => {
         {list.upload_date}
       </TableCell>
       <TableCell classes={{ root: classes.tableCellRoot }}>
-        {userDetails.user.first_name} {userDetails.user.last_name}
+        <Tooltip title={list.created_by.name} placement="top">
+          <Avatar
+            classes={{ root: classes.avatarRoot }}
+            alt="..."
+            src={(list.created_by.photo == null) ? require("assets/img/theme/defaultImage.png").default : list.created_by.photo}
+          />
+        </Tooltip>
       </TableCell>
       <TableCell classes={{ root: classes.tableCellRoot }}>
-        <img src={list.photo} style={{ height: "100px" }} />
+        <img src={list.photo} style={{ height: "80px" }} />
       </TableCell>
       <TableCell classes={{ root: classes.tableCellRoot }}>
-        <a href={list.file} target="_blank" style={{ color: "gray" }}>
-          <Icon component={VisibilityIcon} ></Icon>
+        <a href={list.file} target="_blank">
+          <Button variant="contained" size="small" color="primary">
+            <Box component={VisibilityIcon} position="relative" top="2px" />{" "}
+                  View
+          </Button>
         </a>
       </TableCell>
 

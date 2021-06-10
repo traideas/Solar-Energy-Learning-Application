@@ -14,6 +14,7 @@ import ViewQuiz from "views/admin/ViewQuiz";
 import CreateQuiz from "views/admin/CreateQuiz";
 import CreateDiscussion from "views/admin/CreateDiscussion"
 import DiscussionDetails from "views/admin/DiscussionDetails"
+import InstructorList from "views/admin/InstructorList"
 
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import FlashOn from "@material-ui/icons/FlashOn";
@@ -26,10 +27,11 @@ import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import RateReviewIcon from '@material-ui/icons/RateReview';
+import RecentActorsIcon from '@material-ui/icons/RecentActors';
 
 var routes = [
   {
-    href: "#pablo",
+    href: "/",
     name: "MyREL 0.01",
     icon: FlashOn,
     upgradeToPro: true,
@@ -60,16 +62,16 @@ var routes = [
     path: "/user-profile",
     name: "User Profile",
     icon: Person,
-    iconColor: "WarningLight",
+    iconColor: "Error",
     component: Profile,
     layout: "/admin",
   },
   {
     path: "/tables",
-    name: "Tables",
-    icon: FormatListBulleted,
-    iconColor: "Error",
-    component: Tables,
+    name: "Instructors",
+    icon: RecentActorsIcon,
+    iconColor: "light",
+    component: InstructorList,
     layout: "/admin",
     adminOnly: true,
 

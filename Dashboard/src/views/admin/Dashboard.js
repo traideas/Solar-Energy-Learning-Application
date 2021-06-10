@@ -222,7 +222,10 @@ function Dashboard() {
                           </TableCell>
                           <TableCell classes={{ root: classes.tableCellRoot }}>
                             <Link to={"/admin/discussion/details/" + list.id} style={{ color: "gray" }}>
-                              <Icon component={VisibilityIcon} ></Icon>
+                              <Button variant="contained" size="small" color="primary">
+                                <Box component={VisibilityIcon} position="relative" top="2px" />{" "}
+                                  View
+                              </Button>
                             </Link>
                           </TableCell>
                         </TableRow>
