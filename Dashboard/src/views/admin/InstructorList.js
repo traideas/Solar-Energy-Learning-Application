@@ -13,24 +13,57 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Pagination from "@material-ui/lab/Pagination";
-import Tooltip from "@material-ui/core/Tooltip";
 import Avatar from "@material-ui/core/Avatar";
 import Create from "@material-ui/icons/Create";
 // core components
 import Header from "components/Headers/Header.js";
 import componentStyles from "assets/theme/views/admin/tables.js";
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import Icon from '@material-ui/core/Icon';
 import Button from "@material-ui/core/Button";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import MoreVert from "@material-ui/icons/MoreVert";
-import { useTheme } from "@material-ui/core/styles";
+
+import swal from "sweetalert";
 //Api Services
 import ApiService from "../../services/api.service";
 
 const useStyles = makeStyles(componentStyles);
-
+const onClickStatus =
+    (
+        id,
+        first_name,
+        last_name,
+        username,
+        email,
+        is_verified,
+        institute_name,
+    ) => {
+        swal({
+            title: "Are you sure?",
+            text: "You want to change instructor status!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willChange) => {
+                if (willChange) {
+                    ApiService.changeInstructorStatus
+                        (
+                            id,
+                            first_name,
+                            last_name,
+                            username,
+                            email,
+                            is_verified,
+                            institute_name,
+                        )
+                        .then(function (res) {
+                            swal("Success!", "Instructor Status Changed Successfully!", "success")
+                            window.location.reload();
+                        })
+                        .catch(function (res) {
+                            swal("Failed!", "Please Try Again!", "error");
+                        })
+                }
+            });
+    };
 const TableList = ({ list, index }) => {
     const classes = useStyles()
 
@@ -85,7 +118,9 @@ const TableList = ({ list, index }) => {
 
             <TableCell classes={{ root: classes.tableCellRoot }}>
 
-                <Button variant="contained" size="small" color="primary">
+                <Button variant="contained" size="small" color="primary"
+                    onClick={() => onClickStatus(list.user.id, list.user.first_name, list.user.last_name, list.user.username, list.user.email,
+                        (list.is_verified == true ? 0 : 1), list.institute_name, list.user.photo)}>
                     <Box component={Create} position="relative" top="2px" />{" "}
                      Status
                 </Button>
