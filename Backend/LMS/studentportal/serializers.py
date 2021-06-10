@@ -39,7 +39,7 @@ class CommentSerializer(serializers.ModelSerializer):
         data = super(CommentSerializer, self).to_representation(instance)
         # print(data)
         # print( model_to_dict(instance.created_by))
-        user  = model_to_dict(instance.created_by)
+        user = model_to_dict(instance.created_by)
         # user['photo'] = None
         created_by = {
             'name': user["first_name"]+" "+ user["last_name"],
@@ -265,23 +265,52 @@ class TeacherSerializer(serializers.ModelSerializer):
 class VideoSerializer(serializers.ModelSerializer):
     class Meta:
         model = VideoMaterial
-        fields = ['id', 'title', 'description', 'created_by', 'created_by',
+        fields = ['id', 'title', 'description', 'created_by',
                   'upload_date', 'photo', 'material_type', 'file', 'status']
         extra_kwargs = {'id': {'read_only': True},
                         'upload_date': {'read_only': True, 'required': False},
                         'username': {'required': False}}
 
+    def to_representation(self, instance):
+        data = super(VideoSerializer, self).to_representation(instance)
+        print(data)
+        print(model_to_dict(instance.created_by.user))
+        user = model_to_dict(instance.created_by.user)
+        # user['photo'] = None
+        created_by = {
+            'name': user["first_name"] + " " + user["last_name"],
+            'photo': 'http://127.0.0.1:8000/media/' + str(instance.created_by.user.photo)
+        }
+        # print(str(instance.created_by.photo))
+        data['created_by'] = created_by
+        # data['created_by'] = "hello"
+        return data
 
 
 
 class PPTXSerializer(serializers.ModelSerializer):
     class Meta:
         model = PPTXMaterial
-        fields = ['id', 'title', 'description', 'created_by', 'created_by',
+        fields = ['id', 'title', 'description', 'created_by',
                   'upload_date', 'photo', 'material_type', 'file', 'status']
         extra_kwargs = {'id': {'read_only': True},
                         'upload_date': {'read_only': True, 'required': False},
                         'username': {'required': False}}
+
+    def to_representation(self, instance):
+        data = super(PPTXSerializer, self).to_representation(instance)
+        print(data)
+        print(model_to_dict(instance.created_by.user))
+        user = model_to_dict(instance.created_by.user)
+        # user['photo'] = None
+        created_by = {
+            'name': user["first_name"] + " " + user["last_name"],
+            'photo': 'http://127.0.0.1:8000/media/' + str(instance.created_by.user.photo)
+        }
+        # print(str(instance.created_by.photo))
+        data['created_by'] = created_by
+        # data['created_by'] = "hello"
+        return data
 
 
 
@@ -289,11 +318,27 @@ class PPTXSerializer(serializers.ModelSerializer):
 class DocSerializer(serializers.ModelSerializer):
     class Meta:
         model = DocMaterial
-        fields = ['id', 'title', 'description', 'created_by', 'created_by',
+        fields = ['id', 'title', 'description', 'created_by',
                   'upload_date', 'photo', 'material_type', 'file', 'status']
         extra_kwargs = {'id': {'read_only': True},
                         'upload_date': {'read_only': True, 'required': False},
                         'username': {'required': False}}
+
+
+    def to_representation(self, instance):
+            data = super(DocSerializer, self).to_representation(instance)
+            print(data)
+            print( model_to_dict(instance.created_by.user))
+            user = model_to_dict(instance.created_by.user)
+            # user['photo'] = None
+            created_by = {
+                'name': user["first_name"] + " " + user["last_name"],
+                'photo': 'http://127.0.0.1:8000/media/' + str(instance.created_by.user.photo)
+            }
+            # print(str(instance.created_by.photo))
+            data['created_by'] = created_by
+            # data['created_by'] = "hello"
+            return data
 
 
 
