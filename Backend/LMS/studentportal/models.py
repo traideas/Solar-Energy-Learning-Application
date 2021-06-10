@@ -18,7 +18,7 @@ class User(AbstractUser):
         #     username: ,
         #     photo:
         # }
-        return self.username+" "
+        return self.username
 
 
 class SchoolSection(models.Model):
@@ -50,6 +50,8 @@ class Student(models.Model):
 
 
     # birth_date = models.DateField(blank=False)
+    def __str__(self):
+        return self.user.first_name +" "+ self.user.last_name
 
 
 
@@ -57,6 +59,10 @@ class Teacher(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     institute_name = models.CharField(max_length=200)
     is_verified = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.user.first_name + " " + self.user.last_name
+
 
 
 
@@ -72,6 +78,8 @@ class VideoMaterial(models.Model):
     photo = models.FileField(blank=True, null=True)
     status = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.title
 
 
 class PPTXMaterial(models.Model):
@@ -84,6 +92,8 @@ class PPTXMaterial(models.Model):
     photo = models.FileField(blank=True, null=True)
     status = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.title
 
 class DocMaterial(models.Model):
     title = models.CharField(blank=False, max_length=250)
@@ -95,6 +105,8 @@ class DocMaterial(models.Model):
     photo = models.FileField(blank=True, null=True)
     status = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.title
 
 
 class Quiz(models.Model):
@@ -107,6 +119,8 @@ class Quiz(models.Model):
     total_marks = models.IntegerField()
     description = models.CharField(max_length=1000)
 
+    def __str__(self):
+        return self.title
 
 
 # class Examinee(models.Model):
@@ -139,6 +153,8 @@ class Question(models.Model):
     answer = models.PositiveSmallIntegerField(choices=option_Choices)
     mark = models.IntegerField()
 
+    def __str__(self):
+        return self.question
 
 
 
@@ -159,6 +175,8 @@ class Comment(models.Model):
     created_by = models.ForeignKey('studentportal.User', on_delete=models.CASCADE, related_name='comments')
     created_date = models.DateField(blank=False, auto_now_add=True)
 
+    def __str__(self):
+        return self.comment
 
 class Score(models.Model):
     student = models.ForeignKey('studentportal.Student', on_delete=models.CASCADE, related_name='studentScore')
