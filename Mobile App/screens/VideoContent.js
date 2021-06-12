@@ -11,7 +11,8 @@ const VideoCard = ({ item, onPress }) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.item}>
       <Card
-        title={title} image={photo} avatar={created_by.photo} caption={upload_date} />
+        title={title} image={photo} avatar={created_by.photo} caption={upload_date}
+      />
     </TouchableOpacity>
   );
 };

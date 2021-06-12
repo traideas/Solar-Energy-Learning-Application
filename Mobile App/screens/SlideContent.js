@@ -3,12 +3,15 @@ import { ActivityIndicator, StyleSheet, TouchableOpacity } from "react-native";
 import { Block, Card, Text } from "galio-framework";
 import { FlatList } from "react-native-gesture-handler";
 import axios from "axios";
+import configData from '../services/configData.json'
 
 const SlideCard = ({ item, onPress }) => {
-  const { title, description, photo } = item;
+  const { title, upload_date, photo, created_by } = item;
   return (
     <TouchableOpacity onPress={onPress} style={styles.item}>
-      <Card title={title} caption={description} avatar={photo} />
+      <Card
+        title={title} image={photo} avatar={created_by.photo} caption={upload_date}
+      />
     </TouchableOpacity>
   );
 };
@@ -19,7 +22,7 @@ export default SlideContent = ({ navigation }) => {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/pptx/")
+      .get(configData.SERVER_URL + "pptx/")
       .then(({ data }) => {
         setDATA(data);
       })
@@ -35,7 +38,6 @@ export default SlideContent = ({ navigation }) => {
   };
   return (
     <Block style={styles.container}>
-      <Text h5>Slides</Text>
       {isLoading ? (
         <ActivityIndicator />
       ) : (
@@ -43,6 +45,8 @@ export default SlideContent = ({ navigation }) => {
           data={DATA}
           renderItem={renderItem}
           keyExtractor={(item) => item.id.toString()}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
         />
       )}
     </Block>
@@ -52,12 +56,12 @@ export default SlideContent = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 40,
+    paddingTop: 10,
     paddingHorizontal: 20,
     backgroundColor: "#fff",
   },
   item: {
     flex: 1,
-    marginTop: 20,
+    marginBottom: 10,
   },
 });

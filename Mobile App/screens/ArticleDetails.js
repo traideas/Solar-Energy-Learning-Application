@@ -6,7 +6,6 @@ import { WebView } from "react-native-webview";
 
 export default ArticleDetails = ({ route }) => {
   const { title, description, file } = route.params;
-  //console.log(file);
   const [pdfUrl, setPdfUrl] = useState("");
   useEffect(() => {
     setPdfUrl(file);
@@ -18,13 +17,13 @@ export default ArticleDetails = ({ route }) => {
         <Text>{title}</Text>
         <Text>{description}</Text>
       </Block>
-      {/*  <WebView
+      <WebView
         scalesPageToFit={true}
         bounces={false}
         javaScriptEnabled
         source={{ pdfUrl }}
-        style={{ height: 500, width: 300 }}
-      /> */}
+        style={{ height: 300, width: 300 }}
+      />
     </Block>
   );
 };

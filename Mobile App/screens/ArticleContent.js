@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { ActivityIndicator, StyleSheet, TouchableOpacity } from "react-native";
-import { Block, Card, Text } from "galio-framework";
+import { Block, Card } from "galio-framework";
 import { FlatList } from "react-native-gesture-handler";
 import axios from "axios";
+import configData from '../services/configData.json'
 
 const SlideCard = ({ item, onPress }) => {
-  const { title, upload_date, photo } = item;
+  const { title, upload_date, photo, created_by } = item;
   return (
     <TouchableOpacity onPress={onPress} style={styles.item}>
-      <Card title={title} avatar="http://i.pravatar.cc/100?id=skater" caption={upload_date} />
+      <Card
+        title={title} image={photo} avatar={created_by.photo} caption={upload_date}
+      />
     </TouchableOpacity>
   );
 };
@@ -19,7 +22,7 @@ export default ArticleContent = ({ navigation }) => {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/document/")
+      .get(configData.SERVER_URL + "document/")
       .then(({ data }) => {
         setDATA(data);
       })
@@ -60,7 +63,6 @@ const styles = StyleSheet.create({
   },
   item: {
     flex: 1,
-    marginTop: 20,
-    marginBottom: 20,
+    marginBottom: 10,
   },
 });
