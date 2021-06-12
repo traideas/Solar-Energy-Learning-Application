@@ -148,8 +148,34 @@ function DrawerStack(props) {
         }}
       />
       {/* Fix Profile First than add the route in drawer */}
-      {/* <Drawer.Screen name="Profile" component={Profile} /> */}
+      <Drawer.Screen name="Profile" component={ProfileStack} />
     </Drawer.Navigator>
+  );
+}
+
+function ProfileStack(props) {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: "#4f63f9",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          width: "100%",
+          fontWeight: "bold",
+        },
+        headerTitleAlign: "center",
+      }}
+    >
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          title: "Profile",
+        }}
+      />
+    </Stack.Navigator>
   );
 }
 
@@ -185,7 +211,7 @@ function HomeStack(props) {
         },
         headerTintColor: "#fff",
         headerTitleStyle: {
-          width: '100%',
+          width: "100%",
           fontWeight: "bold",
         },
         headerTitleAlign: "center",

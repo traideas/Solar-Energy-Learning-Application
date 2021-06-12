@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import {
   StyleSheet,
   Dimensions,
@@ -11,7 +11,7 @@ import { Block, Text, theme, Card } from "galio-framework";
 
 import Images from "../constants/Images";
 import Icon from "../components/Icon";
-import argonTheme from '../constants/Theme'
+import argonTheme from "../constants/Theme";
 
 const { width } = Dimensions.get("screen");
 
@@ -22,7 +22,7 @@ export default Home = ({ navigation, back, scene }) => {
       : navigation.openDrawer();
   };
   const [count, setCount] = React.useState(0);
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
         <Icon
