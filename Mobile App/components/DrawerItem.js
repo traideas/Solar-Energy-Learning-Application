@@ -106,8 +106,8 @@ class DrawerItem extends React.Component {
         onPress={() =>
           title == "Log out"
             ? AsyncStorage.removeItem("user_id").then(() =>
-                navigation.navigate("Onboarding")
-              )
+              navigation.navigate("Onboarding")
+            )
             : navigation.navigate(title)
         }
       >

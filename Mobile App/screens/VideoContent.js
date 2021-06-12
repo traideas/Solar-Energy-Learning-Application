@@ -4,13 +4,15 @@ import { Block, Card } from "galio-framework";
 
 import { FlatList } from "react-native-gesture-handler";
 import axios from "axios";
-import Images from "../constants/Images";
+import configData from '../services/configData.json'
+
 const VideoCard = ({ item, onPress }) => {
-  const { title, upload_date, photo } = item;
+  const { title, upload_date, photo, created_by } = item;
   return (
     <TouchableOpacity onPress={onPress} style={styles.item}>
       <Card
-        title={title} image={photo} avatar="http://i.pravatar.cc/100?id=skater" caption={upload_date} />
+        title={title} image={photo} avatar={created_by.photo} caption={upload_date}
+      />
     </TouchableOpacity>
   );
 };
@@ -21,7 +23,7 @@ export default VideoContent = ({ navigation }) => {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/video/")
+      .get(configData.SERVER_URL + "video/")
       .then(({ data }) => {
         setDATA(data);
       })
@@ -62,8 +64,7 @@ const styles = StyleSheet.create({
   },
   item: {
     flex: 1,
-    marginTop: 20,
-    marginBottom: 20,
+    marginBottom: 10,
   },
 
 
