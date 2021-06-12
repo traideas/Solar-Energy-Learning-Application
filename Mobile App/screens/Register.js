@@ -25,7 +25,7 @@ const DismissKeyboard = ({ children }) => (
 );
 
 const Register = ({ navigation }) => {
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit, reset } = useForm();
   const onSubmit = ({
     username,
     password,
@@ -46,7 +46,10 @@ const Register = ({ navigation }) => {
         school_roll,
         birth_date,
       })
-      .then((res) => Alert.alert("Congratulations!", "Account Created Successfully."))
+      .then((res) => {
+        Alert.alert("Congratulations!", "Account Created Successfully.")
+        reset()
+      })
       .catch((err) => Alert.alert("Registration Failed!", "Please Try Again."));
   };
   return (
