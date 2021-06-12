@@ -1,23 +1,22 @@
-import React, { useState, createRef, useEffect } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   StyleSheet,
   ImageBackground,
   Dimensions,
-  StatusBar,
   KeyboardAvoidingView,
   TouchableHighlight,
   Alert,
   AsyncStorage,
 } from "react-native";
-import { Block, Checkbox, Text, theme } from "galio-framework";
+import { Block, Text } from "galio-framework";
 
 import Button from "../components/Button";
 import Input from "../components/Input";
 import Icon from "../components/Icon";
 import { Images, argonTheme } from "../constants";
 import axios from "axios";
-
+import configData from '../services/configData.json'
 const { width, height } = Dimensions.get("screen");
 
 export default Login = ({ navigation }) => {
@@ -28,21 +27,18 @@ export default Login = ({ navigation }) => {
 
   const onSubmit = (e) => {
     setLoading(true)
-    axios.post("http://127.0.0.1:8000/api/auth/", e)
+    axios.post(configData.SERVER_URL + "api/auth/", e)
       .then(({ data }) => {
         AsyncStorage.setItem('user_id', JSON.stringify(data.user_id))
         navigation.replace('HomeRoute')
       })
       .catch(err => {
-        Alert.alert("Login Failed!")
+        Alert.alert("Login Failed !", "Please Try Again.")
         console.log(err)
       })
   };
   const onPressRegister = () => {
     navigation.push("Register");
-    // Check if Stored in AsyncStorage
-    /* AsyncStorage.getItem('user_id')
-    .then(val => console.log(val)) */
   };
   return (
     <Block flex middle>
@@ -54,8 +50,8 @@ export default Login = ({ navigation }) => {
           <Block style={styles.registerContainer}>
             <Block flex>
               <Block flex={0.17} middle style={{ marginTop: 15, marginBottom: 15 }}>
-                <Text color="#8898AA" size={30}>
-                  Login
+                <Text color="#8898AA" size={25}>
+                  Login to MyREL
                 </Text>
               </Block>
               <Block flex center>
@@ -111,8 +107,8 @@ export default Login = ({ navigation }) => {
                     </Button>
                   </Block>
                   <Block middle style={{ paddingTop: 20 }}>
-                    <TouchableHighlight onPress={onPressRegister}>
-                      <Text>Register If you dont Have an account</Text>
+                    <TouchableHighlight onPress={onPressRegister} underlayColor='transparent'>
+                      <Text color="#8898AA">If you don't have an account, <Text bold color="blue">Register Here</Text></Text>
                     </TouchableHighlight>
                   </Block>
                 </KeyboardAvoidingView>
