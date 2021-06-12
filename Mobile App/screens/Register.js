@@ -46,8 +46,8 @@ const Register = ({ navigation }) => {
         school_roll,
         birth_date,
       })
-      .then((res) => Alert.alert("Registration Successful"))
-      .catch((err) => console.log(err));
+      .then((res) => Alert.alert("Registration is done Successfully!"))
+      .catch((err) => Alert.alert("Registration Failed!", "Please Try Again!"));
   };
   return (
     <DismissKeyboard>
@@ -174,32 +174,35 @@ const Register = ({ navigation }) => {
                           />
                         </Block>
                       </Block>
-                    </Block>
-                    <Block flex={0.2} middle>
-                      <Block center>
-                        <Button
-                          color="primary"
-                          style={styles.createButton}
-                          onPress={handleSubmit(onSubmit)}
-                        >
-                          <Text
-                            style={{ fontFamily: "open-sans-bold" }}
-                            size={14}
-                            color={argonTheme.COLORS.WHITE}
+                      <Block middle>
+                        <Block center>
+                          <Button
+                            color="primary"
+                            style={styles.createButton}
+                            onPress={handleSubmit(onSubmit)}
                           >
-                            CREATE ACCOUNT
-                          </Text>
-                        </Button>
+                            <Text
+                              style={{ fontFamily: "open-sans-bold" }}
+                              size={14}
+                              color={argonTheme.COLORS.WHITE}
+                            >
+                              CREATE ACCOUNT
+                            </Text>
+                          </Button>
+                        </Block>
                       </Block>
+                      <Block middle>
+                        <TouchableHighlight
+                          onPress={() => navigation.navigate("Login")}
+                        >
+                          <Text>Login If you already have an account</Text>
+                        </TouchableHighlight>
+                      </Block>
+
                     </Block>
+
                   </Block>
-                  <Block middle style={{ paddingTop: 20 }}>
-                    <TouchableHighlight
-                      onPress={() => navigation.navigate("Login")}
-                    >
-                      <Text>Login If you already have an account</Text>
-                    </TouchableHighlight>
-                  </Block>
+
                 </Block>
               </Block>
             </Block>
@@ -213,7 +216,7 @@ const Register = ({ navigation }) => {
 const styles = StyleSheet.create({
   registerContainer: {
     width: width * 0.9,
-    height: height < 812 ? height * 0.9 : height * 0.8,
+    height: height * 0.75,
     backgroundColor: "#F4F5F7",
     borderRadius: 4,
     shadowColor: argonTheme.COLORS.BLACK,
