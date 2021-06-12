@@ -308,7 +308,7 @@ function QuizStack() {
         name="Quiz"
         component={Quiz}
         options={{
-          title: "All Quiz",
+          title: "Quizs",
         }}
       />
       <Stack.Screen
@@ -339,7 +339,7 @@ function DiscussionStack() {
       <Stack.Screen
         name="DiscussionContainer"
         options={{
-          title: "All Discussions",
+          title: "Discussions",
         }}
         component={DiscussionContainer}
       />
