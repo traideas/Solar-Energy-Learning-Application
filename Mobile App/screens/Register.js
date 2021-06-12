@@ -15,7 +15,7 @@ import { Block, Checkbox, Text, theme } from "galio-framework";
 
 import { Button, Icon, Input } from "../components";
 import { Images, argonTheme } from "../constants";
-
+import configData from '../services/configData.json'
 const { width, height } = Dimensions.get("screen");
 
 const DismissKeyboard = ({ children }) => (
@@ -34,7 +34,7 @@ const Register = ({ navigation }) => {
     birth_date,
   }) => {
     axios
-      .post("http://127.0.0.1:8000/student/", {
+      .post(configData.SERVER_URL + "student/", {
         user: {
           username,
           password,
@@ -46,8 +46,8 @@ const Register = ({ navigation }) => {
         school_roll,
         birth_date,
       })
-      .then((res) => Alert.alert("Registration is done Successfully!"))
-      .catch((err) => Alert.alert("Registration Failed!", "Please Try Again!"));
+      .then((res) => Alert.alert("Congratulations!", "Account Created Successfully."))
+      .catch((err) => Alert.alert("Registration Failed!", "Please Try Again."));
   };
   return (
     <DismissKeyboard>
@@ -66,10 +66,11 @@ const Register = ({ navigation }) => {
                         fontFamily: "open-sans-regular",
                         textAlign: "center",
                       }}
+                      bold
                       color="#8898AA"
-                      size={12}
+                      size={20}
                     >
-                      Sign Up For MyRel
+                      Sign Up For MyREL
                     </Text>
                   </Block>
                   <Block center flex={0.9}>
@@ -78,13 +79,13 @@ const Register = ({ navigation }) => {
                         <Block width={width * 0.8} style={{ marginBottom: 5 }}>
                           <Input
                             borderless
-                            placeholder="User Name"
+                            placeholder="Username"
                             iconContent={
                               <Icon
                                 size={16}
                                 color="#ADB5BD"
-                                name="hat-3"
-                                family="ArgonExtra"
+                                name="fingerprint"
+                                family="entypo"
                                 style={styles.inputIcons}
                               />
                             }
@@ -95,6 +96,7 @@ const Register = ({ navigation }) => {
                         <Block width={width * 0.8} style={{ marginBottom: 5 }}>
                           <Input
                             borderless
+                            email
                             placeholder="Email"
                             iconContent={
                               <Icon
@@ -147,7 +149,7 @@ const Register = ({ navigation }) => {
                               <Icon
                                 size={16}
                                 color="#ADB5BD"
-                                name="ic_mail_24px"
+                                name="hat-3"
                                 family="ArgonExtra"
                                 style={styles.inputIcons}
                               />
@@ -164,7 +166,7 @@ const Register = ({ navigation }) => {
                               <Icon
                                 size={16}
                                 color="#ADB5BD"
-                                name="ic_mail_24px"
+                                name="hat-3"
                                 family="ArgonExtra"
                                 style={styles.inputIcons}
                               />
@@ -193,9 +195,9 @@ const Register = ({ navigation }) => {
                       </Block>
                       <Block middle>
                         <TouchableHighlight
-                          onPress={() => navigation.navigate("Login")}
+                          onPress={() => navigation.navigate("Login")} underlayColor='transparent'
                         >
-                          <Text>Login If you already have an account</Text>
+                          <Text color="#8898AA"><Text bold color="blue">Login</Text> if you already have an account</Text>
                         </TouchableHighlight>
                       </Block>
 

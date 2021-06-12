@@ -33,7 +33,7 @@ export default Login = ({ navigation }) => {
         navigation.replace('HomeRoute')
       })
       .catch(err => {
-        Alert.alert("Login Failed !", "Please Try Again.")
+        Alert.alert("Login Failed!", "Please Try Again.")
         console.log(err)
       })
   };
@@ -50,7 +50,7 @@ export default Login = ({ navigation }) => {
           <Block style={styles.registerContainer}>
             <Block flex>
               <Block flex={0.17} middle style={{ marginTop: 15, marginBottom: 15 }}>
-                <Text color="#8898AA" size={25}>
+                <Text bold color="#8898AA" size={20}>
                   Login to MyREL
                 </Text>
               </Block>
@@ -68,8 +68,8 @@ export default Login = ({ navigation }) => {
                         <Icon
                           size={16}
                           color={argonTheme.COLORS.ICON}
-                          name="ic_mail_24px"
-                          family="ArgonExtra"
+                          name="fingerprint"
+                          family="entypo"
                           style={styles.inputIcons}
                         />
                       }
