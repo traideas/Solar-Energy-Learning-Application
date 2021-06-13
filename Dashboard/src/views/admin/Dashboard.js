@@ -19,12 +19,12 @@ import Typography from "@material-ui/core/Typography";
 // @material-ui/icons components
 import Avatar from "@material-ui/core/Avatar";
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import Icon from '@material-ui/core/Icon';
 import Tooltip from "@material-ui/core/Tooltip";
 // core components
 import Header from "components/Headers/Header.js";
 import componentStyles from "assets/theme/views/admin/dashboard.js";
 
+import configData from '../../configData.json'
 //Api Services
 import ApiService from "../../services/api.service";
 
@@ -95,7 +95,7 @@ function Dashboard() {
                             size="small"
                           >
                             Create New
-                        </Button>
+                          </Button>
                         </Link>
                       </Box>
                     </Grid>
@@ -213,7 +213,7 @@ function Dashboard() {
                               <Avatar
                                 classes={{ root: classes.avatarRoot }}
                                 alt="..."
-                                src={(list.created_by.photo == null) ? require("assets/img/theme/defaultImage.png").default : list.created_by.photo}
+                                src={(list.created_by.photo == configData.SERVER_URL + "media/") ? require("assets/img/theme/defaultImage.png").default : list.created_by.photo}
                               />
                             </Tooltip>
                           </TableCell>
@@ -224,7 +224,7 @@ function Dashboard() {
                             <Link to={"/admin/discussion/details/" + list.id} style={{ color: "gray" }}>
                               <Button variant="contained" size="small" color="primary">
                                 <Box component={VisibilityIcon} position="relative" top="2px" />{" "}
-                                  View
+                                View
                               </Button>
                             </Link>
                           </TableCell>

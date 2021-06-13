@@ -23,7 +23,7 @@ import Avatar from "@material-ui/core/Avatar";
 // core components
 import Header from "components/Headers/Header.js";
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import Icon from '@material-ui/core/Icon';
+import configData from '../../configData.json'
 import componentStyles from "assets/theme/views/admin/tables.js";
 
 //Api Services
@@ -62,7 +62,7 @@ const TableList = ({ list, index }) => {
           <Avatar
             classes={{ root: classes.avatarRoot }}
             alt="..."
-            src={(list.created_by.photo == null) ? require("assets/img/theme/defaultImage.png").default : list.created_by.photo}
+            src={(list.created_by.photo == configData.SERVER_URL + "media/") ? require("assets/img/theme/defaultImage.png").default : list.created_by.photo}
           />
         </Tooltip>
       </TableCell>
@@ -73,7 +73,7 @@ const TableList = ({ list, index }) => {
         <a href={list.file} target="_blank">
           <Button variant="contained" size="small" color="primary">
             <Box component={VisibilityIcon} position="relative" top="2px" />{" "}
-                  View
+            View
           </Button>
         </a>
       </TableCell>
@@ -128,7 +128,7 @@ const Slides = () => {
                       <Button variant="contained" color="primary" size="small"
                       >
                         Create New
-                    </Button>
+                      </Button>
                     </Link>
                   </Box>
                 </Grid>
