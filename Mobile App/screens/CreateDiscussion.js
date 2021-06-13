@@ -12,7 +12,7 @@ import configData from '../services/configData.json'
 export default CreateDiscussion = ({ navigation }) => {
   const { control, handleSubmit } = useForm();
   const onSubmit = ({ title, description }) => {
-    console.log(AsyncStorage.getItem('user_id'))
+    // console.log(AsyncStorage.getItem('user_id'))
     axios.post(configData.SERVER_URL + "discussion/", {
       "title": title,
       "description": description,

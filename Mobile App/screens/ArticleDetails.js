@@ -21,7 +21,7 @@ export default ArticleDetails = ({ route }) => {
         scalesPageToFit={true}
         bounces={false}
         javaScriptEnabled
-        source={{ pdfUrl }}
+        source={{ uri: pdfUrl }}
         style={{ height: 300, width: 300 }}
       />
     </Block>
