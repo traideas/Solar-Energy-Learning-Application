@@ -20,7 +20,7 @@ import Grid from "@material-ui/core/Grid";
 // core components
 import Header from "components/Headers/Header.js";
 import componentStyles from "assets/theme/views/admin/profile.js";
-
+import configData from '../../configData.json'
 import ApiService from '../../services/api.service'
 import AuthService from '../../services/auth.service'
 import swal from "sweetalert";
@@ -48,7 +48,7 @@ const CommentList = ({ list }) => {
                             <Avatar
                                 classes={{ root: classes.avatarRoot }}
                                 alt="..."
-                                src={(list.created_by.photo == null) ? require("assets/img/theme/defaultImage.png").default : list.created_by.photo}
+                                src={(list.created_by.photo == configData.SERVER_URL + "media/") ? require("assets/img/theme/defaultImage.png").default : list.created_by.photo}
                             />
                         </Tooltip>
                     </Grid>
@@ -138,7 +138,7 @@ function CreateDiscussion() {
                                         <Avatar
                                             classes={{ root: classes.avatarRoot }}
                                             alt="..."
-                                            src={(created_by.photo == null) ? require("assets/img/theme/defaultImage.png").default : created_by.photo}
+                                            src={(created_by.photo == configData.SERVER_URL + "media/") ? require("assets/img/theme/defaultImage.png").default : created_by.photo}
                                         />
                                     </Tooltip>
                                 </Grid>
@@ -187,7 +187,7 @@ function CreateDiscussion() {
                                 type="submit"
                             >
                                 Comment
-                                </Button>
+                            </Button>
 
                         </form>
                     </CardActions>

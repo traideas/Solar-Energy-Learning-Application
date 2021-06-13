@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   },
   item: {
     flex: 1,
-    marginTop: 20,
+    marginBottom: 10,
   },
 });
 

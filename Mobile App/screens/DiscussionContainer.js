@@ -11,10 +11,10 @@ import configData from '../services/configData.json'
 
 
 const Discussion = ({ item, onPress }) => {
-  const { title, description, comments, created_by } = item;
+  const { title, description, created_by } = item;
   return (
     <TouchableOpacity style={styles.item} onPress={onPress}>
-      <Card title={title} caption={description.substring(0, 80) + "....."} avatar={created_by.photo} />
+      <Card title={title} caption={description.substring(0, 80) + "....."} avatar={(created_by.photo == configData.SERVER_URL + "media/" ? "https://i.imgur.com/36HNnQ2.png" : created_by.photo)} />
 
     </TouchableOpacity>
   );

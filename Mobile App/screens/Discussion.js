@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { StyleSheet, Image, ScrollView, } from "react-native";
+import { StyleSheet, Image, ScrollView, AsyncStorage, Alert } from "react-native";
 import { Block, Text, Button } from "galio-framework";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import Input from '../components/Input'
 import configData from '../services/configData.json'
+import AuthService from "../services/auth.service";
 
 export default Discussion = ({ route }) => {
   const { title, description, comments, id, created_date, created_by } = route.params;
@@ -13,9 +14,7 @@ export default Discussion = ({ route }) => {
   const { control, handleSubmit, reset } = useForm();
 
   const renderComments = allComments.map((comment, index) => (
-    /*  <Text key={index} style={{ margin: 10 }}>
-       {comment.comment}
-     </Text> */
+
     <Block key={index}>
       <Block style={styles.commentContainer}>
         <Text>{comment.comment}</Text>
@@ -24,9 +23,9 @@ export default Discussion = ({ route }) => {
             flexDirection: "row",
             flexWrap: "wrap",
           }}>
-            <Image source={{ uri: comment.created_by.photo }} style={{ width: 35, height: 35, borderRadius: 5 }} />
+            <Image source={{ uri: (comment.created_by.photo == configData.SERVER_URL + "media/" ? "https://i.imgur.com/36HNnQ2.png" : comment.created_by.photo) }} style={{ width: 35, height: 35, borderRadius: 5 }} />
             <Block style={{ marginLeft: 5, marginTop: -2 }}>
-              <Text>{comment.created_by.name} </Text>
+              <Text>{comment.created_by.name == " " ? " " : comment.created_by.name} </Text>
               <Text style={{ color: "gray" }}>{comment.created_date}</Text>
             </Block>
           </Block>
@@ -36,18 +35,26 @@ export default Discussion = ({ route }) => {
     </Block>
   ));
 
+  const [userID, setUserID] = useState();
+  AuthService.displayData().then((val) => setUserID(val));
   const onSubmit = ({ comment }) => {
+    console.log(comment)
     axios
       .post(configData.SERVER_URL + "comment/", {
-        comment: comment,
-        discussion: id,
-        created_by: 1,
+        "comment": comment,
+        "discussion": id,
+        "created_by": userID,
       })
       .then((res) => {
-        setAllComments(prevState => [...prevState, { comment: comment }])
+
         reset()
+        Alert.alert("Great", "Comment Added Successfully!")
+        //setAllComments(prevState => [...prevState, { comment: comment }])
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        Alert.alert("Failed!", "Please Try Again.")
+        console.log(err)
+      });
   };
 
   return (
@@ -60,7 +67,7 @@ export default Discussion = ({ route }) => {
             flexDirection: "row",
             flexWrap: "wrap",
           }}>
-            <Image source={{ uri: created_by.photo }} style={{ width: 35, height: 35, borderRadius: 5 }} />
+            <Image source={{ uri: (created_by.photo == configData.SERVER_URL + "media/" ? "https://i.imgur.com/36HNnQ2.png" : created_by.photo) }} style={{ width: 35, height: 35, borderRadius: 5 }} />
             <Block style={{ marginLeft: 5, marginTop: -2 }}>
               <Text>{created_by.name} </Text>
               <Text style={{ color: "gray" }}>{created_date}</Text>
