@@ -3,7 +3,21 @@ import { StyleSheet, Dimensions } from "react-native";
 import { Block, Text } from "galio-framework";
 
 export default VideoDetail = ({ route }) => {
-  const { title, description } = route.params;
+  const [details, setDetails] = useState({
+    created_by: {
+      name: "",
+      photo: ""
+    },
+    description: "",
+    file: "",
+    id: "",
+    material_type: "",
+    photo: "",
+    status: true,
+    title: "",
+    upload_date: ""
+  })
+  const { title, description, file, photo, upload_date, created_by } = route.params;
   /* // console.log(file);
   const [videoUrl, setVideoUrl] = useState("")
   useEffect(() => {
