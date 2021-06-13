@@ -14,24 +14,26 @@ export default VideoDetail = ({ route }) => {
   const { width } = Dimensions.get("window");
   return (
     <Block style={styles.container}>
-      <Text p>{title}</Text>
-      <Block>
-        <Video
-          ref={video}
-          source={{
-            uri: videoUrl,
-          }}
-          shouldPlay
-          resizeMode="cover"
-          style={{ height: 300 }}
-          useNativeControls
-          resizeMode="contain"
-          isLooping
-        />
-        <Text style={{ marginBottom: 10 }}>
-          {description}
-        </Text>
-      </Block>
+      <Text style={{ marginBottom: 10 }} p>{title}</Text>
+
+      <Video
+        ref={video}
+        source={{
+          uri: videoUrl,
+        }}
+        shouldPlay
+        resizeMode="cover"
+
+        useNativeControls
+        resizeMode="contain"
+        isLooping
+        style={styles.backgroundVideo}
+      />
+
+
+      <Text style={{ marginBottom: 10, marginTop: 10 }}>
+        {description}
+      </Text>
     </Block>
   );
 };
@@ -41,11 +43,12 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   backgroundVideo: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
+    borderRadius: 5,
+    borderWidth: 1,
+    height: 300,
+    borderColor: "lightgray",
+    backgroundColor: "white",
+    padding: 5
   },
   controlBar: {
     position: "absolute",

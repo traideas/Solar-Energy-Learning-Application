@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Alert, StyleSheet, TouchableOpacity, Image, Dimensions } from "react-native";
+import { Alert, StyleSheet, TouchableOpacity, Image, Dimensions, ScrollView } from "react-native";
 import { Block, Button, Text, theme } from "galio-framework";
 import { FlatList } from "react-native-gesture-handler";
 import { block } from "react-native-reanimated";
@@ -29,12 +29,12 @@ export default QuizDetails = ({ navigation, route }) => {
   };
   const onSubmitAnswer = () => {
     if (selectedOption === quizQuestions[currentQuestion].answer) {
-      Alert.alert("Correct Answer");
+      Alert.alert("Great!", "Your Answer Is Correct");
       setScore(score + 1);
     } else {
       Alert.alert(
-        "Opps, correct answer is: \n",
-        getCorrectAnswer(quizQuestions[currentQuestion].answer)
+        "Opps! Wrong Answer",
+        "Correct answer is: " + getCorrectAnswer(quizQuestions[currentQuestion].answer)
       );
     }
     const nextQuestion = currentQuestion + 1;
@@ -44,20 +44,20 @@ export default QuizDetails = ({ navigation, route }) => {
     } else setShowScore(true);
   };
   return (
-    <Block style={styles.container}>
+    <ScrollView style={styles.container}>
       {startQuiz ? null : (
         <>
 
           <Block style={{ alignItems: "center", }}>
             <Image
-              source={{ uri: photo }}
-              style={{ height: 250, width: width - theme.SIZES.BASE * 2, }}
+              source={{ uri: (photo == null ? "https://i.imgur.com/CSigznj.png" : photo) }}
+              style={{ height: 350, width: width - theme.SIZES.BASE * 2, }}
             >
             </Image>
 
           </Block>
           <Block style={{ marginTop: 30 }}>
-            <Text h5>{title}</Text>
+            <Text h6>{title}</Text>
             <Text p style={{ marginTop: 10 }}>{description}</Text>
           </Block>
 
@@ -81,7 +81,7 @@ export default QuizDetails = ({ navigation, route }) => {
           ) : (
             <Block>
               <Block style={styles.question}>
-                <Text p>{quizQuestions[currentQuestion].question}</Text>
+                <Text p>Q. {quizQuestions[currentQuestion].question}</Text>
               </Block>
               <Block style={styles.optionsContainer}>
                 <TouchableOpacity onPress={() => setSelectedOption(1)}>
@@ -165,7 +165,7 @@ export default QuizDetails = ({ navigation, route }) => {
 
         )}
       </Block>
-    </Block>
+    </ScrollView>
   );
 };
 
