@@ -6,11 +6,11 @@ import axios from "axios";
 import configData from '../services/configData.json'
 
 const SlideCard = ({ item, onPress }) => {
-  const { title, upload_date, photo, created_by } = item;
+  const { title, description, photo, created_by } = item;
   return (
     <TouchableOpacity onPress={onPress} style={styles.item}>
       <Card
-        title={title} image={photo} avatar={(created_by.photo == configData.SERVER_URL + "media/" ? "https://i.imgur.com/36HNnQ2.png" : created_by.photo)} caption={upload_date}
+        title={title} image={photo} avatar={(created_by.photo == configData.SERVER_URL + "media/" ? "https://i.imgur.com/36HNnQ2.png" : created_by.photo)} caption={description.substring(0, 80) + "....."}
       />
     </TouchableOpacity>
   );

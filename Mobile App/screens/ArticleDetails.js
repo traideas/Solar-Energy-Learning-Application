@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Dimensions } from "react-native";
 import { Block, Text } from "galio-framework";
-import { WebView } from "react-native-webview";
+
 
 
 export default ArticleDetails = ({ route }) => {
@@ -12,7 +12,7 @@ export default ArticleDetails = ({ route }) => {
   }, []);
   const { width } = Dimensions.get("window");
   return (
-    <Block style={styles.container}>
+    /* <Block style={styles.container}>
       <Block>
         <Text>{title}</Text>
         <Text>{description}</Text>
@@ -24,16 +24,20 @@ export default ArticleDetails = ({ route }) => {
         source={{ uri: pdfUrl }}
         style={{ height: 300, width: 300 }}
       />
+    </Block> */
+
+    <Block style={styles.container}>
+      <Text style={{ marginBottom: 10 }} p>{title}</Text>
+      <Text style={{ marginBottom: 10 }}>
+        {description}
+      </Text>
     </Block>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "flex-start",
-    alignItems: "center",
-    marginTop: 25,
+    padding: 20,
   },
   pdf: {
     flex: 1,
