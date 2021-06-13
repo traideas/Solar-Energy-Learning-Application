@@ -23,9 +23,9 @@ export default Discussion = ({ route }) => {
             flexDirection: "row",
             flexWrap: "wrap",
           }}>
-            <Image source={{ uri: comment.created_by.photo }} style={{ width: 35, height: 35, borderRadius: 5 }} />
+            <Image source={{ uri: (comment.created_by.photo == configData.SERVER_URL + "media/" ? "https://i.imgur.com/36HNnQ2.png" : comment.created_by.photo) }} style={{ width: 35, height: 35, borderRadius: 5 }} />
             <Block style={{ marginLeft: 5, marginTop: -2 }}>
-              <Text>{comment.created_by.name} </Text>
+              <Text>{comment.created_by.name == " " ? " " : comment.created_by.name} </Text>
               <Text style={{ color: "gray" }}>{comment.created_date}</Text>
             </Block>
           </Block>
@@ -46,9 +46,10 @@ export default Discussion = ({ route }) => {
         "created_by": userID,
       })
       .then((res) => {
-        setAllComments(prevState => [...prevState, { comment: comment }])
+
         reset()
-        Alert.alert("Great", "Comment Created Successfully!")
+        Alert.alert("Great", "Comment Added Successfully!")
+        //setAllComments(prevState => [...prevState, { comment: comment }])
       })
       .catch((err) => {
         Alert.alert("Failed!", "Please Try Again.")
@@ -66,7 +67,7 @@ export default Discussion = ({ route }) => {
             flexDirection: "row",
             flexWrap: "wrap",
           }}>
-            <Image source={{ uri: (created_by.photo === "http://127.0.0.1:8000/media/" ? "https://imgur.com/a/ZZhqrXz" : created_by.photo) }} style={{ width: 35, height: 35, borderRadius: 5 }} />
+            <Image source={{ uri: (created_by.photo == configData.SERVER_URL + "media/" ? "https://i.imgur.com/36HNnQ2.png" : created_by.photo) }} style={{ width: 35, height: 35, borderRadius: 5 }} />
             <Block style={{ marginLeft: 5, marginTop: -2 }}>
               <Text>{created_by.name} </Text>
               <Text style={{ color: "gray" }}>{created_date}</Text>
