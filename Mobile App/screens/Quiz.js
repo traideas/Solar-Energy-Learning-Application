@@ -6,14 +6,15 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
-import { Block, Card, Text } from "galio-framework";
+import { Block, Card } from "galio-framework";
 import axios from 'axios'
+import configData from '../services/configData.json'
 
 const QuizItem = ({ item, onPress }) => {
   const { title, description, photo } = item;
   return (
     <TouchableOpacity onPress={onPress} style={styles.item}>
-      <Card title={title} caption={description} avatar={photo} />
+      <Card title={title} caption={description.substring(0, 80) + "....."} avatar={"https://i.imgur.com/UqMV65B.png"} />
     </TouchableOpacity>
   );
 };
@@ -25,7 +26,7 @@ const Quiz = ({ navigation }) => {
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       axios
-        .get("http://127.0.0.1:8000/quiz/")
+        .get(configData.SERVER_URL + "quiz/")
         .then(({ data }) => {
           setDATA(data);
         })
