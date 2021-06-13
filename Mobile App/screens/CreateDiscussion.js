@@ -1,29 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   AsyncStorage,
-  TextInput
+  Alert,
 } from "react-native";
 import { Block, Button } from "galio-framework";
 import axios from "axios";
 import Input from "../components/Input";
 import { useForm } from "react-hook-form";
 import configData from '../services/configData.json'
+import AuthService from "../services/auth.service";
+
+
 export default CreateDiscussion = ({ navigation }) => {
   const { control, handleSubmit } = useForm();
+  const [userID, setUserID] = useState();
+  AuthService.displayData().then((val) => setUserID(val));
   const onSubmit = ({ title, description }) => {
-    // console.log(AsyncStorage.getItem('user_id'))
     axios.post(configData.SERVER_URL + "discussion/", {
       "title": title,
       "description": description,
-      "created_by": AsyncStorage.getItem('user_id'),
+      "created_by": userID,
     })
       .then(res => {
-        console.log("Discussion Created Successfully")
+        Alert.alert("Great", "Discussion Created Successfully!")
         navigation.goBack()
       })
       .catch(err => {
-        console.log("Failed to Create Discussion")
+        Alert.alert("Failed!", "Please Try Again.")
       })
   }
   return (
