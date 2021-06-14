@@ -25,8 +25,8 @@ function CustomDrawerContent({
   const insets = useSafeArea();
   const screens = [
     "Home",
-    "Video",
     /* 
+    "Video",
     "Quiz",
     "Article",
     "Slide",
