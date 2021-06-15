@@ -38,7 +38,6 @@ export default ArticleContent = ({ navigation }) => {
   };
   return (
     <Block style={styles.container}>
-
       {isLoading ? (
         <ActivityIndicator />
       ) : (

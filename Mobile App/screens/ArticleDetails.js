@@ -1,47 +1,35 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Dimensions } from "react-native";
-import { Block, Text } from "galio-framework";
-
-
+import { StyleSheet, Dimensions, ScrollView, View, ActivityIndicator } from "react-native";
+import { Block, Text, Button } from "galio-framework";
+import { WebView } from "react-native-webview";
+import PDFReader from "rn-pdf-reader-js"
+// import { Constants, FileSystem } from "expo";
+// import * as FileSystem from "expo-file-system";
 
 export default ArticleDetails = ({ route }) => {
   const { title, description, file } = route.params;
-  const [pdfUrl, setPdfUrl] = useState("");
-  useEffect(() => {
-    setPdfUrl(file);
-  }, []);
-  const { width } = Dimensions.get("window");
-  return (
-    /* <Block style={styles.container}>
-      <Block>
-        <Text>{title}</Text>
-        <Text>{description}</Text>
-      </Block>
-      <WebView
-        scalesPageToFit={true}
-        bounces={false}
-        javaScriptEnabled
-        source={{ uri: pdfUrl }}
-        style={{ height: 300, width: 300 }}
-      />
-    </Block> */
 
-    <Block style={styles.container}>
-      <Text style={{ marginBottom: 10 }} p>{title}</Text>
-      <Text style={{ marginBottom: 10 }}>
-        {description}
-      </Text>
-    </Block>
+  return (
+    <View style={styles.container}>
+      <PDFReader
+        style={{
+          width: Dimensions.get("window").width,
+          height: Dimensions.get("window").height
+        }}
+        source={{
+          uri: file,
+        }}
+        noLoader={{ ActivityIndicator: true }}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
-  },
-  pdf: {
     flex: 1,
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
