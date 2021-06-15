@@ -149,6 +149,7 @@ function DrawerStack(props) {
       />
       {/* Fix Profile First than add the route in drawer */}
       <Drawer.Screen name="Profile" component={ProfileStack} />
+      {/* <Drawer.Screen name="Video" component={VideoStack} /> */}
     </Drawer.Navigator>
   );
 }

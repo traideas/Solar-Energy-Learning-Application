@@ -1,3 +1,4 @@
+import 'react-native-get-random-values';
 import "react-native-gesture-handler";
 import React, { useEffect } from "react";
 import * as Font from 'expo-font';

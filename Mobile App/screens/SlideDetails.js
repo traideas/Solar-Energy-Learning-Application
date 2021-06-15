@@ -1,27 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, ScrollView, View } from "react-native";
 import { Block, Text } from "galio-framework";
+import { WebView } from "react-native-webview";
+import PDFReader from "rn-pdf-reader-js"
 
 export default VideoDetail = ({ route }) => {
-  const { title, description } = route.params;
-  /* // console.log(file);
-  const [videoUrl, setVideoUrl] = useState("")
-  useEffect(() => {
-      setVideoUrl(file)
-  }, []) */
+  const { title, description, file, photo, upload_date, created_by } =
+    route.params;
   const { width } = Dimensions.get("window");
   return (
-    <Block style={styles.container}>
-      <Text h4>{title}</Text>
-      <Text italic style={{ marginBottom: 10 }}>
-        {description}
-      </Text>
-    </Block>
+    <View style={styles.container}>
+      <PDFReader
+        style={{
+          width: Dimensions.get("window").width,
+          height: Dimensions.get("window").height
+        }}
+        source={{
+          uri: file,
+        }}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
