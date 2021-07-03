@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Dimensions, ScrollView, View } from "react-native";
+import { StyleSheet, Dimensions, ScrollView, View, ActivityIndicator } from "react-native";
 import { Block, Text, Button } from "galio-framework";
 import { WebView } from "react-native-webview";
 import PDFReader from "rn-pdf-reader-js"
@@ -19,6 +19,7 @@ export default ArticleDetails = ({ route }) => {
         source={{
           uri: file,
         }}
+        noLoader={{ActivityIndicator: true}}
       />
     </View>
   );
