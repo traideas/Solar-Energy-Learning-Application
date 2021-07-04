@@ -3,7 +3,6 @@ import Dashboard from "views/admin/Dashboard.js";
 import Login from "views/auth/Login.js";
 import Profile from "views/admin/Profile.js";
 import Register from "views/auth/Register.js";
-import Tables from "views/admin/Tables.js";
 import Videos from "views/admin/Videos.js";
 import CreateVideos from "views/admin/CreateVideos";
 import Slides from "views/admin/Slides";
@@ -18,7 +17,6 @@ import InstructorList from "views/admin/InstructorList"
 
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import FlashOn from "@material-ui/icons/FlashOn";
-import FormatListBulleted from "@material-ui/icons/FormatListBulleted";
 import Person from "@material-ui/icons/Person";
 import VpnKey from "@material-ui/icons/VpnKey";
 import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
@@ -167,23 +165,5 @@ var routes = [
     component: CreateQuiz,
     layout: "/admin"
   },
-  /* {
-    href:
-      "https://www.creative-tim.com/learning-lab/material-ui/overview/argon-dashboard?ref=admui-admin-sidebar",
-    name: "Getting started",
-    icon: FlashOn,
-  },
-  {
-    href:
-      "https://www.creative-tim.com/learning-lab/material-ui/colors/argon-dashboard?ref=admui-admin-sidebar",
-    name: "Foundation",
-    icon: Palette,
-  },
-  {
-    href:
-      "https://www.creative-tim.com/learning-lab/material-ui/alerts/argon-dashboard?ref=admui-admin-sidebar",
-    name: "Components",
-    icon: Dns,
-  }, */
 ];
 export default routes;
