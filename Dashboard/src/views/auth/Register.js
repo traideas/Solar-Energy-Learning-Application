@@ -49,10 +49,9 @@ function Register() {
               color={theme.palette.gray[600]}
               textAlign="center"
               marginBottom="1.5rem"
-              marginTop=".5rem"
-              fontSize="1.2rem"
+              fontSize="1.3rem"
             >
-              <Box fontSize="80%" fontWeight="400" component="small">
+              <Box fontSize="80%" fontWeight="700" component="small">
                 Sign up with credentials
               </Box>
             </Box>

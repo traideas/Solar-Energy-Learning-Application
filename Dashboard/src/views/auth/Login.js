@@ -48,11 +48,10 @@ function Login({ history }) {
             <Box
               color={theme.palette.gray[600]}
               textAlign="center"
-              marginBottom="1rem"
-              marginTop=".5rem"
-              fontSize="1.2rem"
+              marginBottom="1.5rem"
+              fontSize="1.3rem"
             >
-              <Box fontSize="80%" fontWeight="400" component="small">
+              <Box fontSize="80%" fontWeight="700" component="small">
                 Sign in with credentials
               </Box>
             </Box>
@@ -116,25 +115,6 @@ function Login({ history }) {
 
           </CardContent>
         </Card>
-        <Grid container component={Box} marginTop="1rem">
-          <Grid item xs={6} component={Box} textAlign="left">
-            <a
-              href="#admui"
-              onClick={(e) => e.preventDefault()}
-              className={classes.footerLinks}
-            >
-              Forgot password
-            </a>
-          </Grid>
-          <Grid item xs={6} component={Box} textAlign="right">
-            <a
-              href="/auth/register"
-              className={classes.footerLinks}
-            >
-              Create new account
-            </a>
-          </Grid>
-        </Grid>
       </Grid>
     </>
   );
