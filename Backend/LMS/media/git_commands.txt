@@ -1,0 +1,67 @@
+for cloning a online github repository type 
+git clone url_of_thet_repository_copied_from_code_buttton_https
+
+
+
+
+# for creating .git file to your new project type
+git init
+# git init command will set a new git file to your loacl repository
+
+
+
+# for linking that local repository to your github repository type
+
+git remote add origin Url_of_the_remote_project
+
+# for syncing your remote repository to your github repository type
+git fetch
+
+
+# for checking your branch 
+git status
+
+
+# for creating a branch
+git checkout -b branch_name
+
+
+
+# for checking how many branch do you have
+git branch
+
+
+# for changing branch
+git checkout branch_name
+
+
+
+# after making any change in code if you want that code to your current branch type
+git add .
+git commit -m "write a meaning full comment"
+
+#these two commands will add all the changes to your branch
+
+
+# for pushing those change of local repository to github type
+git push origin branch_name
+
+
+# for pulling changes from a remote branch type
+
+git pull origin branch_name
+
+
+# for merging two branch 
+# first you have to access the branch or yours
+# then execute the merge command where you will mention the branch name which you want to 
+# merge with your own branch
+
+git checkout your_branch
+git merge others_branch
+
+
+# for go to the previous commited code  type
+git reset --hard
+
+

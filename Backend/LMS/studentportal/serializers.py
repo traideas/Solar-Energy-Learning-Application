@@ -56,12 +56,17 @@ class DiscussionSerializer(serializers.ModelSerializer):
     comments = CommentSerializer(many=True, read_only=True)
     class Meta:
         model = Discussion
-        fields = ['id','title', 'description', 'created_by', 'created_date', 'status', 'comments']
+        fields = ['id', 'title', 'description', 'file', 'created_by', 'created_date', 'school', 'status', 'comments']
+        extra_kwargs = {'id': {'read_only': True},
+                        'school': {'required': False, 'read_only': True},
+                        'file': {'required': False},
+                        }
+
 
     def to_representation(self, instance):
         data = super(DiscussionSerializer, self).to_representation(instance)
-        print(data)
-        print( model_to_dict(instance.created_by))
+        # print(data)
+        # print( model_to_dict(instance.created_by))
         user  = model_to_dict(instance.created_by)
         # user['photo'] = None
         created_by = {
@@ -72,6 +77,39 @@ class DiscussionSerializer(serializers.ModelSerializer):
         data['created_by'] = created_by
 
         return data
+
+
+    def validate(self, data):
+        try:
+            user = data.get('created_by')
+            # record = User.objects.get(pk=user.id)
+        except:
+            # record = None
+            pass
+        if user.is_admin:
+            raise serializers.ValidationError("Admin can not create discussion")
+        return super().validate(data)
+
+
+    def create(self, validated_data):
+        creator = validated_data['created_by']
+        school = None
+        if(creator.is_student):
+            student = Student.objects.get(pk=creator.id)
+            school = SchoolSection.objects.get(pk=student.school_section.id)
+
+
+        elif creator.is_teacher:
+            teacher = Teacher.objects.get(pk=creator.id)
+            school = SchoolSection.objects.get(pk=teacher.institute_name.id)
+
+        validated_data['school'] = school
+        discussion = Discussion.objects.create(**validated_data)
+        # creator = validated_data['creator']
+        print(creator.username)
+        discussion.save()
+
+        return discussion
 
 
 
@@ -87,6 +125,68 @@ class UserSerializer(serializers.ModelSerializer):
                         'photo': {'required': False},
                         }
 
+class AdminSerializer(serializers.ModelSerializer):
+    # username = serializers.CharField(max_length=200)
+    # discussions = DiscussionSerializer(many=True, read_only=True)
+    class Meta:
+        model = User
+        fields = ['id','first_name', 'last_name', 'username', 'email', 'password', 'photo']
+        extra_kwargs = {'id': {'read_only': True}, 'password': {'write_only': True, 'required': False},
+                        'username': {'required': True},
+                        'photo': {'required': False},
+                        }
+
+    def validate(self, data):
+        try:
+            username = data.get('username')
+            record = Score.objects.filter(username=username).first()
+        except:
+            record = None
+            pass
+        if record:
+            raise serializers.ValidationError("Username has already been used, try with another one")
+
+        return super().validate(data)
+
+    def create(self, validated_data):
+        user = User.objects.create(**validated_data)
+        password = validated_data['password']
+        user.set_password(password)
+        user.is_admin = True
+        user.save()
+        print(user.is_admin)
+
+        return user
+
+
+
+    def update(self, instance, validated_data):
+        user_data = validated_data
+        user = instance
+        try:
+           user.first_name = user_data['first_name']
+           user.last_name = user_data['last_name']
+           user.email = user_data['email']
+
+        except:
+            pass
+
+        try:
+            if user_data['password']:
+                user.set_password(user_data['password'])
+            # print(user_data['password'])
+        except:
+            pass
+
+        try:
+            if(user_data['photo']!=None):
+                user.photo = user_data['photo']
+        except: pass
+        #
+        #
+        #
+        instance.save()
+        return instance
 
 
 class SchoolSerializer(serializers.ModelSerializer):
@@ -94,6 +194,23 @@ class SchoolSerializer(serializers.ModelSerializer):
         model = SchoolSection
         fields = '__all__'
         read_only_fields = ['student_count']
+
+    def validate(self, data):
+        try:
+            user = data.get('creator')
+            # record = User.objects.get(pk=user.id)
+        except:
+            # record = None
+            pass
+        if user.is_admin != True:
+            raise serializers.ValidationError("This User is not an admin and has no permission to set up school")
+        return super().validate(data)
+
+    def create(self, validated_data):
+        school = SchoolSection.objects.create(**validated_data)
+        school.student_count = 0
+        school.save()
+        return school
 
 
 
@@ -126,7 +243,7 @@ class ScoreSerializer(serializers.ModelSerializer):
 
 class StudentSerializer(serializers.ModelSerializer):
     user = UserSerializer()
-    school_section = SchoolSerializer()
+    # school_section = SchoolSerializer()
     studentScore = ScoreSerializer(many=True, read_only=True)
 
     class Meta:
@@ -137,19 +254,25 @@ class StudentSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user_data = validated_data.pop('user')
         school_section_data = validated_data.pop('school_section')
-        try:
-            school_section = SchoolSection.objects.get( school_name=school_section_data['school_name'])
-            count = school_section.student_count
-            school_section.student_count = count + 1
-            school_section.save()
-        except:
-            school_section = SchoolSection.objects.create(**school_section_data)
-            pass
+        print(school_section_data)
+        print(school_section_data.id)
+
 
         user = User.objects.create(**user_data)
         user.is_student = True
         user.set_password(user_data['password'])
         user.save()
+
+
+        try:
+            school_section = SchoolSection.objects.get(pk=school_section_data.id)
+            count = school_section.student_count
+            school_section.student_count = count + 1
+            school_section.save()
+        except:
+            # school_section = SchoolSection.objects.create(**school_section_data)
+            pass
+
         student = Student.objects.create(user=user, school_section=school_section, **validated_data)
         return student
 
