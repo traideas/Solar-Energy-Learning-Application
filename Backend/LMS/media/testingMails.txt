@@ -1,7 +1,0 @@
-mail = 'walter.y.m.g@gmail.com'
-password = 'zaq13edc'
-
-
-
-mail = 'walter.y.m.k@gmail.com'
-password = 'zaq13edc'
