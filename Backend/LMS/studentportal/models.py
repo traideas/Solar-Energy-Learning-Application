@@ -22,6 +22,7 @@ class User(AbstractUser):
 
 
 class SchoolSection(models.Model):
+    creator = models.ForeignKey(User, on_delete=models.CASCADE)
     # Section_Choices = (
     #     (1, 'First Standard'),
     #     (2, 'Second Standard'),
@@ -40,12 +41,14 @@ class SchoolSection(models.Model):
     # section = models.CharField(max_length=50)
     school_name = models.CharField(max_length=200)
     student_count = models.IntegerField(default=1)
+    def __str__(self):
+        return self.school_name
 
 
 
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    school_section = models.ForeignKey(SchoolSection, on_delete=models.CASCADE)
+    school_section = models.ForeignKey(SchoolSection, on_delete=models.CASCADE, related_name='students')
     school_roll = models.CharField(max_length=10)
 
 
@@ -57,7 +60,7 @@ class Student(models.Model):
 
 class Teacher(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    institute_name = models.CharField(max_length=200)
+    institute_name = models.ForeignKey(SchoolSection, on_delete=models.CASCADE, related_name='teachers')
     is_verified = models.BooleanField(default=False)
 
     def __str__(self):
@@ -162,8 +165,10 @@ class Discussion(models.Model):
     title = models.CharField(max_length=1000)
     description = models.CharField(max_length=5000)
     created_by = models.ForeignKey('studentportal.User', on_delete=models.CASCADE, related_name='discussions')
+    school = models.ForeignKey(SchoolSection, on_delete=models.CASCADE, related_name='school_discussions', blank=True)
     created_date = models.DateField(blank=False, auto_now_add=True)
     status = models.BooleanField(default=False)
+    file = models.FileField(blank=True, null=True)
 
     def __str__(self):
         return self.title

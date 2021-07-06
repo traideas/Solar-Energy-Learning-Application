@@ -41,10 +41,37 @@ class UserAuthentication(ObtainAuthToken):
 
 
 
+class AdminList(generics.ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = AdminSerializer
+
+
+class AdminDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = AdminSerializer
+
+
+
+
+
+
+class SchoolList(generics.ListCreateAPIView):
+    queryset = SchoolSection.objects.all()
+    serializer_class = SchoolSerializer
+
+
+
+
+class SchoolDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = SchoolSection.objects.all()
+    serializer_class = SchoolSerializer
+
+
 
 class StudentList(generics.ListCreateAPIView):
     # permission_classes = [permissions.IsAuthenticatedOrReadOnly,
     #                       IsOwnerOrReadOnly]
+
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
 
@@ -175,8 +202,39 @@ class QuestionDetail(generics.RetrieveUpdateDestroyAPIView):
 class DiscussionList(generics.ListCreateAPIView):
     # permission_classes = [permissions.IsAuthenticatedOrReadOnly,
     #                       IsOwnerOrReadOnly]
+    # user = None
+    # print(user)
     queryset = Discussion.objects.all().order_by('-id')
     serializer_class = DiscussionSerializer
+    # print(self.request.user)
+
+    def list(self, request):
+        # Note the use of `get_queryset()` instead of `self.queryset`
+        # queryset = self.get_queryset()
+        creator = request.user
+        school = None
+        try:
+            if(creator.is_admin):
+                queryset = Discussion.objects.all().order_by('-id')
+                serializer = DiscussionSerializer(queryset, many=True)
+                return Response(serializer.data)
+        except:
+            pass
+        try:
+            if (creator.is_student):
+                student = Student.objects.get(pk=creator.id)
+                school = SchoolSection.objects.get(pk=student.school_section.id)
+
+            elif creator.is_teacher:
+                teacher = Teacher.objects.get(pk=creator.id)
+                school = SchoolSection.objects.get(pk=teacher.institute_name.id)
+            queryset = Discussion.objects.filter(school=school.id).all().order_by('-id')
+        except:
+            queryset = []
+
+        serializer = DiscussionSerializer(queryset, many=True)
+        return Response(serializer.data)
+
 
 
 class DiscussionDetail(generics.RetrieveUpdateDestroyAPIView):
