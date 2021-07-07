@@ -1,18 +1,6 @@
 import axios from "axios";
 import configData from '../configData.json'
 
-const accessToken = JSON.parse(localStorage.getItem("userToken"))
-
-axios.interceptors.request.use(
-  config => {
-    config.headers.authorization = `Bearer ${accessToken}`;
-    return config;
-  },
-  error => {
-    return Promise.reject(error)
-  }
-)
-
 const register = (
   first_name,
   last_name,
@@ -40,29 +28,46 @@ const login = (username, password) => {
       password,
     })
     .then(async ({ data }) => {
-      const result = await axios.get(configData.SERVER_URL + "teacher/" + data.user_id + "/")
-      localStorage.setItem("teacherStatus", JSON.stringify(result.data.is_verified));
-      localStorage.setItem("userToken", JSON.stringify(data.token));
-      localStorage.setItem("userTypeStudent", JSON.stringify(data.is_student));
-      localStorage.setItem("userTypeTeacher", JSON.stringify(data.is_teacher));
-      localStorage.setItem("userTypeAdmin", JSON.stringify(data.is_admin));
-      localStorage.setItem("userId", JSON.stringify(data.user_id));
+
+      if (data.is_teacher) {
+
+        const result = await axios.get(configData.SERVER_URL + "teacher/" + data.user_id + "/", {
+          headers: {
+            'Authorization': `Token ${data.token}`
+          }
+        })
+        if (result.data.is_verified == true) {
+          localStorage.setItem("tusoKe36kie", JSON.stringify(data.token));
+          localStorage.setItem("Teas7jkdb13sduiw", JSON.stringify(data.is_teacher));
+          localStorage.setItem("s4u8i2sdyf", JSON.stringify(data.user_id));
+        }
+      }
+      else if (data.is_admin) {
+        localStorage.setItem("Admsienjoas2h3", JSON.stringify(data.is_admin));
+        localStorage.setItem("tusoKe36kie", JSON.stringify(data.token));
+        localStorage.setItem("s4u8i2sdyf", JSON.stringify(data.user_id));
+      }
+      else {
+        localStorage.setItem("tusoKe36kie", JSON.stringify(data.token));
+        localStorage.setItem("Stdhus21uu23wj", JSON.stringify(data.is_student));
+        localStorage.setItem("s4u8i2sdyf", JSON.stringify(data.user_id));
+      }
 
     });
 };
 
 const logout = () => {
-  localStorage.removeItem("userToken");
-  localStorage.removeItem("userTypeStudent");
-  localStorage.removeItem("userTypeTeacher");
-  localStorage.removeItem("userId");
-  localStorage.removeItem("userTypeAdmin");
-  localStorage.removeItem("teacherStatus");
+  localStorage.removeItem("tusoKe36kie");
+  localStorage.removeItem("Stdhus21uu23wj");
+  localStorage.removeItem("Teas7jkdb13sduiw");
+  localStorage.removeItem("s4u8i2sdyf");
+  localStorage.removeItem("Admsienjoas2h3");
+
 };
 
 const isLogedin = () => {
 
-  if (hasToken() && isTeacher() && isValidTeacher()) {
+  if (hasToken() && getUserId()) {
     return true;
   }
   else {
@@ -72,27 +77,23 @@ const isLogedin = () => {
 };
 
 const hasToken = () => {
-  return JSON.parse(localStorage.getItem("userToken"));
+  return JSON.parse(localStorage.getItem("tusoKe36kie"));
 };
 
 const isStudent = () => {
-  return JSON.parse(localStorage.getItem("userTypeStudent"));
+  return JSON.parse(localStorage.getItem("Stdhus21uu23wj"));
 };
 
 const isTeacher = () => {
-  return JSON.parse(localStorage.getItem("userTypeTeacher"));
-};
-
-const isValidTeacher = () => {
-  return JSON.parse(localStorage.getItem("teacherStatus"))
+  return JSON.parse(localStorage.getItem("Teas7jkdb13sduiw"));
 };
 
 const isAdmin = () => {
-  return JSON.parse(localStorage.getItem("userTypeAdmin"));
+  return JSON.parse(localStorage.getItem("Admsienjoas2h3"));
 };
 
 const getUserId = () => {
-  return JSON.parse(localStorage.getItem("userId"));
+  return JSON.parse(localStorage.getItem("s4u8i2sdyf"));
 };
 
 export default {
@@ -105,5 +106,5 @@ export default {
   getUserId,
   isAdmin,
   hasToken,
-  isValidTeacher
+
 };
