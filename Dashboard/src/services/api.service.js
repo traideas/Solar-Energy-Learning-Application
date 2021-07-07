@@ -1,5 +1,18 @@
 import axios from "axios";
 import configData from '../configData.json'
+import AuthService from './auth.service'
+
+const accessToken = AuthService.hasToken()
+
+axios.interceptors.request.use(
+  config => {
+    config.headers.authorization = `Bearer ${accessToken}`;
+    return config;
+  },
+  error => {
+    return Promise.reject(error)
+  }
+)
 
 const uploadVideoContent = (
   title,
