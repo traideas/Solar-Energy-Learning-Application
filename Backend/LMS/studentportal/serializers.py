@@ -388,26 +388,60 @@ class TeacherSerializer(serializers.ModelSerializer):
 class VideoSerializer(serializers.ModelSerializer):
     class Meta:
         model = VideoMaterial
-        fields = ['id', 'title', 'description', 'created_by',
-                  'upload_date', 'photo', 'material_type', 'file', 'status']
+        fields = ['id', 'title', 'description', 'created_by','school',
+                  'upload_date', 'photo', 'material_type', 'file', 'status', 'public']
         extra_kwargs = {'id': {'read_only': True},
+                        'public': {'read_only': True, 'required': False},
                         'upload_date': {'read_only': True, 'required': False},
-                        'username': {'required': False}}
+                        'school': {'read_only': True, 'required': False},
+                        'username': {'required': False}
+                        }
 
     def to_representation(self, instance):
         data = super(VideoSerializer, self).to_representation(instance)
-        print(data)
-        print(model_to_dict(instance.created_by.user))
-        user = model_to_dict(instance.created_by.user)
+        user = model_to_dict(instance.created_by)
         # user['photo'] = None
         created_by = {
             'name': user["first_name"] + " " + user["last_name"],
-            'photo': 'http://127.0.0.1:8000/media/' + str(instance.created_by.user.photo)
+            'photo': 'http://127.0.0.1:8000/media/' + str(instance.created_by.photo)
         }
         # print(str(instance.created_by.photo))
         data['created_by'] = created_by
         # data['created_by'] = "hello"
         return data
+
+
+
+    def validate(self, data):
+        try:
+            user = data.get('created_by')
+            # record = User.objects.get(pk=user.id)
+        except:
+            # record = None
+            pass
+        if user.is_student:
+            raise serializers.ValidationError("This User has no permission to publish any study material")
+        return super().validate(data)
+
+
+    def create(self, validated_data):
+        user = validated_data['created_by']
+        material = VideoMaterial.objects.create(**validated_data)
+        if user.is_admin:
+            material.public = True
+
+        else:
+            teacher = Teacher.objects.get(pk=user.id)
+            material.school = teacher.institute_name
+
+
+        material.save()
+        return material
+
+
+    # def update(self, instance, validated_data):
+    #     pass
+
 
 
 
@@ -415,53 +449,100 @@ class PPTXSerializer(serializers.ModelSerializer):
     class Meta:
         model = PPTXMaterial
         fields = ['id', 'title', 'description', 'created_by',
-                  'upload_date', 'photo', 'material_type', 'file', 'status']
+                  'upload_date', 'photo', 'material_type', 'file', 'status', 'public']
         extra_kwargs = {'id': {'read_only': True},
+                        'public': {'read_only': True, 'required': False},
                         'upload_date': {'read_only': True, 'required': False},
                         'username': {'required': False}}
 
     def to_representation(self, instance):
         data = super(PPTXSerializer, self).to_representation(instance)
-        print(data)
-        print(model_to_dict(instance.created_by.user))
-        user = model_to_dict(instance.created_by.user)
+        user = model_to_dict(instance.created_by)
         # user['photo'] = None
         created_by = {
             'name': user["first_name"] + " " + user["last_name"],
-            'photo': 'http://127.0.0.1:8000/media/' + str(instance.created_by.user.photo)
+            'photo': 'http://127.0.0.1:8000/media/' + str(instance.created_by.photo)
         }
-        # print(str(instance.created_by.photo))
         data['created_by'] = created_by
-        # data['created_by'] = "hello"
+
         return data
 
 
+
+    def validate(self, data):
+        try:
+            user = data.get('created_by')
+            # record = User.objects.get(pk=user.id)
+        except:
+            # record = None
+            pass
+        if user.is_student:
+            raise serializers.ValidationError("This User has no permission to publish any study material")
+        return super().validate(data)
+
+
+
+    def create(self, validated_data):
+        user = validated_data['created_by']
+        material = PPTXMaterial.objects.create(**validated_data)
+        if user.is_admin:
+            material.public = True
+
+        else:
+            teacher = Teacher.objects.get(pk=user.id)
+            material.school = teacher.institute_name
+
+        material.save()
+        return material
 
 
 class DocSerializer(serializers.ModelSerializer):
     class Meta:
         model = DocMaterial
         fields = ['id', 'title', 'description', 'created_by',
-                  'upload_date', 'photo', 'material_type', 'file', 'status']
+                  'upload_date', 'photo', 'material_type', 'file', 'status', 'public']
         extra_kwargs = {'id': {'read_only': True},
+                        'public': {'read_only': True, 'required': False},
                         'upload_date': {'read_only': True, 'required': False},
                         'username': {'required': False}}
 
-
     def to_representation(self, instance):
-            data = super(DocSerializer, self).to_representation(instance)
-            print(data)
-            print( model_to_dict(instance.created_by.user))
-            user = model_to_dict(instance.created_by.user)
-            # user['photo'] = None
-            created_by = {
-                'name': user["first_name"] + " " + user["last_name"],
-                'photo': 'http://127.0.0.1:8000/media/' + str(instance.created_by.user.photo)
-            }
-            # print(str(instance.created_by.photo))
-            data['created_by'] = created_by
-            # data['created_by'] = "hello"
-            return data
+        data = super(DocSerializer, self).to_representation(instance)
+        user = model_to_dict(instance.created_by)
+        # user['photo'] = None
+        created_by = {
+            'name': user["first_name"] + " " + user["last_name"],
+            'photo': 'http://127.0.0.1:8000/media/' + str(instance.created_by.photo)
+        }
+        data['created_by'] = created_by
+
+        return data
+
+
+    def validate(self, data):
+        try:
+            user = data.get('created_by')
+            # record = User.objects.get(pk=user.id)
+        except:
+            # record = None
+            pass
+        if user.is_student:
+            raise serializers.ValidationError("This User has no permission to publish any study material")
+        return super().validate(data)
+
+
+    def create(self, validated_data):
+        user = validated_data['created_by']
+        material = DocMaterial.objects.create(**validated_data)
+        if user.is_admin:
+            material.public = True
+
+        else:
+            teacher = Teacher.objects.get(pk=user.id)
+            material.school = teacher.institute_name
+
+        material.save()
+        return material
 
 
 

@@ -73,13 +73,15 @@ class Teacher(models.Model):
 
 class VideoMaterial(models.Model):
     title = models.CharField(blank=False, max_length=250)
+    school = models.ForeignKey(SchoolSection, on_delete=models.CASCADE, related_name='school_video', blank=True, null =True)
     file = models.FileField(blank=True, null=True)
     description = models.CharField(blank=True, max_length=1000, null=True)
     material_type = models.CharField(blank=True, max_length=1000, null=True)
     upload_date = models.DateField(blank=False, auto_now_add=True)
-    created_by = models.ForeignKey('studentportal.Teacher', on_delete=models.CASCADE, related_name='videos')
+    created_by = models.ForeignKey('studentportal.User', on_delete=models.CASCADE, related_name='videos')
     photo = models.FileField(blank=True, null=True)
     status = models.BooleanField(default=False)
+    public = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
@@ -87,26 +89,30 @@ class VideoMaterial(models.Model):
 
 class PPTXMaterial(models.Model):
     title = models.CharField(blank=False, max_length=250)
+    school = models.ForeignKey(SchoolSection, on_delete=models.CASCADE, related_name='school_pptx', blank=True, null =True)
     file = models.FileField(blank=True, null=True)
     description = models.CharField(blank=True, max_length=1000, null=True)
     material_type = models.CharField(blank=True, max_length=1000, null=True)
     upload_date = models.DateField(blank=False, auto_now_add=True)
-    created_by = models.ForeignKey('studentportal.Teacher', on_delete=models.CASCADE, related_name='pptx')
+    created_by = models.ForeignKey('studentportal.User', on_delete=models.CASCADE, related_name='pptx')
     photo = models.FileField(blank=True, null=True)
     status = models.BooleanField(default=False)
+    public = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
 
 class DocMaterial(models.Model):
     title = models.CharField(blank=False, max_length=250)
+    school = models.ForeignKey(SchoolSection, on_delete=models.CASCADE, related_name='school_docx', blank=True, null =True)
     file = models.FileField(blank=True, null=True)
     description = models.CharField(blank=True, max_length=1000, null=True)
     material_type = models.CharField(blank=True, max_length=1000, null=True)
     upload_date = models.DateField(blank=False, auto_now_add=True)
-    created_by = models.ForeignKey('studentportal.Teacher', on_delete=models.CASCADE, related_name='docx')
+    created_by = models.ForeignKey('studentportal.User', on_delete=models.CASCADE, related_name='docx')
     photo = models.FileField(blank=True, null=True)
     status = models.BooleanField(default=False)
+    public = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
