@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import FileUploadParser
-
+from django.db.models import Q
 from .serializers import *
 # Create your views here.
 from rest_framework import permissions
@@ -140,10 +140,55 @@ class VideoList(generics.ListCreateAPIView):
     queryset = VideoMaterial.objects.all().order_by('-id')
     serializer_class = VideoSerializer
 
+    def list(self, request):
+        user = request.user
+
+        school = None
+        try:
+            if (user.is_admin):
+                queryset = VideoMaterial.objects.all().order_by('-id')
+                serializer = VideoSerializer(queryset, many=True)
+                return Response(serializer.data)
+        except:
+            queryset = []
+            pass
+
+        try:
+            if (user.is_student):
+                student = Student.objects.get(pk=user.id)
+                school = SchoolSection.objects.get(pk=student.school_section.id)
+
+            elif user.is_teacher:
+                teacher = Teacher.objects.get(pk=user.id)
+                school = SchoolSection.objects.get(pk=teacher.institute_name.id)
+            queryset = VideoMaterial.objects.filter(Q(school=school.id) | Q(public=True)).all().order_by('-id')
+
+        except:
+            queryset = []
+            pass
+        serializer = VideoSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+
+
 
 class VideoDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = VideoMaterial.objects.all()
     serializer_class = VideoSerializer
+
+    # def list(self, request):
+    #     user = request.user
+    #     try:
+    #         if (user.is_admin):
+    #             queryset = self.get_queryset()
+    #         else:
+    #             queryset = []
+    #     except:
+    #         queryset = []
+    #
+    #         pass
+    #     serializer = VideoSerializer(queryset)
+    #     return Response(serializer.data)
 
 
 
@@ -153,6 +198,35 @@ class PPTXList(generics.ListCreateAPIView):
     #                       IsOwnerOrReadOnly]
     queryset = PPTXMaterial.objects.all().order_by('-id')
     serializer_class = PPTXSerializer
+
+    def list(self, request):
+        user = request.user
+
+        school = None
+        try:
+            if (user.is_admin):
+                queryset = PPTXMaterial.objects.all().order_by('-id')
+                serializer = PPTXSerializer(queryset, many=True)
+                return Response(serializer.data)
+        except:
+            queryset = []
+            pass
+
+        try:
+            if (user.is_student):
+                student = Student.objects.get(pk=user.id)
+                school = SchoolSection.objects.get(pk=student.school_section.id)
+
+            elif user.is_teacher:
+                teacher = Teacher.objects.get(pk=user.id)
+                school = SchoolSection.objects.get(pk=teacher.institute_name.id)
+            queryset = PPTXMaterial.objects.filter(Q(school=school.id) | Q(public=True)).all().order_by('-id')
+
+        except:
+            queryset = []
+            pass
+        serializer = PPTXSerializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class PPTXDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -166,6 +240,35 @@ class DocList(generics.ListCreateAPIView):
     #                       IsOwnerOrReadOnly]
     queryset = DocMaterial.objects.all().order_by('-id')
     serializer_class = DocSerializer
+
+    def list(self, request):
+        user = request.user
+
+        school = None
+        try:
+            if (user.is_admin):
+                queryset = DocMaterial.objects.all().order_by('-id')
+                serializer = DocSerializer(queryset, many=True)
+                return Response(serializer.data)
+        except:
+            queryset = []
+            pass
+
+        try:
+            if (user.is_student):
+                student = Student.objects.get(pk=user.id)
+                school = SchoolSection.objects.get(pk=student.school_section.id)
+
+            elif user.is_teacher:
+                teacher = Teacher.objects.get(pk=user.id)
+                school = SchoolSection.objects.get(pk=teacher.institute_name.id)
+            queryset = DocMaterial.objects.filter(Q(school=school.id) | Q(public=True)).all().order_by('-id')
+
+        except:
+            queryset = []
+            pass
+        serializer = DocSerializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class DocDetail(generics.RetrieveUpdateDestroyAPIView):
