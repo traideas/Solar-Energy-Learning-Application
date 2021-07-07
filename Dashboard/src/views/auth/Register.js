@@ -1,5 +1,5 @@
 import React from "react";
-import swal from 'sweetalert';
+import swal from "sweetalert";
 import { useForm } from "react-hook-form";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -16,34 +16,50 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import Email from "@material-ui/icons/Email";
 import Lock from "@material-ui/icons/Lock";
 import School from "@material-ui/icons/School";
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
-import FingerprintIcon from '@material-ui/icons/Fingerprint';
+import AccountBoxIcon from "@material-ui/icons/AccountBox";
+import FingerprintIcon from "@material-ui/icons/Fingerprint";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import KeyboardArrowDown from "@material-ui/icons/KeyboardArrowDown";
 // core components
 import componentStyles from "assets/theme/views/auth/register.js";
 //Services
-import AuthService from '../../services/auth.service'
+import AuthService from "../../services/auth.service";
 
 const useStyles = makeStyles(componentStyles);
 
 function Register() {
   const classes = useStyles();
   const theme = useTheme();
-  const { register, handleSubmit, reset } = useForm()
-  const onSubmit = ({ first_name, last_name, username, email, password, institute_name }) => {
-    AuthService.register(first_name, last_name, username, email, password, institute_name)
+  const { register, handleSubmit, reset } = useForm();
+  const onSubmit = ({
+    first_name,
+    last_name,
+    username,
+    email,
+    password,
+    institute_name,
+  }) => {
+    AuthService.register(
+      first_name,
+      last_name,
+      username,
+      email,
+      password,
+      institute_name
+    )
       .then(function (response) {
-        reset()
-        swal("Congratulations!", "Account Created Successfully!", "success")
+        reset();
+        swal("Congratulations!", "Account Created Successfully!", "success");
       })
       .catch(function (error) {
         swal("Registration Failed!", "Please Try Again!", "error");
       });
-  }
+  };
   return (
     <>
       <Grid item xs={12} lg={6} md={8}>
         <Card classes={{ root: classes.cardRoot }}>
-
           <CardContent classes={{ root: classes.cardContent }}>
             <Box
               color={theme.palette.gray[600]}
@@ -56,13 +72,11 @@ function Register() {
               </Box>
             </Box>
             <form onSubmit={handleSubmit(onSubmit)}>
-
               <FormControl
                 variant="filled"
                 component={Box}
                 width="48%"
                 marginBottom="1.5rem!important"
-
               >
                 <FilledInput
                   autoComplete="off"
@@ -125,19 +139,23 @@ function Register() {
                 width="100%"
                 marginBottom="1.5rem!important"
               >
-                <FilledInput
-                  autoComplete="off"
-                  type="text"
-                  placeholder="Institute"
-                  name="institute_name"
-                  required
-                  {...register("institute_name")}
+                <Select
+                  defaultValue=""
+                  IconComponent={KeyboardArrowDown}
                   startAdornment={
                     <InputAdornment position="start">
                       <School />
+                      <p style={{marginLeft: 10}}>Select Your Institute</p>
                     </InputAdornment>
                   }
-                />
+                >
+                  <MenuItem value="" disabled>Select Your Institute</MenuItem>
+                  <MenuItem value={1}>1</MenuItem>
+                  <MenuItem value={2}>2</MenuItem>
+                  <MenuItem value={3}>3</MenuItem>
+                  <MenuItem value={4}>4</MenuItem>
+                  <MenuItem value={5}>5</MenuItem>
+                </Select>
               </FormControl>
               <FormControl
                 variant="filled"
