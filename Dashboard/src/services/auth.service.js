@@ -1,6 +1,17 @@
 import axios from "axios";
 import configData from '../configData.json'
-import { useAsync } from 'react-async';
+
+const accessToken = JSON.parse(localStorage.getItem("userToken"))
+
+axios.interceptors.request.use(
+  config => {
+    config.headers.authorization = `Bearer ${accessToken}`;
+    return config;
+  },
+  error => {
+    return Promise.reject(error)
+  }
+)
 
 const register = (
   first_name,
