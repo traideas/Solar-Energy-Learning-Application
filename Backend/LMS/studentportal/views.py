@@ -56,6 +56,7 @@ class AdminDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class SchoolList(generics.ListCreateAPIView):
+    permission_classes = [UniversalPermission]
     queryset = SchoolSection.objects.all()
     serializer_class = SchoolSerializer
 
@@ -63,6 +64,7 @@ class SchoolList(generics.ListCreateAPIView):
 
 
 class SchoolDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [AdminPermission]
     queryset = SchoolSection.objects.all()
     serializer_class = SchoolSerializer
 
