@@ -561,12 +561,45 @@ class QuizSerializer(serializers.ModelSerializer):
     questions = QuestionSerializer(many=True, read_only=True)
     class Meta:
         model = Quiz
-        fields = ['id','title', 'description', 'teacher', 'start_date', 'photo','questions','total_marks']
+        fields = ['id', 'title', 'description', 'school', 'created_by', 'start_date', 'photo', 'questions', 'total_marks', 'public']
 
-        extra_kwargs = { 'id': {'read_only': True},
-                       'total_marks': {'required': False},
-                         'photo': {'required': False}
-                         }
+        extra_kwargs = {
+                        'id': {'read_only': True},
+                        'public': {'read_only': True},
+                        'school': {'read_only': True},
+                        'total_marks': {'required': False},
+                        'photo': {'required': False}
+                        }
+
+
+    def validate(self, data):
+        try:
+            user = data.get('created_by')
+            # record = User.objects.get(pk=user.id)
+        except:
+            # record = None
+            pass
+        if user.is_student:
+            raise serializers.ValidationError("This User has no permission to publish any quiz")
+        return super().validate(data)
+
+
+
+    def create(self, validated_data):
+        user = validated_data['created_by']
+        material = Quiz.objects.create(**validated_data)
+        if user.is_admin:
+            material.public = True
+
+        else:
+            teacher = Teacher.objects.get(pk=user.id)
+            material.school = teacher.institute_name
+
+        material.save()
+        return material
+
+
+
 
 
 
