@@ -119,7 +119,9 @@ class DocMaterial(models.Model):
 
 
 class Quiz(models.Model):
-    teacher = models.ForeignKey('studentportal.Teacher', related_name='quizes', on_delete=models.CASCADE)
+    created_by = models.ForeignKey('studentportal.User', related_name='quizes', on_delete=models.CASCADE)
+    school = models.ForeignKey(SchoolSection, on_delete=models.CASCADE, related_name='school_quiz', blank=True, null=True)
+    public = models.BooleanField(default=False)
     # student = models.ForeignKey('studentportal.CourseTeacher', related_name='tests', on_delete=models.CASCADE)
     # time_duration = models.IntegerField()
     photo = models.FileField(blank=True, null=True)

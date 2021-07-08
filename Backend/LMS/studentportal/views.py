@@ -18,7 +18,7 @@ from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework import status
-
+from .permission import *
 
 
 
@@ -56,6 +56,7 @@ class AdminDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class SchoolList(generics.ListCreateAPIView):
+    permission_classes = [UniversalPermission]
     queryset = SchoolSection.objects.all()
     serializer_class = SchoolSerializer
 
@@ -63,6 +64,7 @@ class SchoolList(generics.ListCreateAPIView):
 
 
 class SchoolDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [AdminPermission]
     queryset = SchoolSection.objects.all()
     serializer_class = SchoolSerializer
 
@@ -173,6 +175,8 @@ class VideoList(generics.ListCreateAPIView):
 
 
 class VideoDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                          AccessPermission, IsCreatedBy]
     queryset = VideoMaterial.objects.all()
     serializer_class = VideoSerializer
 
@@ -230,6 +234,8 @@ class PPTXList(generics.ListCreateAPIView):
 
 
 class PPTXDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                          AccessPermission, IsCreatedBy]
     queryset = PPTXMaterial.objects.all()
     serializer_class = PPTXSerializer
 
@@ -272,6 +278,8 @@ class DocList(generics.ListCreateAPIView):
 
 
 class DocDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                          AccessPermission, IsCreatedBy]
     queryset = DocMaterial.objects.all()
     serializer_class = DocSerializer
 
@@ -284,7 +292,40 @@ class QuizList(generics.ListCreateAPIView):
     serializer_class = QuizSerializer
 
 
+    def list(self, request):
+        user = request.user
+
+        school = None
+        try:
+            if (user.is_admin):
+                queryset = Quiz.objects.all().order_by('-id')
+                serializer = QuizSerializer(queryset, many=True)
+                return Response(serializer.data)
+        except:
+            queryset = []
+            pass
+
+        try:
+            if (user.is_student):
+                student = Student.objects.get(pk=user.id)
+                school = SchoolSection.objects.get(pk=student.school_section.id)
+
+            elif user.is_teacher:
+                teacher = Teacher.objects.get(pk=user.id)
+                school = SchoolSection.objects.get(pk=teacher.institute_name.id)
+            queryset = Quiz.objects.filter(Q(school=school.id) | Q(public=True)).all().order_by('-id')
+
+        except:
+            queryset = []
+            pass
+        serializer = QuizSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+
+
 class QuizDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                          AccessPermission, IsCreatedBy]
     queryset = Quiz.objects.all()
     serializer_class = QuizSerializer
 
@@ -341,6 +382,8 @@ class DiscussionList(generics.ListCreateAPIView):
 
 
 class DiscussionDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                         IsCreatedBy]
     queryset = Discussion.objects.all()
     serializer_class = DiscussionSerializer
 
@@ -355,6 +398,8 @@ class CommentList(generics.ListCreateAPIView):
 
 
 class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                          IsCreatedBy]
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 
