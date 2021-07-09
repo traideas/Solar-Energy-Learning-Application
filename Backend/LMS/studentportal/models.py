@@ -22,7 +22,7 @@ class User(AbstractUser):
 
 
 class SchoolSection(models.Model):
-    creator = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     # Section_Choices = (
     #     (1, 'First Standard'),
     #     (2, 'Second Standard'),
@@ -47,24 +47,24 @@ class SchoolSection(models.Model):
 
 
 class Student(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    created_by = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     school_section = models.ForeignKey(SchoolSection, on_delete=models.CASCADE, related_name='students')
     school_roll = models.CharField(max_length=10)
 
 
     # birth_date = models.DateField(blank=False)
     def __str__(self):
-        return self.user.first_name +" "+ self.user.last_name
+        return self.created_by.first_name +" "+ self.created_by.last_name
 
 
 
 class Teacher(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    created_by = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     institute_name = models.ForeignKey(SchoolSection, on_delete=models.CASCADE, related_name='teachers')
     is_verified = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.user.first_name + " " + self.user.last_name
+        return self.created_by.first_name + " " + self.created_by.last_name
 
 
 
