@@ -14,7 +14,7 @@ import DirectionsRun from "@material-ui/icons/DirectionsRun";
 /* import EventNote from "@material-ui/icons/EventNote";
 import LiveHelp from "@material-ui/icons/LiveHelp"; */
 import Person from "@material-ui/icons/Person";
-import Settings from "@material-ui/icons/Settings";
+
 
 // core components
 import componentStyles from "assets/theme/components/navbar-dropdown.js";
@@ -22,7 +22,7 @@ import componentStyles from "assets/theme/components/navbar-dropdown.js";
 //Api Services
 import ApiService from "../../services/api.service";
 import AuthService from "../../services/auth.service";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -171,13 +171,13 @@ export default function NavbarDropdown() {
       >
         <Avatar
           alt="..."
-          src={(userDetails.user.photo == null) ? require("assets/img/theme/defaultImage.png").default : userDetails.user.photo}
+          src={(userDetails.photo == null) ? require("assets/img/theme/defaultImage.png").default : userDetails.photo}
           classes={{
             root: classes.avatarRoot,
           }}
         />
         <Hidden smDown>
-          {userDetails.user.first_name} {userDetails.user.last_name}
+          {userDetails.first_name} {userDetails.last_name}
         </Hidden>
       </Button>
       {renderMenu}

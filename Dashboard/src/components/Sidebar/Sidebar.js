@@ -45,7 +45,7 @@ export default function Sidebar({ routes, logo, dropdown, input }) {
   const createLinks = (routes) => {
     return routes.map((prop, key) => {
       if (prop.adminOnly) {
-        if (AuthService.isAdmin() == false) {
+        if (AuthService.isAdmin() == false || AuthService.isAdmin() == null) {
           return null;
         }
       }

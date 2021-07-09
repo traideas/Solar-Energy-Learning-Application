@@ -1,15 +1,16 @@
 import axios from "axios";
 import configData from '../configData.json'
+import authService from "./auth.service";
 
 const accessToken = JSON.parse(localStorage.getItem("tusoKe36kie"))
 
 
 
-const authAxios = axios.create({
+const config = {
   headers: {
     'Authorization': `Token ${accessToken}`
   }
-})
+}
 
 const uploadVideoContent = (
   title,
@@ -28,7 +29,7 @@ const uploadVideoContent = (
   }
   formData.append("file", file[0]);
   formData.append("status", status);
-  return authAxios.post(configData.SERVER_URL + "video/", formData);
+  return axios.post(configData.SERVER_URL + "video/", config, formData);
 };
 
 
@@ -49,7 +50,7 @@ const uploadSlideContent = (
   }
   formData.append("file", file[0]);
   formData.append("status", status);
-  return authAxios.post(configData.SERVER_URL + "pptx/", formData);
+  return axios.post(configData.SERVER_URL + "pptx/", config, formData);
 };
 
 const uploadArticleContent = (
@@ -69,7 +70,7 @@ const uploadArticleContent = (
   }
   formData.append("file", file[0]);
   formData.append("status", status);
-  return authAxios.post(configData.SERVER_URL + "document/", formData);
+  return axios.post(configData.SERVER_URL + "document/", config, formData);
 };
 
 const uploadDiscussion = (
@@ -83,7 +84,7 @@ const uploadDiscussion = (
   formData.append("description", description);
   formData.append("created_by", created_by);
   formData.append("status", status);
-  return authAxios.post(configData.SERVER_URL + "discussion/", formData);
+  return axios.post(configData.SERVER_URL + "discussion/", config, formData);
 };
 
 const uploadComment = (
@@ -95,57 +96,69 @@ const uploadComment = (
   formData.append("comment", comment);
   formData.append("discussion", discussion);
   formData.append("created_by", created_by);
-  return authAxios.post(configData.SERVER_URL + "comment/", formData);
+  return axios.post(configData.SERVER_URL + "comment/", config, formData);
 };
 
 const getUserDetails = (id) => {
-  return (
-    authAxios.get(configData.SERVER_URL + "user/" + id + "/")
-  )
+  if (authService.isAdmin) {
+    return (
+      axios.get(configData.SERVER_URL + "user_admin/" + id + "/", config)
+    )
+  }
+  if (authService.isTeacher) {
+    return (
+      axios.get(configData.SERVER_URL + "teacher/" + id + "/", config)
+    )
+  }
+  else {
+    return (
+      axios.get(configData.SERVER_URL + "student/" + id + "/", config)
+    )
+  }
+
 };
 
 const getArticleDetails = () => {
 
   return (
-    authAxios.get(configData.SERVER_URL + "document/")
+    axios.get(configData.SERVER_URL + "document/", config)
   )
 };
 
 const getSlideDetails = () => {
   return (
-    authAxios.get(configData.SERVER_URL + "pptx/")
+    axios.get(configData.SERVER_URL + "pptx/", config)
   )
 };
 
 const getVideoDetails = () => {
 
   return (
-    authAxios.get(configData.SERVER_URL + "video/")
+    axios.get(configData.SERVER_URL + "video/", config)
   )
 };
 
 const getQuizDetails = () => {
   return (
-    authAxios.get(configData.SERVER_URL + "quiz/")
+    axios.get(configData.SERVER_URL + "quiz/", config)
   )
 };
 
 const getDiscussionDetails = () => {
   return (
-    authAxios.get(configData.SERVER_URL + "discussion/")
+    axios.get(configData.SERVER_URL + "discussion/", config)
   )
 };
 
 const getDiscussionById = (id) => {
   return (
-    authAxios.get(configData.SERVER_URL + "discussion/" + id + "/")
+    axios.get(configData.SERVER_URL + "discussion/" + id + "/", config)
   )
 };
 
 const getTeacherList = () => {
   return (
-    authAxios.get(configData.SERVER_URL + "teacherall/"
-    )
+    axios.get(configData.SERVER_URL + "teacherall/", config)
   )
 };
 
@@ -166,8 +179,7 @@ const changeInstructorStatus = (
   formData.append("user.email", email)
   formData.append("is_verified", is_verified)
   formData.append("institute_name", institute_name)
-  return authAxios.put(configData.SERVER_URL + "teacher/" + id + "/", formData
-  )
+  return axios.put(configData.SERVER_URL + "teacher/" + id + "/", config, formData)
 }
 
 export default {

@@ -38,7 +38,7 @@ const Admin = () => {
     return routes.map((prop, key) => {
       if (prop.layout === "/admin") {
         if (prop.adminOnly) {
-          if (AuthService.isAdmin() == false) {
+          if (AuthService.isAdmin() == false || AuthService.isAdmin() == null) {
             return null;
           }
           else {
