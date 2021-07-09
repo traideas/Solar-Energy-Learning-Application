@@ -197,7 +197,7 @@ class SchoolSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         try:
-            user = data.get('creator')
+            user = data.get('created_by')
             # record = User.objects.get(pk=user.id)
         except:
             # record = None
@@ -242,17 +242,17 @@ class ScoreSerializer(serializers.ModelSerializer):
 
 
 class StudentSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
+    created_by = UserSerializer()
     # school_section = SchoolSerializer()
     studentScore = ScoreSerializer(many=True, read_only=True)
 
     class Meta:
         model = Student
         # fields = ['user', 'school_section', 'school_roll', 'birth_date']
-        fields = ['user', 'school_section', 'school_roll', 'studentScore']
+        fields = ['created_by', 'school_section', 'school_roll', 'studentScore']
 
     def create(self, validated_data):
-        user_data = validated_data.pop('user')
+        user_data = validated_data.pop('created_by')
         school_section_data = validated_data.pop('school_section')
         print(school_section_data)
         print(school_section_data.id)
@@ -273,16 +273,16 @@ class StudentSerializer(serializers.ModelSerializer):
             # school_section = SchoolSection.objects.create(**school_section_data)
             pass
 
-        student = Student.objects.create(user=user, school_section=school_section, **validated_data)
+        student = Student.objects.create(created_by=user, school_section=school_section, **validated_data)
         return student
 
 
     def update(self, instance, validated_data):
-        user_data = validated_data.pop('user')
+        user_data = validated_data.pop('created_by')
         school_section_data = validated_data.pop('school_section')
-        print('1')
-        user = instance.user
-        print('2')
+
+        user = instance.created_by
+
         temp_school_section = instance.school_section
         user.first_name = user_data['first_name']
         user.last_name = user_data['last_name']
@@ -333,28 +333,28 @@ class StudentSerializer(serializers.ModelSerializer):
 
 
 class TeacherSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
+    created_by = UserSerializer()
     # courseteachers = serializers.HyperlinkedRelatedField(many=True, view_name='coursemanagement-detail', read_only=True)
     class Meta:
         model = Teacher
-        fields = ['user', 'institute_name', 'is_verified']
+        fields = ['created_by', 'institute_name', 'is_verified']
         # extra_kwargs = {'is_verified': {'read_only': True}}
 
     def create(self, validated_data):
-        user_data = validated_data.pop('user')
+        user_data = validated_data.pop('created_by')
         user = User.objects.create(**user_data)
         user.is_teacher = True
 
         user.set_password(user_data['password'])
         user.save()
-        teacher = Teacher.objects.create(user=user,**validated_data)
+        teacher = Teacher.objects.create(created_by=user, **validated_data)
         teacher.is_verified = False
         teacher.save()
         return teacher
 
     def update(self, instance, validated_data):
-        user_data = validated_data.pop('user')
-        user = instance.user
+        user_data = validated_data.pop('created_by')
+        user = instance.created_by
         user.first_name = user_data['first_name']
         user.last_name = user_data['last_name']
         user.email = user_data['email']
