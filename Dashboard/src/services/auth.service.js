@@ -10,14 +10,14 @@ const registerTeacher = (
   institute_name
 ) => {
   return axios.post(configData.SERVER_URL + "teacher/", {
-    user: {
+    created_by: {
       first_name,
       last_name,
       username,
       email,
       password,
     },
-    institute_name,
+    institute_name: institute_name,
   });
 };
 
@@ -30,14 +30,14 @@ const registerStudent = (
   institute_name
 ) => {
   return axios.post(configData.SERVER_URL + "student/", {
-    user: {
+    created_by: {
       first_name,
       last_name,
       username,
       email,
       password,
     },
-    institute_name,
+    school_section: institute_name,
   });
 };
 

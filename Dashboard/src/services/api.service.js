@@ -4,8 +4,6 @@ import authService from "./auth.service";
 
 const accessToken = JSON.parse(localStorage.getItem("tusoKe36kie"))
 
-
-
 const config = {
   headers: {
     'Authorization': `Token ${accessToken}`
@@ -178,11 +176,11 @@ const changeInstructorStatus = (
   institute_name,
 ) => {
   let formData = new FormData()
-  formData.append("user.id", id)
-  formData.append("user.first_name", first_name)
-  formData.append("user.last_name", last_name)
-  formData.append("user.username", username)
-  formData.append("user.email", email)
+  formData.append("created_by.id", id)
+  formData.append("created_by.first_name", first_name)
+  formData.append("created_by.last_name", last_name)
+  formData.append("created_by.username", username)
+  formData.append("created_by.email", email)
   formData.append("is_verified", is_verified)
   formData.append("institute_name", institute_name)
   return axios.put(configData.SERVER_URL + "teacher/" + id + "/", config, formData)
