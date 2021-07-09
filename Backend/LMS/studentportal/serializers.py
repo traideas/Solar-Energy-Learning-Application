@@ -250,6 +250,12 @@ class StudentSerializer(serializers.ModelSerializer):
         model = Student
         # fields = ['user', 'school_section', 'school_roll', 'birth_date']
         fields = ['created_by', 'school_section', 'school_roll', 'studentScore']
+        extra_kwargs = {'id': {'read_only': True},
+                        # 'public': {'read_only': True, 'required': False},
+                        # 'upload_date': {'read_only': True, 'required': False},
+                        # 'school': {'read_only': True, 'required': False},
+                        'school_roll': {'required': False}
+                        }
 
     def create(self, validated_data):
         user_data = validated_data.pop('created_by')
