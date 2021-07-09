@@ -84,10 +84,10 @@ const TableList = ({ list, index }) => {
                 {index = index + 1}
             </TableCell>
             <TableCell classes={{ root: classes.tableCellRoot }} >
-                {list.user.first_name} {list.user.last_name}
+                {list.created_by.first_name} {list.created_by.last_name}
             </TableCell>
             <TableCell classes={{ root: classes.tableCellRoot }} >
-                {list.user.email}
+                {list.created_by.email}
             </TableCell>
             <TableCell classes={{ root: classes.tableCellRoot }}>
                 {list.institute_name}
@@ -96,7 +96,7 @@ const TableList = ({ list, index }) => {
                 <Avatar
                     classes={{ root: classes.avatarRoot }}
                     alt="..."
-                    src={(list.user.photo == null) ? require("assets/img/theme/defaultImage.png").default : list.user.photo}
+                    src={(list.created_by.photo == null) ? require("assets/img/theme/defaultImage.png").default : list.created_by.photo}
                 />
             </TableCell>
             <TableCell classes={{ root: classes.tableCellRoot }}>
@@ -119,10 +119,10 @@ const TableList = ({ list, index }) => {
             <TableCell classes={{ root: classes.tableCellRoot }}>
 
                 <Button variant="contained" size="small" color="primary"
-                    onClick={() => onClickStatus(list.user.id, list.user.first_name, list.user.last_name, list.user.username, list.user.email,
-                        (list.is_verified == true ? 0 : 1), list.institute_name, list.user.photo)}>
+                    onClick={() => onClickStatus(list.created_by.id, list.created_by.first_name, list.created_by.last_name, list.created_by.username, list.created_by.email,
+                        (list.is_verified == true ? 0 : 1), list.institute_name, list.created_by.photo)}>
                     <Box component={Create} position="relative" top="2px" />{" "}
-                     Status
+                    Status
                 </Button>
 
             </TableCell>

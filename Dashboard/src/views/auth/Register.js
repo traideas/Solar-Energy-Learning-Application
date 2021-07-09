@@ -49,28 +49,7 @@ function Register() {
     userType
   }) => {
     if (userType == 1) {
-      console.log("Student Post Request Here")
-    } else {
-      console.log("Teacher Post Request Here")
-    }
-
-    /* AuthService.registerTeacher(
-      first_name,
-      last_name,
-      username,
-      email,
-      password,
-      institute_name
-    )
-      .then(function (response) {
-        reset();
-        swal("Congratulations!", "Account Created Successfully!", "success");
-      })
-      .catch(function (error) {
-        swal("Registration Failed!", "Please Try Again!", "error");
-      }); */
-
-      /* AuthService.registerStudent(
+      AuthService.registerStudent(
         first_name,
         last_name,
         username,
@@ -84,8 +63,27 @@ function Register() {
         })
         .catch(function (error) {
           swal("Registration Failed!", "Please Try Again!", "error");
-        }); */
+        });
+    } else {
+      AuthService.registerTeacher(
+        first_name,
+        last_name,
+        username,
+        email,
+        password,
+        institute_name
+      )
+        .then(function (response) {
+          reset();
+          swal("Congratulations!", "Account Created Successfully!", "success");
+        })
+        .catch(function (error) {
+          swal("Registration Failed!", "Please Try Again!", "error");
+        });
+    }
+
   };
+
   return (
     <>
       <Grid item xs={12} lg={6} md={8}>
@@ -174,17 +172,17 @@ function Register() {
                   IconComponent={KeyboardArrowDown}
                   startAdornment={
                     <InputAdornment position="start">
-                      <School />
+                      <School /> &nbsp; School
                     </InputAdornment>
                   }
-                  name="school"
-                  {...register("school")}
+                  name="institute_name"
+                  {...register("institute_name")}
                 >
                   <MenuItem value="" disabled>
-                    Select Your Institute
+                    Select Your School
                   </MenuItem>
                   {
-                    schools.map(({school_name, id}) => (
+                    schools.map(({ school_name, id }) => (
                       <MenuItem key={id} value={id}>
                         {school_name}
                       </MenuItem>
@@ -201,7 +199,7 @@ function Register() {
                 <FilledInput
                   autoComplete="off"
                   type="text"
-                  placeholder="User Name"
+                  placeholder="Username"
                   name="username"
                   required
                   {...register("username")}
@@ -243,7 +241,7 @@ function Register() {
                   IconComponent={KeyboardArrowDown}
                   startAdornment={
                     <InputAdornment position="start">
-                      <AccountBoxIcon />
+                      <AccountBoxIcon /> &nbsp; User Type
                     </InputAdornment>
                   }
                   name="userType"
