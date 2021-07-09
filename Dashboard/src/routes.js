@@ -156,14 +156,16 @@ var routes = [
     icon: QuestionAnswerIcon,
     iconColor: "light",
     component: ViewQuiz,
-    layout: "/admin"
+    layout: "/admin",
+    adminOnly: true,
   },
   {
     path: "/createquiz",
     name: "Create",
     icon: RateReviewIcon,
     component: CreateQuiz,
-    layout: "/admin"
+    layout: "/admin",
+    adminOnly: true,
   },
 ];
 export default routes;
