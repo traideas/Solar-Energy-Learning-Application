@@ -29,6 +29,14 @@ import axios from "axios";
 import AuthService from "../../services/auth.service";
 import configData from '../../configData.json'
 
+const accessToken = JSON.parse(localStorage.getItem("tusoKe36kie"))
+
+const config = {
+  headers: {
+    'Authorization': `Token ${accessToken}`
+  }
+}
+
 const useStyles = makeStyles(componentStyles);
 
 const CreateQuiz = () => {
@@ -69,10 +77,10 @@ const CreateQuiz = () => {
     }
     formData.append("total_marks", 0)
     axios
-      .post(configData.SERVER_URL + "quiz/", formData)
+      .post(configData.SERVER_URL + "quiz/", config, formData)
       .then(({ data }) => {
         quizes.map(({ question, a, b, c, d, correct_option }) => {
-          axios.post(configData.SERVER_URL + "question/", {
+          axios.post(configData.SERVER_URL + "question/", config, {
             quiz: data.id,
             question: question,
             options_1: a,

@@ -33,7 +33,7 @@ function Login({ history }) {
   const onSubmit = ({ username, password }) => {
     AuthService.login(username, password)
       .then(function (response) {
-        history.push('/admin/index')
+        window.location.replace('/admin/index')
         /* swal("Congratulations!", "Account Created Successfully!", "success") */
       })
       .catch(function (error) {
