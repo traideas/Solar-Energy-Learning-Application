@@ -1,7 +1,7 @@
 import axios from "axios";
 import configData from '../configData.json'
 
-const register = (
+const registerTeacher = (
   first_name,
   last_name,
   username,
@@ -10,6 +10,26 @@ const register = (
   institute_name
 ) => {
   return axios.post(configData.SERVER_URL + "teacher/", {
+    user: {
+      first_name,
+      last_name,
+      username,
+      email,
+      password,
+    },
+    institute_name,
+  });
+};
+
+const registerStudent = (
+  first_name,
+  last_name,
+  username,
+  email,
+  password,
+  institute_name
+) => {
+  return axios.post(configData.SERVER_URL + "student/", {
     user: {
       first_name,
       last_name,
@@ -97,7 +117,6 @@ const getUserId = () => {
 };
 
 export default {
-  register,
   login,
   logout,
   isLogedin,
@@ -106,5 +125,6 @@ export default {
   getUserId,
   isAdmin,
   hasToken,
-
+  registerStudent,
+  registerTeacher
 };

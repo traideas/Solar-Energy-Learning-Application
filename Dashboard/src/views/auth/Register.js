@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import swal from "sweetalert";
 import { useForm } from "react-hook-form";
 // @material-ui/core components
@@ -25,6 +25,7 @@ import KeyboardArrowDown from "@material-ui/icons/KeyboardArrowDown";
 import componentStyles from "assets/theme/views/auth/register.js";
 //Services
 import AuthService from "../../services/auth.service";
+import ApiService from "../../services/api.service";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -32,6 +33,12 @@ function Register() {
   const classes = useStyles();
   const theme = useTheme();
   const { register, handleSubmit, reset } = useForm();
+  const [schools, setSchools] = useState([]);
+  useEffect(() => {
+    ApiService.getSchoolList()
+      .then(({ data }) => setSchools(data))
+      .catch((err) => console.log(err));
+  }, []);
   const onSubmit = ({
     first_name,
     last_name,
@@ -39,8 +46,15 @@ function Register() {
     email,
     password,
     institute_name,
+    userType
   }) => {
-    AuthService.register(
+    if (userType == 1) {
+      console.log("Student Post Request Here")
+    } else {
+      console.log("Teacher Post Request Here")
+    }
+
+    /* AuthService.registerTeacher(
       first_name,
       last_name,
       username,
@@ -54,7 +68,23 @@ function Register() {
       })
       .catch(function (error) {
         swal("Registration Failed!", "Please Try Again!", "error");
-      });
+      }); */
+
+      /* AuthService.registerStudent(
+        first_name,
+        last_name,
+        username,
+        email,
+        password,
+        institute_name
+      )
+        .then(function (response) {
+          reset();
+          swal("Congratulations!", "Account Created Successfully!", "success");
+        })
+        .catch(function (error) {
+          swal("Registration Failed!", "Please Try Again!", "error");
+        }); */
   };
   return (
     <>
@@ -145,16 +175,21 @@ function Register() {
                   startAdornment={
                     <InputAdornment position="start">
                       <School />
-                      <p style={{marginLeft: 10}}>Select Your Institute</p>
                     </InputAdornment>
                   }
+                  name="school"
+                  {...register("school")}
                 >
-                  <MenuItem value="" disabled>Select Your Institute</MenuItem>
-                  <MenuItem value={1}>1</MenuItem>
-                  <MenuItem value={2}>2</MenuItem>
-                  <MenuItem value={3}>3</MenuItem>
-                  <MenuItem value={4}>4</MenuItem>
-                  <MenuItem value={5}>5</MenuItem>
+                  <MenuItem value="" disabled>
+                    Select Your Institute
+                  </MenuItem>
+                  {
+                    schools.map(({school_name, id}) => (
+                      <MenuItem key={id} value={id}>
+                        {school_name}
+                      </MenuItem>
+                    ))
+                  }
                 </Select>
               </FormControl>
               <FormControl
@@ -196,6 +231,36 @@ function Register() {
                     </InputAdornment>
                   }
                 />
+              </FormControl>
+              <FormControl
+                variant="filled"
+                component={Box}
+                width="100%"
+                marginBottom="1.5rem!important"
+              >
+                <Select
+                  defaultValue=""
+                  IconComponent={KeyboardArrowDown}
+                  startAdornment={
+                    <InputAdornment position="start">
+                      <AccountBoxIcon />
+                    </InputAdornment>
+                  }
+                  name="userType"
+                  {...register("userType")}
+                  required
+
+                >
+                  <MenuItem value="" disabled>
+                    Choose your Role
+                  </MenuItem>
+                  <MenuItem value="1">
+                    Student
+                  </MenuItem>
+                  <MenuItem value="2">
+                    Teacher
+                  </MenuItem>
+                </Select>
               </FormControl>
 
               <Box textAlign="center" marginTop="1.5rem" marginBottom="1.5rem">

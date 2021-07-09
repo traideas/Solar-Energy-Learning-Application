@@ -162,6 +162,12 @@ const getTeacherList = () => {
   )
 };
 
+const getSchoolList = () => {
+  return (
+    axios.get(configData.SERVER_URL + "school/")
+  )
+}
+
 const changeInstructorStatus = (
   id,
   first_name,
@@ -196,5 +202,6 @@ export default {
   getVideoDetails,
   getQuizDetails,
   getTeacherList,
-  changeInstructorStatus
+  changeInstructorStatus,
+  getSchoolList
 };
