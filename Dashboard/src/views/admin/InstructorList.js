@@ -150,7 +150,8 @@ const InstructorList = () => {
             <Container
                 maxWidth={false}
                 component={Box}
-                marginTop="-6rem"
+                marginTop="-3rem"
+                marginBottom="6rem"
                 classes={{ root: classes.containerRoot }}
             >
                 <Card classes={{ root: classes.cardRoot }}>

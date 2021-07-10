@@ -78,6 +78,7 @@ function Dashboard() {
         maxWidth={false}
         component={Box}
         marginTop="-6rem"
+        marginBottom="6rem"
         classes={{ root: classes.containerRoot }}
       >
 

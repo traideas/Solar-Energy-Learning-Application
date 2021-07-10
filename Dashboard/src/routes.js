@@ -38,7 +38,7 @@ var routes = [
   },
   {
     path: "/index",
-    name: "Dashboard",
+    name: "Discussion",
     icon: DashboardIcon,
     iconColor: "Primary",
     component: Dashboard,
@@ -157,7 +157,7 @@ var routes = [
   },
   {
     path: "/quiz",
-    name: "Quizs",
+    name: "Create Quizes",
     icon: QuestionAnswerIcon,
     iconColor: "light",
     component: ViewQuiz,
@@ -170,6 +170,7 @@ var routes = [
     icon: RateReviewIcon,
     component: CreateQuiz,
     layout: "/admin",
+    invisible: true,
     adminOnly: true,
   },
   {
@@ -184,7 +185,8 @@ var routes = [
     name: "Attempt Quiz",
     icon: RateReviewIcon,
     component: AttemptQuiz,
-    layout: "/admin"
+    layout: "/admin",
+    invisible: true,
   },
 ];
 export default routes;
