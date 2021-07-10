@@ -46,7 +46,7 @@ class IsCreatedBy(permissions.BasePermission):
             # print(type(obj.creator))
             # print(type(request.user.username))
             # print(obj.creator == request.user)
-            return (obj.created_by == request.user or request.user.is_admin)
+            return (obj.created_by == request.user or request.user.is_admin or request.user.is_student)
 #
         # Write permissions are only allowed to the owner of the snippet.
         return (obj.created_by == request.user or request.user.is_admin)
