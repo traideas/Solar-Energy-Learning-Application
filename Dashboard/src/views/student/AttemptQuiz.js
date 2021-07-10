@@ -29,7 +29,7 @@ import { CardContent } from "@material-ui/core";
 const useStyles = makeStyles(componentStyles);
 
 function AttemptQuiz({ location }) {
-  console.log(location.quiz);
+  const { id, title, description, total_marks } = location.quiz;
   const classes = useStyles();
   return (
     <>
@@ -52,62 +52,65 @@ function AttemptQuiz({ location }) {
           ></CardHeader>
           <CardContent>
             <Grid container>
-              <Grid item xs={12} md={6}>
-                <Typography
-                  variant="h3"
-                  component="h3"
-                  className={classes.mb0}
-                >
-                  Argon Dashboard PRO Material-UI
-                </Typography>
-                <RadioGroup
-                  aria-label="gender"
-                  name="example-radio"
-                  defaultValue="2"
-                  className={classes.mb0}
-                >
-                  <FormControlLabel
-                    control={<Radio color="primary" />}
-                    label="Unchecked"
-                    value="1"
-                    labelPlacement="end"
-                    classes={{
-                      root: classes.formControlCheckboxLabelRoot,
-                      label: classes.formControlCheckboxLabelLabel,
-                    }}
-                  />
-                  <FormControlLabel
-                    control={<Radio color="primary" />}
-                    label="Checked"
-                    labelPlacement="end"
-                    value="2"
-                    classes={{
-                      root: classes.formControlCheckboxLabelRoot,
-                      label: classes.formControlCheckboxLabelLabel,
-                    }}
-                  />
-                  <FormControlLabel
-                    control={<Radio color="primary" disabled />}
-                    label="Unchecked"
-                    value="1"
-                    labelPlacement="end"
-                    classes={{
-                      root: classes.formControlCheckboxLabelRoot,
-                      label: classes.formControlCheckboxLabelLabel,
-                    }}
-                  />
-                  <FormControlLabel
-                    control={<Radio color="primary" disabled />}
-                    label="Checked"
-                    labelPlacement="end"
-                    value="2"
-                    classes={{
-                      root: classes.formControlCheckboxLabelRoot,
-                      label: classes.formControlCheckboxLabelLabel,
-                    }}
-                  />
-                </RadioGroup>
-              </Grid>
+              {location.questions.map(({question, options_1,options_2,options_3,options_4, answer}) => (
+                <Grid item xs={12}>
+                  <Typography
+                    variant="h3"
+                    component="h3"
+                    className={classes.mb0}
+                  >
+                   Question: {question}
+                  </Typography>
+                  <RadioGroup
+                    aria-label="gender"
+                    name="example-radio"
+                    defaultValue=""
+                    className={classes.mb0}
+                  >
+                    <FormControlLabel
+                      control={<Radio color="primary" />}
+                      label={options_1}
+                      value="1"
+                      labelPlacement="end"
+                      classes={{
+                        root: classes.formControlCheckboxLabelRoot,
+                        label: classes.formControlCheckboxLabelLabel,
+                      }}
+                    />
+                    <FormControlLabel
+                      control={<Radio color="primary" />}
+                      label={options_2}
+                      labelPlacement="end"
+                      value="2"
+                      classes={{
+                        root: classes.formControlCheckboxLabelRoot,
+                        label: classes.formControlCheckboxLabelLabel,
+                      }}
+                    />
+                    <FormControlLabel
+                      control={<Radio color="primary" />}
+                      label={options_3}
+                      value="3"
+                      labelPlacement="end"
+                      classes={{
+                        root: classes.formControlCheckboxLabelRoot,
+                        label: classes.formControlCheckboxLabelLabel,
+                      }}
+                    />
+                    <FormControlLabel
+                      control={<Radio color="primary" />}
+                      label={options_4}
+                      labelPlacement="end"
+                      value="4"
+                      classes={{
+                        root: classes.formControlCheckboxLabelRoot,
+                        label: classes.formControlCheckboxLabelLabel,
+                      }}
+                    />
+                  </RadioGroup>
+                  <hr />
+                </Grid>
+              ))}
             </Grid>
           </CardContent>
         </Card>

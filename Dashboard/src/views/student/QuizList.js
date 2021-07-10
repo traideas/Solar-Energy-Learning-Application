@@ -60,7 +60,8 @@ const TableList = ({ list, index }) => {
       <TableCell classes={{ root: classes.tableCellRoot }}>
         <Link to={{
             pathname: '/admin/attempt_quiz',
-            quiz: list
+            quiz: list,
+            questions: list.questions
         }}>
           <Button variant="contained" size="small" color="primary" onClick={() => handleClick(list.questions, list.title)}>
             <Box component={VisibilityIcon} position="relative" top="2px" />{" "}
