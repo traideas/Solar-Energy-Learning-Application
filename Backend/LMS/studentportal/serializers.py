@@ -75,6 +75,7 @@ class DiscussionSerializer(serializers.ModelSerializer):
         }
 
         data['created_by'] = created_by
+        data['file'] = 'http://127.0.0.1:8000/media/' + str(instance.file)
 
         return data
 
@@ -472,6 +473,7 @@ class PPTXSerializer(serializers.ModelSerializer):
             'photo': 'http://127.0.0.1:8000/media/' + str(instance.created_by.photo)
         }
         data['created_by'] = created_by
+        data['file'] = 'http://127.0.0.1:8000/media/' + str(instance.file)
 
         return data
 
@@ -523,6 +525,7 @@ class DocSerializer(serializers.ModelSerializer):
             'photo': 'http://127.0.0.1:8000/media/' + str(instance.created_by.photo)
         }
         data['created_by'] = created_by
+        data['file'] = 'http://127.0.0.1:8000/media/' + str(instance.file)
 
         return data
 
