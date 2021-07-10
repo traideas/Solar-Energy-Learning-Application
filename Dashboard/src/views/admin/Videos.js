@@ -240,7 +240,6 @@ const Videos = () => {
                           " " +
                           classes.tableCellRootHead,
                       }}
-
                     >
                       Action
                     </TableCell>}

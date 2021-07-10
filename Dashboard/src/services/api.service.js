@@ -201,6 +201,14 @@ const deleteVideo = (id) => {
   return axios.delete(configData.SERVER_URL + "video/" + id + "/", config)
 }
 
+const deleteSlide = (id) => {
+  return axios.delete(configData.SERVER_URL + "pptx/" + id + "/", config)
+}
+
+const deleteArticle = (id) => {
+  return axios.delete(configData.SERVER_URL + "document/" + id + "/", config)
+}
+
 
 export default {
   uploadVideoContent,
@@ -220,5 +228,7 @@ export default {
   getSchoolList,
   deleteDiscussion,
   deleteComment,
-  deleteVideo
+  deleteVideo,
+  deleteSlide,
+  deleteArticle
 };
