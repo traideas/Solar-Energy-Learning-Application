@@ -411,8 +411,10 @@ class VideoSerializer(serializers.ModelSerializer):
             'name': user["first_name"] + " " + user["last_name"],
             'photo': 'http://127.0.0.1:8000/media/' + str(instance.created_by.photo)
         }
+
         # print(str(instance.created_by.photo))
         data['created_by'] = created_by
+        data['file'] = 'http://127.0.0.1:8000/media/' + str(instance.file)
         # data['created_by'] = "hello"
         return data
 
