@@ -16,7 +16,9 @@ import Avatar from "@material-ui/core/Avatar";
 import Tooltip from "@material-ui/core/Tooltip";
 import FormControl from "@material-ui/core/FormControl";
 import Grid from "@material-ui/core/Grid";
+import GetAppIcon from '@material-ui/icons/GetApp';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import Icon from '@material-ui/core/Icon';
 // core components
 import Header from "components/Headers/Header.js";
 import componentStyles from "assets/theme/views/admin/profile.js";
@@ -157,7 +159,7 @@ function CreateDiscussion() {
             .catch((err) => console.log(err));
     }, []);
 
-    const { title, description, created_by, created_date, comments } = discussionDetails;
+    const { title, description, file, created_by, created_date, comments } = discussionDetails;
     return (
         <>
             <Header />
@@ -202,7 +204,7 @@ function CreateDiscussion() {
                     <CardContent>
                         <h2>{title}</h2>
                         <p>{description}</p>
-
+                        {file == null ? "" : <a href={file} target="_blank">Attachment</a>}
                     </CardContent>
                     <CardActions>
                         <form onSubmit={handleSubmit(onSubmit)}>
