@@ -193,6 +193,15 @@ const deleteDiscussion = (id) => {
   return axios.delete(configData.SERVER_URL + "discussion/" + id + "/", config)
 }
 
+const deleteComment = (id) => {
+  return axios.delete(configData.SERVER_URL + "comment/" + id + "/", config)
+}
+
+const deleteVideo = (id) => {
+  return axios.delete(configData.SERVER_URL + "video/" + id + "/", config)
+}
+
+
 export default {
   uploadVideoContent,
   uploadSlideContent,
@@ -209,5 +218,7 @@ export default {
   getTeacherList,
   changeInstructorStatus,
   getSchoolList,
-  deleteDiscussion
+  deleteDiscussion,
+  deleteComment,
+  deleteVideo
 };

@@ -16,7 +16,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Tooltip from "@material-ui/core/Tooltip";
 import FormControl from "@material-ui/core/FormControl";
 import Grid from "@material-ui/core/Grid";
-
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 // core components
 import Header from "components/Headers/Header.js";
 import componentStyles from "assets/theme/views/admin/profile.js";
@@ -26,6 +26,35 @@ import AuthService from '../../services/auth.service'
 import swal from "sweetalert";
 
 const useStyles = makeStyles(componentStyles);
+
+const onClickDelete =
+    (
+        id
+    ) => {
+        swal({
+            title: "Are you sure?",
+            text: "You want to change instructor status!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willChange) => {
+                if (willChange) {
+                    ApiService.deleteComment
+                        (
+                            id
+                        )
+                        .then(function (res) {
+                            swal("Success!", "Comment Deleted Successfully!", "success")
+                            window.location.reload();
+                        })
+                        .catch(function (res) {
+                            swal("Failed!", "Please Try Again!", "error");
+                        })
+                }
+            });
+    };
+
 
 const CommentList = ({ list }) => {
 
@@ -61,6 +90,21 @@ const CommentList = ({ list }) => {
                             {list.created_date}
                         </Box>
                     </Grid>
+
+
+                    {(AuthService.isAdmin() == false || AuthService.isAdmin() == null) ? "" :
+                        <Grid item xs="auto">
+                            <Box
+                                justifyContent="flex-end"
+                                display="flex"
+                                flexWrap="wrap"
+                            >
+                                <Button onClick={() => onClickDelete(list.id)} variant="contained" size="small" style={{ backgroundColor: "red", borderColor: "red" }}>
+                                    <Box component={DeleteOutlineIcon} position="relative" top="2px" />{" "}
+                                    Delete
+                                </Button>
+                            </Box>
+                        </Grid>}
                 </Grid>
             </CardActions>
 

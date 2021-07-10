@@ -209,17 +209,9 @@ const Articles = () => {
                     <TableList list={list} key={list.id} index={index} />
                   ))
                 }
-
               </TableBody>
             </Box>
           </TableContainer>
-          <Box
-            classes={{ root: classes.cardActionsRoot }}
-            component={CardActions}
-            justifyContent="flex-end"
-          >
-            <Pagination count={3} color="primary" variant="outlined" />
-          </Box>
         </Card>
       </Container>
     </>
