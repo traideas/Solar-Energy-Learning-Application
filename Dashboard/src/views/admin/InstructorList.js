@@ -208,7 +208,7 @@ const InstructorList = () => {
                                             root:
                                                 classes.tableCellRoot + " " + classes.tableCellRootHead,
                                         }}
-                                    >
+                                    >+
                                         Status
                                     </TableCell>
 
@@ -233,13 +233,6 @@ const InstructorList = () => {
                             </TableBody>
                         </Box>
                     </TableContainer>
-                    <Box
-                        classes={{ root: classes.cardActionsRoot }}
-                        component={CardActions}
-                        justifyContent="flex-end"
-                    >
-                        <Pagination count={3} color="primary" variant="outlined" />
-                    </Box>
                 </Card>
             </Container>
         </>

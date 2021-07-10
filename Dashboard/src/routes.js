@@ -112,7 +112,8 @@ var routes = [
     iconColor: "Primary",
     component: CreateVideos,
     layout: "/admin",
-    invisible: true
+    invisible: true,
+    adminOnly: true,
   },
   {
     path: "/slides",
@@ -127,7 +128,8 @@ var routes = [
     name: "Create Slide",
     component: CreateSlides,
     layout: "/admin",
-    invisible: true
+    invisible: true,
+    adminOnly: true,
   },
   {
     path: "/articles",
@@ -142,7 +144,8 @@ var routes = [
     name: "Slide",
     component: CreateArticles,
     layout: "/admin",
-    invisible: true
+    invisible: true,
+    adminOnly: true,
   },
   {
     divider: true,

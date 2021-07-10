@@ -6,7 +6,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardHeader from "@material-ui/core/CardHeader";
 import Container from "@material-ui/core/Container";
 import Table from "@material-ui/core/Table";
@@ -15,7 +14,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Pagination from "@material-ui/lab/Pagination";
+
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Tooltip from "@material-ui/core/Tooltip";
@@ -24,13 +23,42 @@ import Avatar from "@material-ui/core/Avatar";
 import Header from "components/Headers/Header.js";
 import componentStyles from "assets/theme/views/admin/tables.js";
 import VisibilityIcon from '@material-ui/icons/Visibility';
-
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import configData from '../../configData.json'
 
 //Api Services
 import ApiService from "../../services/api.service";
-
+import AuthService from "../../services/auth.service";
+import swal from "sweetalert";
 const useStyles = makeStyles(componentStyles);
+
+const onClickDelete =
+  (
+    id
+  ) => {
+    swal({
+      title: "Are you sure?",
+      text: "You want to change instructor status!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willChange) => {
+        if (willChange) {
+          ApiService.deleteVideo
+            (
+              id
+            )
+            .then(function (res) {
+              swal("Success!", "Video Deleted Successfully!", "success")
+              window.location.reload();
+            })
+            .catch(function (res) {
+              swal("Failed!", "Please Try Again!", "error");
+            })
+        }
+      });
+  };
 
 const TableList = ({ list, index }) => {
   const classes = useStyles()
@@ -68,9 +96,7 @@ const TableList = ({ list, index }) => {
           />
         </Tooltip>
       </TableCell>
-      <TableCell classes={{ root: classes.tableCellRoot }}>
-        <img src={list.photo} style={{ height: "80px" }} />
-      </TableCell>
+
       <TableCell classes={{ root: classes.tableCellRoot }}>
         <a href={list.file} target="_blank">
           <Button variant="contained" size="small" color="primary">
@@ -79,6 +105,15 @@ const TableList = ({ list, index }) => {
           </Button>
         </a>
       </TableCell>
+
+      {(AuthService.isAdmin() == false || AuthService.isAdmin() == null) ? "" : <TableCell classes={{ root: classes.tableCellRoot }}>
+
+        <Button onClick={() => onClickDelete(list.id)} variant="contained" size="small" style={{ backgroundColor: "red", borderColor: "red" }}>
+          <Box component={DeleteOutlineIcon} position="relative" top="2px" />{" "}
+          Delete
+        </Button>
+
+      </TableCell>}
 
     </TableRow>
   )
@@ -124,7 +159,11 @@ const Videos = () => {
                   </Box>
                 </Grid>
                 <Grid item xs="auto">
-                  <Box justifyContent="flex-end" display="flex" flexWrap="wrap">
+                  <Box
+                    justifyContent="flex-end"
+                    display="flex"
+                    flexWrap="wrap"
+                    display={(AuthService.isAdmin() == false || AuthService.isAdmin() == null) ? "none" : ""}>
                     <Link to='/admin/videos/createvideos'>
                       <Button variant="contained" color="primary" size="small"
                       >
@@ -191,17 +230,19 @@ const Videos = () => {
                         classes.tableCellRoot + " " + classes.tableCellRootHead,
                     }}
                   >
-                    Thumbnil
-                  </TableCell>
-
-                  <TableCell
-                    classes={{
-                      root:
-                        classes.tableCellRoot + " " + classes.tableCellRootHead,
-                    }}
-                  >
                     File
                   </TableCell>
+                  {(AuthService.isAdmin() == false || AuthService.isAdmin() == null) ? "" :
+                    <TableCell
+                      classes={{
+                        root:
+                          classes.tableCellRoot +
+                          " " +
+                          classes.tableCellRootHead,
+                      }}
+                    >
+                      Action
+                    </TableCell>}
 
                 </TableRow>
               </TableHead>
@@ -211,17 +252,9 @@ const Videos = () => {
                     <TableList list={list} key={list.id} index={index} />
                   ))
                 }
-
               </TableBody>
             </Box>
           </TableContainer>
-          <Box
-            classes={{ root: classes.cardActionsRoot }}
-            component={CardActions}
-            justifyContent="flex-end"
-          >
-            <Pagination count={3} color="primary" variant="outlined" />
-          </Box>
         </Card>
       </Container>
     </>
