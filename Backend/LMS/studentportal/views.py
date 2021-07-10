@@ -209,7 +209,7 @@ class VideoList(generics.ListCreateAPIView):
 
 class VideoDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-                          AccessPermission, IsCreatedBy]
+                           IsCreatedBy]
     queryset = VideoMaterial.objects.all()
     serializer_class = VideoSerializer
 

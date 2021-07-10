@@ -189,6 +189,10 @@ const changeInstructorStatus = (
   }, config)
 }
 
+const deleteDiscussion = (id) => {
+  return axios.delete(configData.SERVER_URL + "discussion/" + id + "/", config)
+}
+
 export default {
   uploadVideoContent,
   uploadSlideContent,
@@ -204,5 +208,6 @@ export default {
   getQuizDetails,
   getTeacherList,
   changeInstructorStatus,
-  getSchoolList
+  getSchoolList,
+  deleteDiscussion
 };
