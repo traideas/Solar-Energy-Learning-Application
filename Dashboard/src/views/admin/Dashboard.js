@@ -19,6 +19,7 @@ import Typography from "@material-ui/core/Typography";
 // @material-ui/icons components
 import Avatar from "@material-ui/core/Avatar";
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import Tooltip from "@material-ui/core/Tooltip";
 // core components
 import Header from "components/Headers/Header.js";
@@ -27,7 +28,8 @@ import componentStyles from "assets/theme/views/admin/dashboard.js";
 import configData from '../../configData.json'
 //Api Services
 import ApiService from "../../services/api.service";
-
+import AuthService from "../../services/auth.service";
+import swal from "sweetalert";
 const useStyles = makeStyles(componentStyles);
 
 function Dashboard() {
@@ -39,6 +41,34 @@ function Dashboard() {
       .then((res) => setdiscussionDetails(res.data))
       .catch((err) => console.log(err));
   }, []);
+
+  const onClickDelete =
+    (
+      id
+    ) => {
+      swal({
+        title: "Are you sure?",
+        text: "You want to change instructor status!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+        .then((willChange) => {
+          if (willChange) {
+            ApiService.deleteDiscussion
+              (
+                id
+              )
+              .then(function (res) {
+                swal("Success!", "Discussion Deleted Successfully!", "success")
+                window.location.reload();
+              })
+              .catch(function (res) {
+                swal("Failed!", "Please Try Again!", "error");
+              })
+          }
+        });
+    };
 
   return (
     <>
@@ -87,7 +117,9 @@ function Dashboard() {
                         justifyContent="flex-end"
                         display="flex"
                         flexWrap="wrap"
+                        display={(AuthService.isAdmin() == false || AuthService.isAdmin() == null) ? "" : "none"}
                       >
+
                         <Link to='/admin/creatediscussion'>
                           <Button
                             variant="contained"
@@ -178,9 +210,22 @@ function Dashboard() {
                             " " +
                             classes.tableCellRootHead,
                         }}
+
                       >
                         Details
                       </TableCell>
+                      {(AuthService.isAdmin() == false || AuthService.isAdmin() == null) ? "" :
+                        <TableCell
+                          classes={{
+                            root:
+                              classes.tableCellRoot +
+                              " " +
+                              classes.tableCellRootHead,
+                          }}
+
+                        >
+                          Action
+                        </TableCell>}
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -228,6 +273,14 @@ function Dashboard() {
                               </Button>
                             </Link>
                           </TableCell>
+                          {(AuthService.isAdmin() == false || AuthService.isAdmin() == null) ? "" : <TableCell classes={{ root: classes.tableCellRoot }}>
+
+                            <Button onClick={() => onClickDelete(list.id)} variant="contained" size="small" style={{ backgroundColor: "red", borderColor: "red" }}>
+                              <Box component={DeleteOutlineIcon} position="relative" top="2px" />{" "}
+                              Delete
+                            </Button>
+
+                          </TableCell>}
                         </TableRow>
                       ))
                     }

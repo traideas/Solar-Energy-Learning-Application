@@ -49,26 +49,6 @@ export default function AdminNavbar({ brandText }) {
                   {brandText}
                 </Typography>
               </div>
-              {/* <Box display="flex" alignItems="center" width="auto">
-                <Box
-                  display="flex"
-                  alignItems="center"
-                  width="auto"
-                  marginRight="1rem"
-                  classes={{
-                    root: classes.searchBox,
-                  }}
-                >
-                  <SearchIcon className={classes.searchIcon} />
-                  <InputBase
-                    placeholder="Search"
-                    classes={{
-                      input: classes.searchInput,
-                    }}
-                  />
-                </Box>
-                
-              </Box> */}
               <NavbarDropdown />
             </Box>
           </Container>
