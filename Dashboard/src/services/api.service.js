@@ -74,12 +74,16 @@ const uploadArticleContent = (
 const uploadDiscussion = (
   title,
   description,
+  file,
   created_by,
   status
 ) => {
   let formData = new FormData();
   formData.append("title", title);
   formData.append("description", description);
+  if (file[0] != undefined) {
+    formData.append("file", file[0]);
+  }
   formData.append("created_by", created_by);
   formData.append("status", status);
   return axios.post(configData.SERVER_URL + "discussion/", formData, config);

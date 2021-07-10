@@ -26,10 +26,10 @@ function CreateDiscussion() {
   const classes = useStyles();
   const { register, handleSubmit, reset } = useForm();
 
-  const onSubmit = ({ title, description }) => {
+  const onSubmit = ({ title, description, file }) => {
     const created_by = AuthService.getUserId()
     const status = 1
-    ApiService.uploadDiscussion(title, description, created_by, status)
+    ApiService.uploadDiscussion(title, description, file, created_by, status)
       .then(function (res) {
         reset()
         swal("Success!", "Discussion Created Successfully!", "success")
@@ -92,6 +92,25 @@ function CreateDiscussion() {
                         name="description"
                         {...register("description")}
                         required
+                      />
+                    </FormControl>
+                  </FormGroup>
+                </Grid>
+                <Grid item xs={12}>
+                  <FormGroup>
+                    <FormLabel>Attach a File</FormLabel>
+
+                    <FormControl
+                      variant="filled"
+                      component={Box}
+                      width="100%"
+                      marginBottom="1rem!important"
+                    >
+                      <input
+                        autoComplete="off"
+                        type="file"
+                        name="file"
+                        {...register("file")}
                       />
                     </FormControl>
                   </FormGroup>
