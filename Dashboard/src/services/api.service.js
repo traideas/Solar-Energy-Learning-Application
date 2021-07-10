@@ -27,7 +27,7 @@ const uploadVideoContent = (
   }
   formData.append("file", file[0]);
   formData.append("status", status);
-  return axios.post(configData.SERVER_URL + "video/", config, formData);
+  return axios.post(configData.SERVER_URL + "video/", formData, config);
 };
 
 
@@ -48,7 +48,7 @@ const uploadSlideContent = (
   }
   formData.append("file", file[0]);
   formData.append("status", status);
-  return axios.post(configData.SERVER_URL + "pptx/", config, formData);
+  return axios.post(configData.SERVER_URL + "pptx/", formData, config);
 };
 
 const uploadArticleContent = (
@@ -68,7 +68,7 @@ const uploadArticleContent = (
   }
   formData.append("file", file[0]);
   formData.append("status", status);
-  return axios.post(configData.SERVER_URL + "document/", config, formData);
+  return axios.post(configData.SERVER_URL + "document/", formData, config);
 };
 
 const uploadDiscussion = (
@@ -82,7 +82,7 @@ const uploadDiscussion = (
   formData.append("description", description);
   formData.append("created_by", created_by);
   formData.append("status", status);
-  return axios.post(configData.SERVER_URL + "discussion/", config, formData);
+  return axios.post(configData.SERVER_URL + "discussion/", formData, config);
 };
 
 const uploadComment = (
@@ -94,7 +94,7 @@ const uploadComment = (
   formData.append("comment", comment);
   formData.append("discussion", discussion);
   formData.append("created_by", created_by);
-  return axios.post(configData.SERVER_URL + "comment/", config, formData);
+  return axios.post(configData.SERVER_URL + "comment/", formData, config);
 };
 
 const getUserDetails = (id) => {
@@ -175,15 +175,18 @@ const changeInstructorStatus = (
   is_verified,
   institute_name,
 ) => {
-  let formData = new FormData()
-  formData.append("created_by.id", id)
-  formData.append("created_by.first_name", first_name)
-  formData.append("created_by.last_name", last_name)
-  formData.append("created_by.username", username)
-  formData.append("created_by.email", email)
-  formData.append("is_verified", is_verified)
-  formData.append("institute_name", institute_name)
-  return axios.put(configData.SERVER_URL + "teacher/" + id + "/", config, formData)
+
+  return axios.put(configData.SERVER_URL + "teacher/" + id + "/", {
+    created_by: {
+      id,
+      first_name,
+      last_name,
+      username,
+      email,
+    },
+    is_verified: is_verified,
+    institute_name: institute_name,
+  }, config)
 }
 
 export default {

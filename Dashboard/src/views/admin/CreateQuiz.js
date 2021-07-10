@@ -71,16 +71,16 @@ const CreateQuiz = () => {
     let formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
-    formData.append("teacher", AuthService.getUserId());
+    formData.append("created_by", AuthService.getUserId());
     if (photo[0] != undefined) {
       formData.append("photo", photo[0]);
     }
     formData.append("total_marks", 0)
     axios
-      .post(configData.SERVER_URL + "quiz/", config, formData)
+      .post(configData.SERVER_URL + "quiz/", formData, config)
       .then(({ data }) => {
         quizes.map(({ question, a, b, c, d, correct_option }) => {
-          axios.post(configData.SERVER_URL + "question/", config, {
+          axios.post(configData.SERVER_URL + "question/", {
             quiz: data.id,
             question: question,
             options_1: a,
@@ -89,7 +89,7 @@ const CreateQuiz = () => {
             options_4: d,
             answer: correct_option,
             mark: Math.floor(Math.random() * 101),
-          }).then(function (res) {
+          }, config).then(function (res) {
             reset()
             swal("Success!", "Quiz Created Successfully!", "success")
           })
