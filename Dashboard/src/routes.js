@@ -26,6 +26,8 @@ import AttachFileIcon from '@material-ui/icons/AttachFile';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import RateReviewIcon from '@material-ui/icons/RateReview';
 import RecentActorsIcon from '@material-ui/icons/RecentActors';
+import QuizList from "views/student/QuizList";
+import AttemptQuiz from "views/student/AttemptQuiz";
 
 var routes = [
   {
@@ -151,7 +153,7 @@ var routes = [
     divider: true,
   },
   {
-    title: "Quizs",
+    title: "Quizes",
   },
   {
     path: "/quiz",
@@ -169,6 +171,20 @@ var routes = [
     component: CreateQuiz,
     layout: "/admin",
     adminOnly: true,
+  },
+  {
+    path: "/quiz_list",
+    name: "Quiz List",
+    icon: RateReviewIcon,
+    component: QuizList,
+    layout: "/admin",
+  },
+  {
+    path: "/attempt_quiz",
+    name: "Attempt Quiz",
+    icon: RateReviewIcon,
+    component: AttemptQuiz,
+    layout: "/admin"
   },
 ];
 export default routes;
