@@ -358,7 +358,7 @@ class QuizList(generics.ListCreateAPIView):
 
 class QuizDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-                          AccessPermission, IsCreatedBy]
+                        IsCreatedBy]
     queryset = Quiz.objects.all()
     serializer_class = QuizSerializer
 
