@@ -133,7 +133,8 @@ const Articles = () => {
       <Container
         maxWidth={false}
         component={Box}
-        marginTop="-6rem"
+        marginTop="-3rem"
+        marginBottom="6rem"
         classes={{ root: classes.containerRoot }}
       >
         <Card classes={{ root: classes.cardRoot }}>
@@ -155,7 +156,11 @@ const Articles = () => {
                   </Box>
                 </Grid>
                 <Grid item xs="auto">
-                  <Box justifyContent="flex-end" display="flex" flexWrap="wrap">
+                  <Box
+                    justifyContent="flex-end"
+                    display="flex"
+                    flexWrap="wrap"
+                    display={(AuthService.isAdmin() == false || AuthService.isAdmin() == null) ? "none" : ""}>
                     <Link to='/admin/articles/createarticles'>
                       <Button variant="contained" color="primary" size="small"
                       >

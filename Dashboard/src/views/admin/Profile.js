@@ -87,8 +87,8 @@ function Profile() {
       <Container
         maxWidth={false}
         component={Box}
-        marginTop="-6rem"
-        marginBottom="5rem"
+        marginTop="-3rem"
+        marginBottom="6rem"
         classes={{ root: classes.containerRoot }}
       >
         <Grid container>

@@ -65,7 +65,7 @@ function Login({ history }) {
                 <FilledInput
                   autoComplete="off"
                   type="text"
-                  placeholder="User Name"
+                  placeholder="Username"
                   name="username"
                   required
                   startAdornment={

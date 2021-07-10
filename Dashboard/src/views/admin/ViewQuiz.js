@@ -16,37 +16,53 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 // @material-ui/lab components
-import Pagination from "@material-ui/lab/Pagination";
+
 // @material-ui/icons components
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 // core components
 import Header from "components/Headers/Header.js";
 import componentStyles from "assets/theme/views/admin/tables.js";
 
-import axios from 'axios';
+
 //Api Services
 import ApiService from "../../services/api.service";
-
+import swal from "sweetalert";
 const useStyles = makeStyles(componentStyles);
 
+const onClickDelete =
+  (
+    id
+  ) => {
+    swal({
+      title: "Are you sure?",
+      text: "You want to change instructor status!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willChange) => {
+        if (willChange) {
+          ApiService.deleteQuiz
+            (
+              id
+            )
+            .then(function (res) {
+              swal("Success!", "Quiz Deleted Successfully!", "success")
+              window.location.reload();
+            })
+            .catch(function (res) {
+              swal("Failed!", "Please Try Again!", "error");
+            })
+        }
+      });
+  };
 const TableList = ({ list, index }) => {
   const classes = useStyles()
-  const [userDetails, setUserDetails] = useState({
 
-    user: {
-      first_name: "",
-      last_name: "",
-    }
-  })
-  useEffect(() => {
-    axios.get("http://127.0.0.1:8000/teacher/" + list.teacher + "/")
-      .then(res => {
-        setUserDetails(res.data)
-      })
-  }, [setUserDetails])
   return (
-    <TableRow key={list.id}>
+    <TableRow hover key={list.id}>
       <TableCell
         classes={{
           root:
@@ -69,15 +85,16 @@ const TableList = ({ list, index }) => {
         {list.start_date}
       </TableCell>
       <TableCell classes={{ root: classes.tableCellRoot }}>
-        {userDetails.user.first_name} {userDetails.user.last_name}
-      </TableCell>
-      <TableCell classes={{ root: classes.tableCellRoot }}>
         {list.questions.length}
       </TableCell>
       <TableCell classes={{ root: classes.tableCellRoot }}>
-        <img src={list.photo} style={{ height: "100px" }} />
-      </TableCell>
 
+        <Button onClick={() => onClickDelete(list.id)} variant="contained" size="small" style={{ backgroundColor: "red", borderColor: "red" }}>
+          <Box component={DeleteOutlineIcon} position="relative" top="2px" />{" "}
+          Delete
+        </Button>
+
+      </TableCell>
     </TableRow>
 
   )
@@ -101,7 +118,8 @@ const ViewQuiz = () => {
       <Container
         maxWidth={false}
         component={Box}
-        marginTop="-6rem"
+        marginTop="-3rem"
+        marginBottom="6rem"
         classes={{ root: classes.containerRoot }}
       >
         <Card classes={{ root: classes.cardRoot }}>
@@ -128,7 +146,7 @@ const ViewQuiz = () => {
                       <Button variant="contained" color="primary" size="small"
                       >
                         Create New
-                    </Button>
+                      </Button>
                     </Link>
                   </Box>
                 </Grid>
@@ -176,14 +194,7 @@ const ViewQuiz = () => {
                   >
                     Upload Date
                   </TableCell>
-                  <TableCell
-                    classes={{
-                      root:
-                        classes.tableCellRoot + " " + classes.tableCellRootHead,
-                    }}
-                  >
-                    Created By
-                  </TableCell>
+
                   <TableCell
                     classes={{
                       root:
@@ -198,9 +209,8 @@ const ViewQuiz = () => {
                         classes.tableCellRoot + " " + classes.tableCellRootHead,
                     }}
                   >
-                    Thumbnil
+                    Action
                   </TableCell>
-
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -218,7 +228,6 @@ const ViewQuiz = () => {
             component={CardActions}
             justifyContent="flex-end"
           >
-            <Pagination count={3} color="primary" variant="outlined" />
           </Box>
         </Card>
       </Container>
