@@ -1,4 +1,14 @@
 from rest_framework import permissions
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.parsers import FileUploadParser
+from django.db.models import Q
+from .serializers import *
+# Create your views here.
+from rest_framework import permissions
+from rest_framework import renderers
+from rest_framework.response import Response
+from .models import *
 
 
 
@@ -37,6 +47,21 @@ class UniversalPermission(permissions.BasePermission):
 
 
 
+
+class QuizPermission(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        print(obj)
+        print(obj)
+        print(obj)
+        print(obj)
+        quiz =  Quiz.objects.get(pk=obj.quiz.id)
+        print(obj.student.school_section)
+        print(obj.quiz.school)
+        if obj.quiz.school==None:
+            return (request.user.is_student)
+        else:
+            if(obj.student.school_section.id == obj.quiz.school.id):
+                return (request.user.is_student)
 
 class IsCreatedBy(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
