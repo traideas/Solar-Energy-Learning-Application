@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -21,29 +22,54 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Header from "components/Headers/Header.js";
 import componentStyles from "assets/theme/views/admin/dashboard.js";
 
-import configData from "../../configData.json";
 //Api Services
 import ApiService from "../../services/api.service";
+import AuthService from "../../services/auth.service";
 import { CardContent } from "@material-ui/core";
 
 const useStyles = makeStyles(componentStyles);
 
 function AttemptQuiz({ location }) {
-  const { id, title, description, total_marks } = location.quiz;
+  const { id, title, descriptio } = location.quiz;
   const classes = useStyles();
+  const { register, handleSubmit } = useForm();
+  const [questions, setQuestions] = useState([]);
+  useEffect(() => {
+    ApiService.getQuizById(id)
+      .then((res) => setQuestions(res.data.questions))
+      .catch((err) => console.log(err));
+  }, []);
+  const onSubmit = ({ userAnswer }) => {
+    console.log(userAnswer);
+    const totalQuestion = userAnswer.length;
+    const totalMarks = userAnswer.length;
+    let right = 0;
+    userAnswer.map((answer, i) => {
+      console.log(questions[i].answer);
+      if (answer == questions[i].answer) {
+        right = right + 1;
+      }
+    });
+    const wrong = totalMarks - right
+    const score = right
+    ApiService.setQuizScore(AuthService.getUserId(), id, totalQuestion, totalMarks, right, wrong, score)
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
+  };
   return (
     <>
       <Header />
       <Container
         maxWidth={false}
         component={Box}
-        marginTop="-6rem"
+        marginTop="-3rem"
+        marginBottom="6rem"
         classes={{ root: classes.containerRoot }}
       >
         <Card classes={{ root: classes.cardRoot }}>
           <CardHeader
             className={classes.cardHeader}
-            title={`Quize Title: ${location.quiz.title}`}
+            title={`Quize Title: ${title}`}
             titleTypographyProps={{
               component: Box,
               marginBottom: "0!important",
@@ -51,67 +77,91 @@ function AttemptQuiz({ location }) {
             }}
           ></CardHeader>
           <CardContent>
-            <Grid container>
-              {location.questions.map(({question, options_1,options_2,options_3,options_4, answer}) => (
-                <Grid item xs={12}>
-                  <Typography
-                    variant="h3"
-                    component="h3"
-                    className={classes.mb0}
-                  >
-                   Question: {question}
-                  </Typography>
-                  <RadioGroup
-                    aria-label="gender"
-                    name="example-radio"
-                    defaultValue=""
-                    className={classes.mb0}
-                  >
-                    <FormControlLabel
-                      control={<Radio color="primary" />}
-                      label={options_1}
-                      value="1"
-                      labelPlacement="end"
-                      classes={{
-                        root: classes.formControlCheckboxLabelRoot,
-                        label: classes.formControlCheckboxLabelLabel,
-                      }}
-                    />
-                    <FormControlLabel
-                      control={<Radio color="primary" />}
-                      label={options_2}
-                      labelPlacement="end"
-                      value="2"
-                      classes={{
-                        root: classes.formControlCheckboxLabelRoot,
-                        label: classes.formControlCheckboxLabelLabel,
-                      }}
-                    />
-                    <FormControlLabel
-                      control={<Radio color="primary" />}
-                      label={options_3}
-                      value="3"
-                      labelPlacement="end"
-                      classes={{
-                        root: classes.formControlCheckboxLabelRoot,
-                        label: classes.formControlCheckboxLabelLabel,
-                      }}
-                    />
-                    <FormControlLabel
-                      control={<Radio color="primary" />}
-                      label={options_4}
-                      labelPlacement="end"
-                      value="4"
-                      classes={{
-                        root: classes.formControlCheckboxLabelRoot,
-                        label: classes.formControlCheckboxLabelLabel,
-                      }}
-                    />
-                  </RadioGroup>
-                  <hr />
-                </Grid>
-              ))}
-            </Grid>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Grid container>
+                {questions.map(
+                  (
+                    {
+                      question,
+                      options_1,
+                      options_2,
+                      options_3,
+                      options_4,
+                      answer,
+                    },
+                    index
+                  ) => (
+                    <Grid item xs={12}>
+                      <Typography
+                        variant="h3"
+                        component="h3"
+                        className={classes.mb0}
+                      >
+                        Question: {question}
+                      </Typography>
+
+                      <RadioGroup
+                        aria-label="gender"
+                        defaultValue=""
+                        className={classes.mb0}
+                        name={`userAnswer[${index}]`}
+                        {...register(`userAnswer[${index}]`)}
+                      >
+                        <FormControlLabel
+                          control={<Radio color="primary" />}
+                          label={options_1}
+                          value="1"
+                          labelPlacement="end"
+                          classes={{
+                            root: classes.formControlCheckboxLabelRoot,
+                            label: classes.formControlCheckboxLabelLabel,
+                          }}
+                        />
+                        <FormControlLabel
+                          control={<Radio color="primary" />}
+                          label={options_2}
+                          labelPlacement="end"
+                          value="2"
+                          classes={{
+                            root: classes.formControlCheckboxLabelRoot,
+                            label: classes.formControlCheckboxLabelLabel,
+                          }}
+                        />
+                        <FormControlLabel
+                          control={<Radio color="primary" />}
+                          label={options_3}
+                          value="3"
+                          labelPlacement="end"
+                          classes={{
+                            root: classes.formControlCheckboxLabelRoot,
+                            label: classes.formControlCheckboxLabelLabel,
+                          }}
+                        />
+                        <FormControlLabel
+                          control={<Radio color="primary" />}
+                          label={options_4}
+                          labelPlacement="end"
+                          value="4"
+                          classes={{
+                            root: classes.formControlCheckboxLabelRoot,
+                            label: classes.formControlCheckboxLabelLabel,
+                          }}
+                        />
+                      </RadioGroup>
+                      <hr />
+                    </Grid>
+                  )
+                )}
+                <Button
+                  type="submit"
+                  color="primary"
+                  variant="contained"
+                  fullWidth
+                >
+                  Submit Answers
+                </Button>
+              </Grid>
+            </form>
           </CardContent>
         </Card>
       </Container>
