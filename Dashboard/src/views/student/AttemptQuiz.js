@@ -15,9 +15,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import Radio from "@material-ui/core/Radio";
 import Typography from "@material-ui/core/Typography";
 // @material-ui/icons components
-import Avatar from "@material-ui/core/Avatar";
-import VisibilityIcon from "@material-ui/icons/Visibility";
-import Tooltip from "@material-ui/core/Tooltip";
+
 // core components
 import Header from "components/Headers/Header.js";
 import componentStyles from "assets/theme/views/admin/dashboard.js";
@@ -26,21 +24,22 @@ import componentStyles from "assets/theme/views/admin/dashboard.js";
 import ApiService from "../../services/api.service";
 import AuthService from "../../services/auth.service";
 import { CardContent } from "@material-ui/core";
-
+import swal from "sweetalert";
 const useStyles = makeStyles(componentStyles);
 
 function AttemptQuiz({ location }) {
-  const { id, title, descriptio } = location.quiz;
+  const { id, title } = location.quiz;
   const classes = useStyles();
   const { register, handleSubmit } = useForm();
   const [questions, setQuestions] = useState([]);
+  const [ansHide, setansHide] = useState(false);
   useEffect(() => {
     ApiService.getQuizById(id)
       .then((res) => setQuestions(res.data.questions))
       .catch((err) => console.log(err));
   }, []);
   const onSubmit = ({ userAnswer }) => {
-    console.log(userAnswer);
+    //console.log(userAnswer);
     const totalQuestion = userAnswer.length;
     const totalMarks = userAnswer.length;
     let right = 0;
@@ -53,8 +52,11 @@ function AttemptQuiz({ location }) {
     const wrong = totalMarks - right
     const score = right
     ApiService.setQuizScore(AuthService.getUserId(), id, totalQuestion, totalMarks, right, wrong, score)
-    .then(res => console.log(res))
-    .catch(err => console.log(err))
+      .then(res => {
+        swal("Great!", "Your Score is " + right, "success")
+        setansHide(true)
+      })
+      .catch(err => swal("Sorry!", "You already attempted this quiz!", "warning"))
   };
   return (
     <>
@@ -70,6 +72,7 @@ function AttemptQuiz({ location }) {
           <CardHeader
             className={classes.cardHeader}
             title={`Quize Title: ${title}`}
+            subheader={`Total Marks: ${questions.length}`}
             titleTypographyProps={{
               component: Box,
               marginBottom: "0!important",
@@ -106,6 +109,7 @@ function AttemptQuiz({ location }) {
                         className={classes.mb0}
                         name={`userAnswer[${index}]`}
                         {...register(`userAnswer[${index}]`)}
+                        required
                       >
                         <FormControlLabel
                           control={<Radio color="primary" />}
@@ -148,7 +152,12 @@ function AttemptQuiz({ location }) {
                           }}
                         />
                       </RadioGroup>
+                      <Box display={ansHide == true ? "" : "none"}>
+                        <p style={{ padding: "10px", backgroundColor: "greenyellow", fontWeight: "700" }}>Correct Answer: {(answer == 1) ? options_1 : (answer == 2) ? options_2 : (answer == 3) ? options_3 : options_4}</p>
+                      </Box>
+
                       <hr />
+                      <br />
                     </Grid>
                   )
                 )}
