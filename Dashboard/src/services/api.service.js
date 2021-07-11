@@ -229,11 +229,5 @@ export default {
   deleteVideo,
   deleteSlide,
   deleteArticle,
-<<<<<<< HEAD
   deleteQuiz
 };
-=======
-  getQuizById,
-  setQuizScore
-};
->>>>>>> b069a140016bf5b2ec3c939c45ad16243eb12000
