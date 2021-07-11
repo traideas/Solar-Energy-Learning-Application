@@ -80,6 +80,9 @@ urlpatterns = format_suffix_patterns([
     path('score/<int:pk>',
          views.ScoreDetail.as_view(),
          name='score-detail'),
+    path('quiz_score/<int:pk>',
+         views.QuizScore.as_view(),
+         name='quiz-score'),
 
 
 

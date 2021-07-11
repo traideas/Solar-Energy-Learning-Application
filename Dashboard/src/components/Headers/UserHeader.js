@@ -18,19 +18,13 @@ import AuthService from "../../services/auth.service";
 const useStyles = makeStyles(componentStyles);
 
 const UserHeader = () => {
-  const [userDetails, setUserDetails] = useState({
-    user: {
-      first_name: "",
-      last_name: "",
-      username: "",
-      email: "",
-      password: "",
-    },
-    institute_name: "",
-  });
+  const [userDetails, setUserDetails] = useState([]);
   useEffect(() => {
     ApiService.getUserDetails(AuthService.getUserId())
-      .then((res) => setUserDetails(res.data))
+      .then((res) => {
+        setUserDetails(res.data)
+        console.log(res.data)
+      })
       .catch((err) => console.log(err));
   }, []);
   const classes = useStyles();
@@ -67,7 +61,8 @@ const UserHeader = () => {
                 variant="h1"
                 classes={{ root: classes.typographyRootH1 }}
               >
-                Hello, {userDetails.user.first_name} {userDetails.user.last_name}
+
+                Hello, {userDetails.first_name} {userDetails.last_name}
               </Typography>
               {/* <Box
                 component="p"

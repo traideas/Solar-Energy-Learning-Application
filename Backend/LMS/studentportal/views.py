@@ -438,12 +438,49 @@ class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class ScoreList(generics.ListCreateAPIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-    #                       IsOwnerOrReadOnly]
     queryset = Score.objects.all()
     serializer_class = ScoreSerializer
 
 
-class ScoreDetail(generics.RetrieveUpdateDestroyAPIView):
+class ScoreDetail(generics.RetrieveDestroyAPIView):
     queryset = Score.objects.all()
     serializer_class = ScoreSerializer
+
+
+class QuizScore(generics.ListAPIView):
+    queryset = Score.objects.all()
+    serializer_class = ScoreSerializer
+    # lookup_field = 'pk'
+    # print(lookup_field)
+    def list(self, request, pk):
+
+        creator = request.user
+        school = None
+        try:
+            if (creator.is_admin):
+                queryset = Score.objects.filter(quiz=pk).all().order_by('-id')
+                serializer = ScoreSerializer(queryset, many=True)
+                return Response(serializer.data)
+        except:
+            pass
+        # try:
+        if (creator.is_student):
+            student = Student.objects.get(pk=creator.id)
+            school = SchoolSection.objects.get(pk=student.school_section.id)
+
+        elif creator.is_teacher:
+            teacher = Teacher.objects.get(pk=creator.id)
+            school = SchoolSection.objects.get(pk=teacher.institute_name.id)
+        if school:
+            quiz = None
+            quiz = Quiz.objects.filter(Q(school=school.id) & Q(pk=pk)).all()
+            if quiz:
+                queryset = Score.objects.filter(quiz=pk).all()
+        else:
+            queryset = []
+        # except:
+        #     queryset = []
+
+
+        serializer = ScoreSerializer(queryset, many=True)
+        return Response(serializer.data)

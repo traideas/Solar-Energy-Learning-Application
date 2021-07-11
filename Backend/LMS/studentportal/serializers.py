@@ -233,9 +233,13 @@ class ScoreSerializer(serializers.ModelSerializer):
         # sku = data.get('sku')
 
         record = Score.objects.filter(student=student, quiz=quiz).first()
-
+        print(student.school_section)
+        print(quiz.school)
+        if  quiz.school!=None and quiz.school.id==student.school_section.id:
+            raise serializers.ValidationError("Student does not belong to the specific school")
         if record:
             raise serializers.ValidationError("Student already attend this quiz")
+
 
         return super().validate(data)
 

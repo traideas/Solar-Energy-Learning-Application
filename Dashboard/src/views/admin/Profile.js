@@ -35,7 +35,7 @@ function Profile() {
   const theme = useTheme();
   const { register, handleSubmit } = useForm()
   const onSubmit = (data) => {
-    const { first_name, last_name, email, photo, institute_name, password } = data
+    /* const { first_name, last_name, email, photo, institute_name, password } = data
 
     let formData = new FormData()
     formData.append("user.id", user.id)
@@ -59,27 +59,17 @@ function Profile() {
       .catch(function (error) {
         swal("Failed!", "Please Try Again!", "error");
       });
-
+ */
   }
 
-  const [userDetails, setUserDetails] = useState({
-    user: {
-      id: "",
-      first_name: "",
-      last_name: "",
-      username: "",
-      email: "",
-      password: "",
-      photo: "",
-    },
-    institute_name: "",
-  });
+  const [userDetails, setUserDetails] = useState([])
+
   useEffect(() => {
     ApiService.getUserDetails(AuthService.getUserId())
       .then((res) => setUserDetails(res.data))
       .catch((err) => console.log(err));
   }, []);
-  const { user, institute_name } = userDetails;
+
   return (
     <>
       <UserHeader />
@@ -158,7 +148,7 @@ function Profile() {
                               className="MuiInputBase-input"
                               autoComplete="off"
                               type="text"
-                              value={user.username}
+                              value={userDetails.username}
                               {...register("username")}
                             />
                           </FormControl>
@@ -179,7 +169,7 @@ function Profile() {
                               className="MuiInputBase-input"
                               autoComplete="off"
                               type="email"
-                              defaultValue={user.email}
+                              defaultValue={userDetails.email}
 
                               required
                               {...register("email")}
@@ -204,7 +194,7 @@ function Profile() {
                               className="MuiInputBase-input"
                               autoComplete="off"
                               type="text"
-                              defaultValue={user.first_name}
+                              defaultValue={userDetails.first_name}
                               required
                               {...register("first_name")}
                             />
@@ -226,7 +216,7 @@ function Profile() {
                               className="MuiInputBase-input"
                               autoComplete="off"
                               type="text"
-                              defaultValue={user.last_name}
+                              defaultValue={userDetails.last_name}
                               required
                               {...register("last_name")}
                             />
@@ -235,28 +225,7 @@ function Profile() {
                       </Grid>
                     </Grid>
                     <Grid container>
-                      <Grid item xs={12} lg={6}>
-                        <FormGroup>
-                          <FormLabel>Institute</FormLabel>
-                          <FormControl
-                            variant="filled"
-                            component={Box}
-                            width="100%"
-                            marginBottom="1rem!important"
-                          >
-                            <input
-                              paddingLeft="0.75rem"
-                              paddingRight="0.75rem"
-                              className="MuiInputBase-input"
-                              autoComplete="off"
-                              type="text"
-                              defaultValue={institute_name}
-                              required
-                              {...register("institute_name")}
-                            />
-                          </FormControl>
-                        </FormGroup>
-                      </Grid>
+
                       <Grid item xs={12} lg={6}>
                         <FormGroup>
                           <FormLabel>New Password</FormLabel>
@@ -279,8 +248,6 @@ function Profile() {
                           </FormControl>
                         </FormGroup>
                       </Grid>
-                    </Grid>
-                    <Grid container>
                       <Grid item xs={12} lg={6}>
                         <FormGroup>
                           <FormLabel>Profile Photo</FormLabel>
@@ -300,6 +267,7 @@ function Profile() {
                         </FormGroup>
                       </Grid>
                     </Grid>
+
                     <Box textAlign="center" marginTop="1.5rem" marginBottom="1.5rem">
                       <Button color="primary" variant="contained" type="submit">
                         Update Profile
@@ -325,7 +293,7 @@ function Profile() {
                   <Box position="relative">
                     <Box
                       component="img"
-                      src={(user.photo == null) ? require("assets/img/theme/defaultImage.png").default : user.photo}
+                      src={(userDetails.photo == null) ? require("assets/img/theme/defaultImage.png").default : userDetails.photo}
                       alt="..."
                       maxWidth="200px"
                       height="200px"
@@ -375,7 +343,7 @@ function Profile() {
                 </Grid>
                 <Box textAlign="center">
                   <Typography variant="h3">
-                    {user.first_name} {user.last_name}
+                    {userDetails.first_name} {userDetails.last_name}
                   </Typography>
                   <Box
                     component={Typography}
@@ -385,7 +353,7 @@ function Profile() {
                     alignItems="center"
                     justifyContent="center"
                   >
-                    User Name: {user.username}
+                    Username: {userDetails.username}
                   </Box>
                   <Box
                     component={Typography}
@@ -395,22 +363,9 @@ function Profile() {
                     alignItems="center"
                     justifyContent="center"
                   >
-                    Email: {user.email}
+                    Email: {userDetails.email}
                   </Box>
-                  <Box
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                    fontSize="1rem"
-                  >
-                    <Box
-                      component={School}
-                      width="1.25rem!important"
-                      height="1.25rem!important"
-                      marginRight=".5rem"
-                    ></Box>
-                    {institute_name}
-                  </Box>
+
                 </Box>
               </Box>
             </Card>
