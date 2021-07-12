@@ -258,7 +258,7 @@ class StudentSerializer(serializers.ModelSerializer):
         extra_kwargs = {'id': {'read_only': True},
                         # 'public': {'read_only': True, 'required': False},
                         # 'upload_date': {'read_only': True, 'required': False},
-                       # 'school_section': {'required': False},
+                        # 'school_section': {'required': False},
                         'school_roll': {'required': False}
                         }
 
@@ -315,13 +315,6 @@ class StudentSerializer(serializers.ModelSerializer):
             if(user_data['photo']!=None):
                 user.photo = user_data['photo']
         except: pass
-        # try:
-        #     if(validated_data.get('school_section', instance.school_section)!=None):
-        #         instance.school_section = validated_data.get('school_section', instance.school_section)
-        #     else:
-        #         validated_data['school_section'] = instance.school_section
-        #
-        # except: pass
 
 
 
@@ -345,6 +338,7 @@ class StudentSerializer(serializers.ModelSerializer):
         # instance.birth_date = validated_data.get('birth_date', instance.birth_date)
         instance.save()
         return instance
+
 
 
 

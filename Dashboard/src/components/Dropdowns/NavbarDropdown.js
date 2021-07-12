@@ -29,20 +29,12 @@ const useStyles = makeStyles(componentStyles);
 export default function NavbarDropdown() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [userDetails, setUserDetails] = useState({
-    user: {
-      first_name: "",
-      last_name: "",
-      username: "",
-      email: "",
-      password: "",
-      photo: "",
-    },
-    institute_name: "",
-  });
+  const [userDetails, setUserDetails] = useState([]);
   useEffect(() => {
-    ApiService.getUserDetails(AuthService.getUserId())
-      .then((res) => setUserDetails(res.data))
+    ApiService.getUserDetailsOnly(AuthService.getUserId())
+      .then((res) => {
+        setUserDetails(res.data)
+      })
       .catch((err) => console.log(err));
   }, []);
 
