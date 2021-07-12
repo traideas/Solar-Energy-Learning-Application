@@ -91,10 +91,10 @@ const uploadComment = (comment, discussion, created_by) => {
 };
 
 const getUserDetails = (id) => {
-  if (authService.isAdmin) {
+  if (authService.isAdmin()) {
     return axios.get(configData.SERVER_URL + "user_admin/" + id + "/", config);
   }
-  if (authService.isTeacher) {
+  if (authService.isTeacher()) {
     return axios.get(configData.SERVER_URL + "teacher/" + id + "/", config);
   } else {
     return axios.get(configData.SERVER_URL + "student/" + id + "/", config);
@@ -208,6 +208,17 @@ const deleteQuiz = (id) => {
   return axios.delete(configData.SERVER_URL + "quiz/" + id + "/", config)
 }
 
+const updateProfile = (formData, id) => {
+  if (authService.isAdmin()) {
+    return axios.put(configData.SERVER_URL + "user_admin/" + id + "/", formData, config);
+  }
+  if (authService.isTeacher()) {
+    return axios.put(configData.SERVER_URL + "teacher/" + id + "/", formData, config);
+  } else {
+    return axios.put(configData.SERVER_URL + "student/" + id + "/", formData, config);
+  }
+}
+
 export default {
   uploadVideoContent,
   uploadSlideContent,
@@ -231,5 +242,7 @@ export default {
   deleteArticle,
   deleteQuiz,
   getQuizById,
-  setQuizScore
+  setQuizScore,
+  updateProfile
 };
+

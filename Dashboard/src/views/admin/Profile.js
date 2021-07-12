@@ -15,53 +15,23 @@ import FormLabel from "@material-ui/core/FormLabel";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 // @material-ui/icons components
-import School from "@material-ui/icons/School";
 
 // core components
 import UserHeader from "components/Headers/UserHeader.js";
-import axios from "axios";
+
 import componentStyles from "assets/theme/views/admin/profile.js";
 import boxShadows from "assets/theme/box-shadow.js";
 import swal from 'sweetalert';
 //Api Services
 import ApiService from "../../services/api.service";
 import AuthService from "../../services/auth.service";
-import configData from '../../configData.json'
+
 
 const useStyles = makeStyles(componentStyles);
 
 function Profile() {
   const classes = useStyles();
   const theme = useTheme();
-  const { register, handleSubmit } = useForm()
-  const onSubmit = (data) => {
-    /* const { first_name, last_name, email, photo, institute_name, password } = data
-
-    let formData = new FormData()
-    formData.append("user.id", user.id)
-    formData.append("user.first_name", (first_name == "") ? user.first_name : first_name)
-    formData.append("user.last_name", (last_name == "") ? user.last_name : last_name)
-    formData.append("user.username", user.username)
-    formData.append("user.email", (email == "") ? user.email : email)
-    formData.append("user.password", password)
-    formData.append("is_verified", userDetails.is_verified)
-    formData.append("institute_name", (institute_name == "") ? userDetails.institute_name : institute_name)
-
-    if (photo[0] != undefined) {
-      formData.append("user.photo", photo[0])
-    }
-    return axios.put(configData.SERVER_URL + "teacher/" + AuthService.getUserId() + "/", formData
-    ).then(function (response) {
-
-      swal("Success!", "Profile Updated Successfully!", "success")
-      window.location.reload();
-    })
-      .catch(function (error) {
-        swal("Failed!", "Please Try Again!", "error");
-      });
- */
-  }
-
   const [userDetails, setUserDetails] = useState([])
 
   useEffect(() => {
@@ -69,6 +39,57 @@ function Profile() {
       .then((res) => setUserDetails(res.data))
       .catch((err) => console.log(err));
   }, []);
+
+  const { register, handleSubmit } = useForm()
+  const onSubmit = (data) => {
+    let formData = new FormData()
+    if (AuthService.isAdmin()) {
+      formData.append("first_name", (data.first_name == "") ? userDetails.first_name : data.first_name)
+      formData.append("last_name", (data.last_name == "") ? userDetails.last_name : data.last_name)
+      formData.append("username", userDetails.username)
+      formData.append("email", (data.email == "") ? userDetails.email : data.email)
+      formData.append("password", data.password)
+
+      if (data.photo[0] != undefined) {
+        formData.append("photo", data.photo[0])
+      }
+    }
+    if (AuthService.isTeacher()) {
+      formData.append("created_by.first_name", (data.first_name == "") ? userDetails.first_name : data.first_name)
+      formData.append("created_by.last_name", (data.last_name == "") ? userDetails.last_name : data.last_name)
+      formData.append("created_by.username", userDetails.username)
+      formData.append("created_by.email", (data.email == "") ? userDetails.email : data.email)
+      formData.append("created_by.password", data.password)
+
+      if (data.photo[0] != undefined) {
+        formData.append("created_by.photo", data.photo[0])
+      }
+    }
+    else {
+      formData.append("created_by.first_name", (data.first_name == "") ? userDetails.first_name : data.first_name)
+      formData.append("created_by.last_name", (data.last_name == "") ? userDetails.last_name : data.last_name)
+      formData.append("created_by.username", userDetails.username)
+      formData.append("created_by.email", (data.email == "") ? userDetails.email : data.email)
+      formData.append("created_by.password", data.password)
+
+      if (data.photo[0] != undefined) {
+        formData.append("created_by.photo", data.photo[0])
+      }
+
+    }
+
+
+    ApiService.updateProfile(formData, userDetails.id)
+      .then(function (res) {
+        swal("Success!", "Profile Updated Successfully!", "success")
+        window.location.reload();
+      })
+      .catch(function (res) {
+        swal("Failed!", "Please Try Again!", "error");
+      })
+  }
+
+
 
   return (
     <>
