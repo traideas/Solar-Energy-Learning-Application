@@ -154,6 +154,13 @@ const getTeacherList = () => {
   return axios.get(configData.SERVER_URL + "teacherall/", config);
 };
 
+const postSchoolList = (school_name, created_by) => {
+  return axios.post(configData.SERVER_URL + "school/", {
+    school_name: school_name,
+    created_by: created_by
+  });
+};
+
 const getSchoolList = () => {
   return axios.get(configData.SERVER_URL + "school/");
 };
@@ -201,12 +208,12 @@ const deleteSlide = (id) => {
 };
 
 const deleteArticle = (id) => {
-  return axios.delete(configData.SERVER_URL + "document/" + id + "/", config)
-}
+  return axios.delete(configData.SERVER_URL + "document/" + id + "/", config);
+};
 
 const deleteQuiz = (id) => {
-  return axios.delete(configData.SERVER_URL + "quiz/" + id + "/", config)
-}
+  return axios.delete(configData.SERVER_URL + "quiz/" + id + "/", config);
+};
 
 export default {
   uploadVideoContent,
@@ -231,5 +238,6 @@ export default {
   deleteArticle,
   deleteQuiz,
   getQuizById,
-  setQuizScore
+  setQuizScore,
+  postSchoolList
 };
