@@ -330,11 +330,11 @@ class StudentSerializer(serializers.ModelSerializer):
             school_section.student_count = count + 1
             school_section.save()
         except:
-            school_section = SchoolSection.objects.create(**school_section_data)
+            # school_section = SchoolSection.objects.create(**school_section_data)
 
             pass
 
-        instance.school_section = school_section
+        # instance.school_section = school_section
         # instance.birth_date = validated_data.get('birth_date', instance.birth_date)
         instance.save()
         return instance
