@@ -28,6 +28,7 @@ import RateReviewIcon from '@material-ui/icons/RateReview';
 import RecentActorsIcon from '@material-ui/icons/RecentActors';
 import QuizList from "views/student/QuizList";
 import AttemptQuiz from "views/student/AttemptQuiz";
+import Institute from "views/admin/Institute";
 
 var routes = [
   {
@@ -72,6 +73,16 @@ var routes = [
     icon: RecentActorsIcon,
     iconColor: "light",
     component: InstructorList,
+    layout: "/admin",
+    adminOnly: true,
+
+  },
+  {
+    path: "/institute",
+    name: "Schools",
+    icon: RecentActorsIcon,
+    iconColor: "light",
+    component: Institute,
     layout: "/admin",
     adminOnly: true,
 
