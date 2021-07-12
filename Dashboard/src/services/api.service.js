@@ -165,6 +165,10 @@ const getSchoolList = () => {
   return axios.get(configData.SERVER_URL + "school/");
 };
 
+const getSchoolByID = (id) => {
+  return axios.get("http://localhost:8000/school/" + id + "/", id)
+}
+
 const changeInstructorStatus = (
   id,
   first_name,
@@ -239,5 +243,6 @@ export default {
   deleteQuiz,
   getQuizById,
   setQuizScore,
-  postSchoolList
+  postSchoolList,
+  getSchoolByID
 };
