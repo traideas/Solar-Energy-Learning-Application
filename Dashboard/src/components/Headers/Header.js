@@ -17,8 +17,7 @@ import PieChart from "@material-ui/icons/PieChart"; */
 /* import CardStats from "components/Cards/CardStats.js"; */
 
 //Api Services
-import ApiService from "../../services/api.service";
-import AuthService from "../../services/auth.service";
+
 
 import componentStyles from "assets/theme/components/header.js";
 

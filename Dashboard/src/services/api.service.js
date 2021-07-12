@@ -101,6 +101,10 @@ const getUserDetails = (id) => {
   }
 };
 
+const getUserDetailsOnly = (id) => {
+  return axios.get(configData.SERVER_URL + "user_admin/" + id + "/", config);
+};
+
 const getArticleDetails = () => {
   return axios.get(configData.SERVER_URL + "document/", config);
 };
@@ -251,6 +255,8 @@ export default {
   getQuizById,
   setQuizScore,
   updateProfile,
-  postSchoolList
+  postSchoolList,
+  getUserDetailsOnly
 };
+
 

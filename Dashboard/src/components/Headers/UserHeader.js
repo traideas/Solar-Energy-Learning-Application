@@ -18,7 +18,7 @@ const useStyles = makeStyles(componentStyles);
 const UserHeader = () => {
   const [userDetails, setUserDetails] = useState([]);
   useEffect(() => {
-    ApiService.getUserDetails(AuthService.getUserId())
+    ApiService.getUserDetailsOnly(AuthService.getUserId())
       .then((res) => {
         setUserDetails(res.data)
 

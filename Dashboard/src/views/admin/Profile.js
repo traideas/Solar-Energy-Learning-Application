@@ -35,8 +35,16 @@ function Profile() {
   const [userDetails, setUserDetails] = useState([])
 
   useEffect(() => {
-    ApiService.getUserDetails(AuthService.getUserId())
+    ApiService.getUserDetailsOnly(AuthService.getUserId())
       .then((res) => setUserDetails(res.data))
+      .catch((err) => console.log(err));
+  }, []);
+
+  const [userFullDetails, setuserFullDetails] = useState([])
+
+  useEffect(() => {
+    ApiService.getUserDetails(AuthService.getUserId())
+      .then((res) => setuserFullDetails(res.data))
       .catch((err) => console.log(err));
   }, []);
 
@@ -64,8 +72,12 @@ function Profile() {
       if (data.photo[0] != undefined) {
         formData.append("created_by.photo", data.photo[0])
       }
+      formData.append("institute_name", userFullDetails.institute_name)
+      formData.append("is_verified", userFullDetails.is_verified)
     }
     else {
+
+
       formData.append("created_by.first_name", (data.first_name == "") ? userDetails.first_name : data.first_name)
       formData.append("created_by.last_name", (data.last_name == "") ? userDetails.last_name : data.last_name)
       formData.append("created_by.username", userDetails.username)
@@ -75,6 +87,8 @@ function Profile() {
       if (data.photo[0] != undefined) {
         formData.append("created_by.photo", data.photo[0])
       }
+      formData.append("school_section", userFullDetails.school_section)
+      formData.append("school_roll", userFullDetails.school_roll)
 
     }
 
