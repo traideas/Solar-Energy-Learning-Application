@@ -41,8 +41,7 @@ const handleClick = (questions, title) => {
   }
 };
 
-const TableList = ({ list, index }) => {
-  console.log(list);
+const TableList = ({ list, index, score }) => {
   const classes = useStyles();
   return (
     <TableRow hover key={list.id}>
@@ -100,21 +99,30 @@ const TableList = ({ list, index }) => {
           </Link>
         </TableCell>
       ) : (
-        <TableCell classes={{ root: classes.tableCellRoot }}>10</TableCell>
+        <TableCell classes={{ root: classes.tableCellRoot }}>
+          {score[0]?.score}/{score[0]?.totalMarks}
+        </TableCell>
       )}
     </TableRow>
   );
 };
 
 const QuizList = () => {
+  const classes = useStyles();
   const [quizDetails, setQuizDetails] = useState([]);
-
+  const [studentScore, setStudentScore] = useState([])
+  
   useEffect(() => {
     ApiService.getQuizDetails()
-      .then((res) => setQuizDetails(res.data))
-      .catch((err) => console.log(err));
+    .then((res) => setQuizDetails(res.data))
+    .catch((err) => console.log(err));
   }, []);
-  const classes = useStyles();
+
+  useEffect(() => {
+    ApiService.getUserDetails(AuthService.getUserId())
+    .then(({data}) => setStudentScore(data.studentScore))
+    .catch(err => console.log(err))
+  }, [])
 
   return (
     <>
@@ -207,18 +215,17 @@ const QuizList = () => {
               </TableHead>
               <TableBody>
                 {quizDetails.map((list, index) => (
-                  <TableList list={list} key={list.id} index={index} />
+                  <TableList list={list} key={list.id} index={index}
+                    score={
+                      studentScore?.filter(
+                        score => score.quiz === list.id
+                      )
+                    }
+                  />
                 ))}
               </TableBody>
             </Box>
           </TableContainer>
-          <Box
-            classes={{ root: classes.cardActionsRoot }}
-            component={CardActions}
-            justifyContent="flex-end"
-          >
-            {/* <Pagination count={3} color="primary" variant="outlined" /> */}
-          </Box>
         </Card>
       </Container>
     </>

@@ -55,7 +55,12 @@ const onClickDelete = (id) => {
 };
 
 const TableList = ({ list, index }) => {
-  console.log(list);
+  const [userName, setUserName] = useState("");
+  useEffect(() => {
+    ApiService.getUserDetailsOnly(list.student)
+      .then((res) => setUserName(`${res.data.first_name} ${res.data.last_name}`))
+      .catch((err) => console.log(err));
+  }, []);
   const classes = useStyles();
   return (
     <TableRow hover key={list.id}>
@@ -68,7 +73,7 @@ const TableList = ({ list, index }) => {
         {(index = index + 1)}
       </TableCell>
       <TableCell classes={{ root: classes.tableCellRoot }}>
-        {list.student}
+        {userName}
       </TableCell>
       <TableCell classes={{ root: classes.tableCellRoot }}>
         {list.score}/{list.totalMarks}
