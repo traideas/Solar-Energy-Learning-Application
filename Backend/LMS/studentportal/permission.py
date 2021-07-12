@@ -78,20 +78,20 @@ class IsCreatedBy(permissions.BasePermission):
 
 
 
-class IsUser(permissions.BasePermission):
-    def has_object_permission(self, request, view, obj):
-        # Read permissions are allowed to any request,
-        # so we'll always allow GET, HEAD or OPTIONS requests.
-        # if request.method in permissions.SAFE_METHODS:
-            # print(type(obj.creator))
-            # print(type(request.user.username))
-            # print(obj.creator == request.user)
-        print(request.user)
-        if request.user.is_admin:
-            return (request.user.is_admin == True)
-
-        else:
-            return (obj.created_by == request.user)
+# class IsUser(permissions.BasePermission):
+#     def has_object_permission(self, request, view, obj):
+#         # Read permissions are allowed to any request,
+#         # so we'll always allow GET, HEAD or OPTIONS requests.
+#         # if request.method in permissions.SAFE_METHODS:
+#             # print(type(obj.creator))
+#             # print(type(request.user.username))
+#             # print(obj.creator == request.user)
+#         print(request.user)
+#         if request.user.is_admin:
+#             return (request.user.is_admin == True)
+#
+#         else:
+#             return (obj.created_by == request.user)
 #
 # #
 #         # Write permissions are only allowed to the owner of the snippet.

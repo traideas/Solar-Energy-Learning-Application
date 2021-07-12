@@ -116,7 +116,8 @@ class StudentList(generics.ListCreateAPIView):
 
 
 class StudentDetail(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsUser]
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
 
@@ -126,7 +127,7 @@ class StudentDetail(generics.RetrieveUpdateDestroyAPIView):
         school_section = instance.school_section
         user.delete()
         instance.delete()
-        print(school_section.school_name)
+        # print(school_section.school_name)
 
         try:
 
@@ -157,7 +158,7 @@ class TeacherListAll(generics.ListCreateAPIView):
 
 
 class TeacherDetail(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsUser]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsCreatedBy]
 
     queryset = Teacher.objects.all()
     serializer_class = TeacherSerializer

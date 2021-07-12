@@ -258,7 +258,7 @@ class StudentSerializer(serializers.ModelSerializer):
         extra_kwargs = {'id': {'read_only': True},
                         # 'public': {'read_only': True, 'required': False},
                         # 'upload_date': {'read_only': True, 'required': False},
-                        # 'school': {'read_only': True, 'required': False},
+                        # 'school_section': {'required': False},
                         'school_roll': {'required': False}
                         }
 
@@ -343,13 +343,14 @@ class StudentSerializer(serializers.ModelSerializer):
 
 
 
+
 class TeacherSerializer(serializers.ModelSerializer):
     created_by = UserSerializer()
     # courseteachers = serializers.HyperlinkedRelatedField(many=True, view_name='coursemanagement-detail', read_only=True)
     class Meta:
         model = Teacher
         fields = ['created_by', 'institute_name', 'is_verified']
-        # extra_kwargs = {'is_verified': {'read_only': True}}
+        # extra_kwargs = {'institute_name': {'required': False}}
 
     def create(self, validated_data):
         user_data = validated_data.pop('created_by')
@@ -375,7 +376,7 @@ class TeacherSerializer(serializers.ModelSerializer):
 
         try:
             user.set_password(user_data['password'])
-            print(user_data['password'])
+
         except:
             pass
 
@@ -384,9 +385,17 @@ class TeacherSerializer(serializers.ModelSerializer):
                 user.photo = user_data['photo']
         except: pass
 
-
+        # try:
+        #     if(validated_data.get('institute_name', instance.institute_name)!=None):
+        #         instance.institute_name = validated_data.get('institute_name', instance.institute_name)
+        #     else:
+        #         validated_data['institute_name'] = instance.institute_name
+        #
+        # except: pass
+        #
+        # validated_data['institute_name'] = instance.institute_name
         user.save()
-        instance.institute_name = validated_data.get('institute_name', instance.institute_name)
+
         instance.is_verified = validated_data.get('is_verified', instance.is_verified)
         instance.save()
 
