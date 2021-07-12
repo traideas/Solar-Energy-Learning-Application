@@ -116,7 +116,7 @@ class StudentList(generics.ListCreateAPIView):
 
 
 class StudentDetail(generics.RetrieveUpdateDestroyAPIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsCreatedBy]
 
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
