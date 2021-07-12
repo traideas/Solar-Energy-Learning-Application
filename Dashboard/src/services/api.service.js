@@ -125,6 +125,11 @@ const getQuizById = (id) => {
   return axios.get(configData.SERVER_URL + "quiz/" + id + "/", config);
 };
 
+const getQuizScoreById = (id) => {
+  return axios.get(configData.SERVER_URL + "quiz_score/" + id , config);
+} 
+
+
 const setQuizScore = (
   student,
   quiz,
@@ -145,6 +150,7 @@ const setQuizScore = (
   };
   return axios.post(configData.SERVER_URL + "score/", data, config);
 };
+
 
 const getDiscussionDetails = () => {
   return axios.get(configData.SERVER_URL + "discussion/", config);
@@ -168,6 +174,10 @@ const postSchoolList = (school_name, created_by) => {
 const getSchoolList = () => {
   return axios.get(configData.SERVER_URL + "school/");
 };
+
+const getSchoolByID = (id) => {
+  return axios.get("http://localhost:8000/school/" + id + "/", id)
+}
 
 const changeInstructorStatus = (
   id,
@@ -254,9 +264,15 @@ export default {
   deleteQuiz,
   getQuizById,
   setQuizScore,
+
+  postSchoolList,
+  getSchoolByID,
+  getQuizScoreById,
+
   updateProfile,
   postSchoolList,
   getUserDetailsOnly
+
 };
 
 

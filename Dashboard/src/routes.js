@@ -26,9 +26,11 @@ import AttachFileIcon from '@material-ui/icons/AttachFile';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import RateReviewIcon from '@material-ui/icons/RateReview';
 import RecentActorsIcon from '@material-ui/icons/RecentActors';
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import QuizList from "views/student/QuizList";
 import AttemptQuiz from "views/student/AttemptQuiz";
 import Institute from "views/admin/Institute";
+import ViewQuizScore from "views/admin/ViewQuizScore";
 
 var routes = [
   {
@@ -80,8 +82,8 @@ var routes = [
   {
     path: "/institute",
     name: "Schools",
-    icon: RecentActorsIcon,
-    iconColor: "light",
+    icon: AccountBalanceIcon,
+    iconColor: "Primary",
     component: Institute,
     layout: "/admin",
     adminOnly: true,
@@ -190,6 +192,14 @@ var routes = [
     icon: RateReviewIcon,
     component: QuizList,
     layout: "/admin",
+  },
+  {
+    path: "/view_score",
+    name: "",
+    icon: RateReviewIcon,
+    component: ViewQuizScore,
+    layout: "/admin",
+    invisible: true,
   },
   {
     path: "/attempt_quiz",
