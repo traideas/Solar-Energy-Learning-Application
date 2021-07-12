@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, Redirect
- } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -16,29 +15,43 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Pagination from "@material-ui/lab/Pagination";
+// @material-ui/lab components
+
+// @material-ui/icons components
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import Tooltip from "@material-ui/core/Tooltip";
-import Avatar from "@material-ui/core/Avatar";
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import VisibilityIcon from "@material-ui/icons/Visibility";
 // core components
 import Header from "components/Headers/Header.js";
 import componentStyles from "assets/theme/views/admin/tables.js";
-import VisibilityIcon from "@material-ui/icons/Visibility";
-
-import configData from "../../configData.json";
 
 //Api Services
 import ApiService from "../../services/api.service";
 import AuthService from "services/auth.service";
-import AttemptQuiz from "./AttemptQuiz";
+import swal from "sweetalert";
 
 const useStyles = makeStyles(componentStyles);
 
-const handleClick = (questions, title) => {
-  {
-    /* <AttemptQuiz questions={questions} title={title} /> */
-  }
+const onClickDelete = (id) => {
+  swal({
+    title: "Are you sure?",
+    text: "You want to change instructor status!",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  }).then((willChange) => {
+    if (willChange) {
+      ApiService.deleteQuiz(id)
+        .then(function (res) {
+          swal("Success!", "Quiz Deleted Successfully!", "success");
+          window.location.reload();
+        })
+        .catch(function (res) {
+          swal("Failed!", "Please Try Again!", "error");
+        });
+    }
+  });
 };
 
 const TableList = ({ list, index }) => {
@@ -55,66 +68,24 @@ const TableList = ({ list, index }) => {
         {(index = index + 1)}
       </TableCell>
       <TableCell classes={{ root: classes.tableCellRoot }}>
-        <Box style={{}}>{list.title}</Box>
-        <Box>{list.description}</Box>
+        {list.student}
       </TableCell>
-      {AuthService.isStudent() == false || AuthService.isStudent() == null ? (
-        ""
-      ) : (
-        <TableCell classes={{ root: classes.tableCellRoot }}>
-          <Link
-            to={{
-              pathname: "/admin/attempt_quiz",
-              quiz: list,
-              questions: list.questions,
-            }}
-          >
-            <Button
-              variant="contained"
-              size="small"
-              color="primary"
-              onClick={() => handleClick(list.questions, list.title)}
-            >
-              <Box component={VisibilityIcon} position="relative" top="2px" />{" "}
-              Attempt Quiz
-            </Button>
-          </Link>
-        </TableCell>
-      )}
-      {AuthService.isStudent() == false || AuthService.isStudent() == null ? (
-        <TableCell classes={{ root: classes.tableCellRoot }}>
-          <Link
-            to={{
-              pathname: "/admin/view_score",
-              state: list.id
-            }}
-          >
-            <Button
-              variant="contained"
-              size="small"
-              color="primary"
-            >
-              <Box component={VisibilityIcon} position="relative" top="2px" />{" "}
-              View Quiz Scoresssss
-            </Button>
-          </Link>
-        </TableCell>
-      ) : (
-        <TableCell classes={{ root: classes.tableCellRoot }}>10</TableCell>
-      )}
+      <TableCell classes={{ root: classes.tableCellRoot }}>
+        {list.score}/{list.totalMarks}
+      </TableCell>
     </TableRow>
   );
 };
 
-const QuizList = () => {
-  const [quizDetails, setQuizDetails] = useState([]);
-
+const ViewQuizScore = ({ location }) => {
+  const classes = useStyles();
+  console.log(location.state);
+  const [quiz, setQuiz] = useState();
   useEffect(() => {
-    ApiService.getQuizDetails()
-      .then((res) => setQuizDetails(res.data))
+    ApiService.getQuizScoreById(location.state)
+      .then((res) => setQuiz(res.data))
       .catch((err) => console.log(err));
   }, []);
-  const classes = useStyles();
 
   return (
     <>
@@ -170,31 +141,8 @@ const QuizList = () => {
                         classes.tableCellRoot + " " + classes.tableCellRootHead,
                     }}
                   >
-                    Quiz Description
+                    Student Name
                   </TableCell>
-                  {/* <TableCell
-                    classes={{
-                      root:
-                        classes.tableCellRoot + " " + classes.tableCellRootHead,
-                    }}
-                  >
-                    Upload Date
-                  </TableCell> */}
-                  {AuthService.isStudent() == false ||
-                  AuthService.isStudent() == null ? (
-                    ""
-                  ) : (
-                    <TableCell
-                      classes={{
-                        root:
-                          classes.tableCellRoot +
-                          " " +
-                          classes.tableCellRootHead,
-                      }}
-                    >
-                      Attempts
-                    </TableCell>
-                  )}
                   <TableCell
                     classes={{
                       root:
@@ -206,23 +154,16 @@ const QuizList = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {quizDetails.map((list, index) => (
+                {quiz?.map((list, index) => (
                   <TableList list={list} key={list.id} index={index} />
                 ))}
               </TableBody>
             </Box>
           </TableContainer>
-          <Box
-            classes={{ root: classes.cardActionsRoot }}
-            component={CardActions}
-            justifyContent="flex-end"
-          >
-            {/* <Pagination count={3} color="primary" variant="outlined" /> */}
-          </Box>
         </Card>
       </Container>
     </>
   );
 };
 
-export default QuizList;
+export default ViewQuizScore;

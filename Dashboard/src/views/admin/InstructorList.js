@@ -66,7 +66,7 @@ const onClickStatus = (
   });
 };
 const TableList = ({ list, index, schoolList }) => {
-console.log(schoolList)
+  console.log(schoolList);
   const classes = useStyles();
   return (
     <TableRow hover key={list.id}>
@@ -85,7 +85,7 @@ console.log(schoolList)
         {list.created_by.email}
       </TableCell>
       <TableCell classes={{ root: classes.tableCellRoot }}>
-      {schoolList[0].school_name}
+        {schoolList[0].school_name}
       </TableCell>
       <TableCell classes={{ root: classes.tableCellRoot }}>
         <Avatar
@@ -144,13 +144,13 @@ console.log(schoolList)
 
 const InstructorList = () => {
   const [teacherList, setTeacherList] = useState([]);
-  const [schoolList, setSchoolList] = useState([])
+  const [schoolList, setSchoolList] = useState([]);
 
   useEffect(() => {
     ApiService.getSchoolList()
-    .then(res => setSchoolList(res.data))
-    .catch(err => console.log(err))
-  }, [])
+      .then((res) => setSchoolList(res.data))
+      .catch((err) => console.log(err));
+  }, []);
 
   useEffect(() => {
     ApiService.getTeacherList()
@@ -240,10 +240,13 @@ const InstructorList = () => {
               </TableHead>
               <TableBody>
                 {teacherList.map((list, index) => (
-                  <TableList list={list} key={list.id} index={index} 
-                  schoolList={
-                    schoolList.filter(school => school.id === list.institute_name)
-                  }
+                  <TableList
+                    list={list}
+                    key={list.id}
+                    index={index}
+                    schoolList={schoolList.filter(
+                      (school) => school.id === list.institute_name
+                    )}
                   />
                 ))}
               </TableBody>

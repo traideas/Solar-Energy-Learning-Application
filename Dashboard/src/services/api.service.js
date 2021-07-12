@@ -121,6 +121,11 @@ const getQuizById = (id) => {
   return axios.get(configData.SERVER_URL + "quiz/" + id + "/", config);
 };
 
+const getQuizScoreById = (id) => {
+  return axios.get(configData.SERVER_URL + "quiz_score/" + id , config);
+} 
+
+
 const setQuizScore = (
   student,
   quiz,
@@ -141,6 +146,7 @@ const setQuizScore = (
   };
   return axios.post(configData.SERVER_URL + "score/", data, config);
 };
+
 
 const getDiscussionDetails = () => {
   return axios.get(configData.SERVER_URL + "discussion/", config);
@@ -219,6 +225,7 @@ const deleteQuiz = (id) => {
   return axios.delete(configData.SERVER_URL + "quiz/" + id + "/", config);
 };
 
+
 export default {
   uploadVideoContent,
   uploadSlideContent,
@@ -244,5 +251,6 @@ export default {
   getQuizById,
   setQuizScore,
   postSchoolList,
-  getSchoolByID
+  getSchoolByID,
+  getQuizScoreById
 };
