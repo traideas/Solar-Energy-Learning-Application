@@ -195,7 +195,7 @@ class VideoListPrivate(generics.ListAPIView):
         school = None
         try:
             if (user.is_admin):
-                queryset = VideoMaterial.objects.all().order_by('-id')
+                queryset = VideoMaterial.objects.filter(Q(public=False)).all().order_by('-id')
                 serializer = VideoSerializer(queryset, many=True)
                 return Response(serializer.data)
         except:
@@ -302,7 +302,7 @@ class PPTXListPrivate(generics.ListAPIView):
         school = None
         try:
             if (user.is_admin):
-                queryset = PPTXMaterial.objects.all().order_by('-id')
+                queryset = PPTXMaterial.objects.all(Q(public=False)).order_by('-id')
                 serializer = PPTXSerializer(queryset, many=True)
                 return Response(serializer.data)
         except:
@@ -388,7 +388,7 @@ class DocListPrivate(generics.ListAPIView):
         school = None
         try:
             if (user.is_admin):
-                queryset = DocMaterial.objects.all().order_by('-id')
+                queryset = DocMaterial.objects.all(Q(public=False)).order_by('-id')
                 serializer = DocSerializer(queryset, many=True)
                 return Response(serializer.data)
         except:
