@@ -248,6 +248,7 @@ class ScoreSerializer(serializers.ModelSerializer):
 
 class StudentSerializer(serializers.ModelSerializer):
     created_by = UserSerializer()
+
     # school_section = SchoolSerializer()
     studentScore = ScoreSerializer(many=True, read_only=True)
 
