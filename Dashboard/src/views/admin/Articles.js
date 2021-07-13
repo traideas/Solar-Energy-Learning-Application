@@ -116,12 +116,19 @@ const TableList = ({ list, index }) => {
   )
 }
 
-const Articles = () => {
+const Articles = (props) => {
   const [articleDetails, setarticleDetails] = useState([])
   useEffect(() => {
-    ApiService.getArticleDetails()
-      .then((res) => setarticleDetails(res.data))
-      .catch((err) => console.log(err));
+    if (props.location.pathname === "/admin/additional_articles") {
+      ApiService.getAddArticleDetails()
+        .then((res) => setarticleDetails(res.data))
+        .catch((err) => console.log(err));
+    } else {
+      ApiService.getArticleDetails()
+        .then((res) => setarticleDetails(res.data))
+        .catch((err) => console.log(err));
+    }
+
   }, []);
 
   const classes = useStyles();
@@ -160,7 +167,7 @@ const Articles = () => {
                     justifyContent="flex-end"
                     display="flex"
                     flexWrap="wrap"
-                    display={(AuthService.isAdmin() == false || AuthService.isAdmin() == null) ? "none" : ""}>
+                    display={(props.location.pathname === "/admin/additional_articles") ? (AuthService.isTeacher() == false || AuthService.isTeacher() == null) ? "none" : "" : (AuthService.isAdmin() == false || AuthService.isAdmin() == null) ? "none" : ""}>
                     <Link to='/admin/articles/createarticles'>
                       <Button variant="contained" color="primary" size="small"
                       >

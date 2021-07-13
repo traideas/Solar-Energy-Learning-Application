@@ -170,9 +170,61 @@ class TeacherDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 
+
+
+
+class VideoListPublic(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    queryset = VideoMaterial.objects.all().order_by('-id')
+    serializer_class = VideoSerializer
+
+    def list(self, request):
+        queryset = VideoMaterial.objects.filter(Q(public=True)).all().order_by('-id')
+        serializer = VideoSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+
+class VideoListPrivate(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsCreatedBy]
+
+    queryset = VideoMaterial.objects.all().order_by('-id')
+    serializer_class = VideoSerializer
+
+    def list(self, request):
+        user = request.user
+        school = None
+        try:
+            if (user.is_admin):
+                queryset = VideoMaterial.objects.filter(Q(public=False)).all().order_by('-id')
+                serializer = VideoSerializer(queryset, many=True)
+                return Response(serializer.data)
+        except:
+            queryset = []
+            pass
+
+        try:
+            if (user.is_student):
+                student = Student.objects.get(pk=user.id)
+                school = SchoolSection.objects.get(pk=student.school_section.id)
+            elif user.is_teacher:
+                teacher = Teacher.objects.get(pk=user.id)
+                school = SchoolSection.objects.get(pk=teacher.institute_name.id)
+            queryset = VideoMaterial.objects.filter(Q(school=school.id)).all().order_by('-id')
+
+        except:
+            queryset = []
+            pass
+        serializer = VideoSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+
+
+
+
+
 class VideoList(generics.ListCreateAPIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-    #                       IsOwnerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                          IsCreatedBy]
     queryset = VideoMaterial.objects.all().order_by('-id')
     serializer_class = VideoSerializer
 
@@ -215,19 +267,63 @@ class VideoDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = VideoSerializer
 
     # def list(self, request):
-    #     user = request.user
-    #     try:
-    #         if (user.is_admin):
-    #             queryset = self.get_queryset()
-    #         else:
-    #             queryset = []
-    #     except:
-    #         queryset = []
-    #
-    #         pass
+    #     queryset = self.get_queryset()
     #     serializer = VideoSerializer(queryset)
     #     return Response(serializer.data)
 
+
+
+
+
+
+
+class PPTXListPublic(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    #                       IsOwnerOrReadOnly]
+    queryset = PPTXMaterial.objects.all().order_by('-id')
+    serializer_class = PPTXSerializer
+
+    def list(self, request):
+        queryset = PPTXMaterial.objects.filter( Q(public=True)).all().order_by('-id')
+        serializer = PPTXSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+
+
+class PPTXListPrivate(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    #                       IsOwnerOrReadOnly]
+    queryset = PPTXMaterial.objects.all().order_by('-id')
+    serializer_class = PPTXSerializer
+
+    def list(self, request):
+        user = request.user
+
+        school = None
+        try:
+            if (user.is_admin):
+                queryset = PPTXMaterial.objects.all(Q(public=False)).order_by('-id')
+                serializer = PPTXSerializer(queryset, many=True)
+                return Response(serializer.data)
+        except:
+            queryset = []
+            pass
+
+        try:
+            if (user.is_student):
+                student = Student.objects.get(pk=user.id)
+                school = SchoolSection.objects.get(pk=student.school_section.id)
+
+            elif user.is_teacher:
+                teacher = Teacher.objects.get(pk=user.id)
+                school = SchoolSection.objects.get(pk=teacher.institute_name.id)
+            queryset = PPTXMaterial.objects.filter(Q(school=school.id)).all().order_by('-id')
+
+        except:
+            queryset = []
+            pass
+        serializer = PPTXSerializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 
@@ -267,16 +363,72 @@ class PPTXList(generics.ListCreateAPIView):
         return Response(serializer.data)
 
 
+
+
+
 class PPTXDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-                          AccessPermission, IsCreatedBy]
+                        IsCreatedBy]
     queryset = PPTXMaterial.objects.all()
     serializer_class = PPTXSerializer
 
 
 
+
+
+class DocListPrivate(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,IsCreatedBy]
+    #                       IsOwnerOrReadOnly]
+    queryset = DocMaterial.objects.all().order_by('-id')
+    serializer_class = DocSerializer
+
+    def list(self, request):
+        user = request.user
+
+        school = None
+        try:
+            if (user.is_admin):
+                queryset = DocMaterial.objects.all(Q(public=False)).order_by('-id')
+                serializer = DocSerializer(queryset, many=True)
+                return Response(serializer.data)
+        except:
+            queryset = []
+            pass
+
+        try:
+            if (user.is_student):
+                student = Student.objects.get(pk=user.id)
+                school = SchoolSection.objects.get(pk=student.school_section.id)
+
+            elif user.is_teacher:
+                teacher = Teacher.objects.get(pk=user.id)
+                school = SchoolSection.objects.get(pk=teacher.institute_name.id)
+            queryset = DocMaterial.objects.filter(Q(school=school.id)).all().order_by('-id')
+
+        except:
+            queryset = []
+            pass
+        serializer = DocSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+
+class DocListPublic(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    #                       IsOwnerOrReadOnly]
+    queryset = DocMaterial.objects.all().order_by('-id')
+    serializer_class = DocSerializer
+
+    def list(self, request):
+        queryset = DocMaterial.objects.filter(Q(public=True)).all().order_by('-id')
+        serializer = DocSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+
+
+
+
 class DocList(generics.ListCreateAPIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     #                       IsOwnerOrReadOnly]
     queryset = DocMaterial.objects.all().order_by('-id')
     serializer_class = DocSerializer
@@ -313,14 +465,14 @@ class DocList(generics.ListCreateAPIView):
 
 class DocDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-                          AccessPermission, IsCreatedBy]
+                          IsCreatedBy]
     queryset = DocMaterial.objects.all()
     serializer_class = DocSerializer
 
 
 
 class QuizList(generics.ListCreateAPIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     #                       IsOwnerOrReadOnly]
     queryset = Quiz.objects.all().order_by('-start_date')
     serializer_class = QuizSerializer
@@ -365,7 +517,7 @@ class QuizDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class QuestionList(generics.ListCreateAPIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     #                       IsOwnerOrReadOnly]
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
@@ -378,7 +530,7 @@ class QuestionDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class DiscussionList(generics.ListCreateAPIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     #                       IsOwnerOrReadOnly]
     # user = None
     # print(user)

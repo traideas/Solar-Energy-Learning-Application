@@ -248,6 +248,7 @@ class ScoreSerializer(serializers.ModelSerializer):
 
 class StudentSerializer(serializers.ModelSerializer):
     created_by = UserSerializer()
+
     # school_section = SchoolSerializer()
     studentScore = ScoreSerializer(many=True, read_only=True)
 
@@ -324,17 +325,19 @@ class StudentSerializer(serializers.ModelSerializer):
             temp_school_section.save()
 
             school_section = SchoolSection.objects.get(
-                                                       school_name=school_section_data['school_name'])
-            print(school_section)
+                                                       school_name=school_section_data.school_name)
+
             count = school_section.student_count
             school_section.student_count = count + 1
             school_section.save()
+            instance.school_section = school_section
+            instance.save()
         except:
             # school_section = SchoolSection.objects.create(**school_section_data)
 
             pass
 
-        # instance.school_section = school_section
+        #
         # instance.birth_date = validated_data.get('birth_date', instance.birth_date)
         instance.save()
         return instance
