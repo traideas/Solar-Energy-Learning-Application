@@ -111,7 +111,7 @@ var routes = [
     divider: true,
   },
   {
-    title: "Learning Metarials",
+    title: "Stendard Metarials",
   },
   {
     path: "/videos",
@@ -128,7 +128,6 @@ var routes = [
     component: CreateVideos,
     layout: "/admin",
     invisible: true,
-    adminOnly: true,
   },
   {
     path: "/slides",
@@ -144,7 +143,6 @@ var routes = [
     component: CreateSlides,
     layout: "/admin",
     invisible: true,
-    adminOnly: true,
   },
   {
     path: "/articles",
@@ -160,7 +158,36 @@ var routes = [
     component: CreateArticles,
     layout: "/admin",
     invisible: true,
-    adminOnly: true,
+  },
+  {
+    divider: true,
+  },
+  {
+    title: "Additional Metarials",
+  },
+  {
+    path: "/additional_videos",
+    name: "Videos",
+    icon: VideoLibraryIcon,
+    iconColor: "Primary",
+    component: Videos,
+    layout: "/admin",
+  },
+  {
+    path: "/additional_slides",
+    name: "Slides",
+    icon: NoteAddIcon,
+    iconColor: "Success",
+    component: Slides,
+    layout: "/admin",
+  },
+  {
+    path: "/additional_articles",
+    name: "Articles",
+    icon: AttachFileIcon,
+    iconColor: "Error",
+    component: Articles,
+    layout: "/admin",
   },
   {
     divider: true,
