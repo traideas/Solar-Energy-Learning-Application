@@ -119,14 +119,22 @@ const TableList = ({ list, index }) => {
   )
 }
 
-const Videos = () => {
+const Videos = (props) => {
+
 
   const [videoDetails, setvideoDetails] = useState([])
 
   useEffect(() => {
-    ApiService.getVideoDetails()
-      .then((res) => setvideoDetails(res.data))
-      .catch((err) => console.log(err));
+    if (props.location.pathname === "/admin/additional_videos") {
+      ApiService.getAddVideoDetails()
+        .then((res) => setvideoDetails(res.data))
+        .catch((err) => console.log(err));
+    } else {
+      ApiService.getVideoDetails()
+        .then((res) => setvideoDetails(res.data))
+        .catch((err) => console.log(err));
+    }
+
   }, []);
   const classes = useStyles();
 
@@ -164,7 +172,7 @@ const Videos = () => {
                     justifyContent="flex-end"
                     display="flex"
                     flexWrap="wrap"
-                    display={(AuthService.isAdmin() == false || AuthService.isAdmin() == null) ? "none" : ""}>
+                    display={(props.location.pathname === "/admin/additional_videos") ? (AuthService.isTeacher() == false || AuthService.isTeacher() == null) ? "none" : "" : (AuthService.isAdmin() == false || AuthService.isAdmin() == null) ? "none" : ""}>
                     <Link to='/admin/videos/createvideos'>
                       <Button variant="contained" color="primary" size="small"
                       >

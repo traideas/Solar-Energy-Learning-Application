@@ -116,15 +116,22 @@ const TableList = ({ list, index }) => {
   )
 }
 
-const Slides = () => {
+const Slides = (props) => {
 
 
   const [slideDetails, setslideDetails] = useState([])
 
   useEffect(() => {
-    ApiService.getSlideDetails()
-      .then((res) => setslideDetails(res.data))
-      .catch((err) => console.log(err));
+    if (props.location.pathname === "/admin/additional_slides") {
+      ApiService.getAddSlideDetails()
+        .then((res) => setslideDetails(res.data))
+        .catch((err) => console.log(err));
+    } else {
+      ApiService.getSlideDetails()
+        .then((res) => setslideDetails(res.data))
+        .catch((err) => console.log(err));
+    }
+
   }, []);
   const classes = useStyles();
 
@@ -162,7 +169,7 @@ const Slides = () => {
                     justifyContent="flex-end"
                     display="flex"
                     flexWrap="wrap"
-                    display={(AuthService.isAdmin() == false || AuthService.isAdmin() == null) ? "none" : ""}>
+                    display={(props.location.pathname === "/admin/additional_slides") ? (AuthService.isTeacher() == false || AuthService.isTeacher() == null) ? "none" : "" : (AuthService.isAdmin() == false || AuthService.isAdmin() == null) ? "none" : ""}>
                     <Link to='/admin/slides/createslides'>
                       <Button variant="contained" color="primary" size="small"
                       >

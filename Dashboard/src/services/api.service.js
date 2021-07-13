@@ -106,15 +106,27 @@ const getUserDetailsOnly = (id) => {
 };
 
 const getArticleDetails = () => {
-  return axios.get(configData.SERVER_URL + "document/", config);
+  return axios.get(configData.SERVER_URL + "document_public/", config);
+};
+
+const getAddArticleDetails = () => {
+  return axios.get(configData.SERVER_URL + "document_private/", config);
 };
 
 const getSlideDetails = () => {
-  return axios.get(configData.SERVER_URL + "pptx/", config);
+  return axios.get(configData.SERVER_URL + "pptx_public/", config);
+};
+
+const getAddSlideDetails = () => {
+  return axios.get(configData.SERVER_URL + "pptx_private/", config);
 };
 
 const getVideoDetails = () => {
-  return axios.get(configData.SERVER_URL + "video/", config);
+  return axios.get(configData.SERVER_URL + "video_public/", config);
+};
+
+const getAddVideoDetails = () => {
+  return axios.get(configData.SERVER_URL + "video_private/", config);
 };
 
 const getQuizDetails = () => {
@@ -126,8 +138,8 @@ const getQuizById = (id) => {
 };
 
 const getQuizScoreById = (id) => {
-  return axios.get(configData.SERVER_URL + "quiz_score/" + id , config);
-} 
+  return axios.get(configData.SERVER_URL + "quiz_score/" + id, config);
+}
 
 
 const setQuizScore = (
@@ -264,14 +276,15 @@ export default {
   deleteQuiz,
   getQuizById,
   setQuizScore,
-
   postSchoolList,
   getSchoolByID,
   getQuizScoreById,
-
   updateProfile,
   postSchoolList,
-  getUserDetailsOnly
+  getUserDetailsOnly,
+  getAddVideoDetails,
+  getAddSlideDetails,
+  getAddArticleDetails
 
 };
 
