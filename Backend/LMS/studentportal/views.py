@@ -631,10 +631,8 @@ class QuizScore(generics.ListAPIView):
                 queryset = Score.objects.filter(quiz=pk).all()
                 temp = []
                 for i in queryset:
-                    temp.append(i)
-                for i in queryset:
                     if (i.student.school_section==school):
-                        temp.remove(i)
+                        temp.append(i)
 
                 queryset = temp
             else:
