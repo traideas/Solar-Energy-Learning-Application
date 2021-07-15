@@ -626,11 +626,19 @@ class QuizScore(generics.ListAPIView):
             school = SchoolSection.objects.get(pk=teacher.institute_name.id)
         if school:
             quiz = None
-            quiz = Quiz.objects.filter(Q(school=school.id) & Q(pk=pk)).all()
+            quiz = Quiz.objects.filter(Q(pk=pk)).all()
             if quiz:
                 queryset = Score.objects.filter(quiz=pk).all()
-        else:
-            queryset = []
+                temp = []
+                for i in queryset:
+                    temp.append(i)
+                for i in queryset:
+                    if (i.student.school_section==school):
+                        temp.remove(i)
+
+                queryset = temp
+            else:
+                queryset = []
         # except:
         #     queryset = []
 
