@@ -18,12 +18,25 @@ const useStyles = makeStyles(componentStyles);
 const UserHeader = () => {
   const [userDetails, setUserDetails] = useState([]);
   useEffect(() => {
-    ApiService.getUserDetailsOnly(AuthService.getUserId())
-      .then((res) => {
-        setUserDetails(res.data)
-
-      })
-      .catch((err) => console.log(err));
+    if (AuthService.isAdmin()) {
+      ApiService.getUserDetailsOnly(AuthService.getUserId())
+        .then((res) => {
+          setUserDetails(res.data);
+        })
+        .catch((err) => console.log(err));
+    } else if (AuthService.isTeacher()) {
+      ApiService.getUserTeacherDetailsOnly(AuthService.getUserId())
+        .then((res) => {
+          setUserDetails(res.data.created_by);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      ApiService.getUserStudentDetailsOnly(AuthService.getUserId())
+        .then((res) => {
+          setUserDetails(res.data.created_by);
+        })
+        .catch((err) => console.log(err));
+    }
   }, []);
   const classes = useStyles();
 
@@ -59,7 +72,6 @@ const UserHeader = () => {
                 variant="h1"
                 classes={{ root: classes.typographyRootH1 }}
               >
-
                 Hello, {userDetails.first_name} {userDetails.last_name}
               </Typography>
             </Grid>

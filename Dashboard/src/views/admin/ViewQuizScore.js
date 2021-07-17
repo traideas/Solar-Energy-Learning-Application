@@ -57,8 +57,12 @@ const onClickDelete = (id) => {
 const TableList = ({ list, index }) => {
   const [userName, setUserName] = useState("");
   useEffect(() => {
-    ApiService.getUserDetailsOnly(list.student)
-      .then((res) => setUserName(`${res.data.first_name} ${res.data.last_name}`))
+    ApiService.getUserStudentDetailsOnly(list.student)
+      .then((res) =>
+        setUserName(
+          `${res.data.created_by?.first_name} ${res.data.created_by?.last_name}`
+        )
+      )
       .catch((err) => console.log(err));
   }, []);
   const classes = useStyles();

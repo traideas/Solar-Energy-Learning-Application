@@ -105,6 +105,15 @@ const getUserDetailsOnly = (id) => {
   return axios.get(configData.SERVER_URL + "user_admin/" + id + "/", config);
 };
 
+const getUserTeacherDetailsOnly = (id) => {
+  return axios.get(configData.SERVER_URL + "teacher/" + id + "/", config);
+};
+
+const getUserStudentDetailsOnly = (id) => {
+  return axios.get(configData.SERVER_URL + "student/" + id + "/", config);
+};
+
+
 const getArticleDetails = () => {
   return axios.get(configData.SERVER_URL + "document_public/", config);
 };
@@ -284,7 +293,9 @@ export default {
   getUserDetailsOnly,
   getAddVideoDetails,
   getAddSlideDetails,
-  getAddArticleDetails
+  getAddArticleDetails,
+  getUserStudentDetailsOnly,
+  getUserTeacherDetailsOnly
 
 };
 

@@ -21,89 +21,138 @@ import UserHeader from "components/Headers/UserHeader.js";
 
 import componentStyles from "assets/theme/views/admin/profile.js";
 import boxShadows from "assets/theme/box-shadow.js";
-import swal from 'sweetalert';
+import swal from "sweetalert";
 //Api Services
 import ApiService from "../../services/api.service";
 import AuthService from "../../services/auth.service";
-
 
 const useStyles = makeStyles(componentStyles);
 
 function Profile() {
   const classes = useStyles();
   const theme = useTheme();
-  const [userDetails, setUserDetails] = useState([])
-
+  const [userDetails, setUserDetails] = useState([]);
   useEffect(() => {
-    ApiService.getUserDetailsOnly(AuthService.getUserId())
-      .then((res) => setUserDetails(res.data))
-      .catch((err) => console.log(err));
-  }, []);
-
-  const [userFullDetails, setuserFullDetails] = useState([])
-
-  useEffect(() => {
-    ApiService.getUserDetails(AuthService.getUserId())
-      .then((res) => setuserFullDetails(res.data))
-      .catch((err) => console.log(err));
-  }, []);
-
-  const { register, handleSubmit } = useForm()
-  const onSubmit = (data) => {
-    let formData = new FormData()
     if (AuthService.isAdmin()) {
-      formData.append("first_name", (data.first_name == "") ? userDetails.first_name : data.first_name)
-      formData.append("last_name", (data.last_name == "") ? userDetails.last_name : data.last_name)
-      formData.append("username", userDetails.username)
-      formData.append("email", (data.email == "") ? userDetails.email : data.email)
-      formData.append("password", data.password)
+      ApiService.getUserDetailsOnly(AuthService.getUserId())
+        .then((res) => {
+          setUserDetails(res.data);
+        })
+        .catch((err) => console.log(err));
+    } else if (AuthService.isTeacher()) {
+      ApiService.getUserTeacherDetailsOnly(AuthService.getUserId())
+        .then((res) => {
+          setUserDetails(res.data.created_by);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      ApiService.getUserStudentDetailsOnly(AuthService.getUserId())
+        .then((res) => {
+          setUserDetails(res.data.created_by);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, []);
+
+  const [userFullDetails, setuserFullDetails] = useState([]);
+
+  useEffect(() => {
+    if (AuthService.isAdmin()) {
+      ApiService.getUserDetailsOnly(AuthService.getUserId())
+        .then((res) => {
+          setuserFullDetails(res.data);
+        })
+        .catch((err) => console.log(err));
+    } else if (AuthService.isTeacher()) {
+      ApiService.getUserTeacherDetailsOnly(AuthService.getUserId())
+        .then((res) => {
+          setuserFullDetails(res.data);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      ApiService.getUserStudentDetailsOnly(AuthService.getUserId())
+        .then((res) => {
+          setuserFullDetails(res.data);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, []);
+
+  const { register, handleSubmit } = useForm();
+  const onSubmit = (data) => {
+    let formData = new FormData();
+    if (AuthService.isAdmin()) {
+      formData.append(
+        "first_name",
+        data.first_name == "" ? userDetails.first_name : data.first_name
+      );
+      formData.append(
+        "last_name",
+        data.last_name == "" ? userDetails.last_name : data.last_name
+      );
+      formData.append("username", userDetails.username);
+      formData.append(
+        "email",
+        data.email == "" ? userDetails.email : data.email
+      );
+      formData.append("password", data.password);
 
       if (data.photo[0] != undefined) {
-        formData.append("photo", data.photo[0])
+        formData.append("photo", data.photo[0]);
       }
     }
     if (AuthService.isTeacher()) {
-      formData.append("created_by.first_name", (data.first_name == "") ? userDetails.first_name : data.first_name)
-      formData.append("created_by.last_name", (data.last_name == "") ? userDetails.last_name : data.last_name)
-      formData.append("created_by.username", userDetails.username)
-      formData.append("created_by.email", (data.email == "") ? userDetails.email : data.email)
-      formData.append("created_by.password", data.password)
+      formData.append(
+        "created_by.first_name",
+        data.first_name == "" ? userDetails.first_name : data.first_name
+      );
+      formData.append(
+        "created_by.last_name",
+        data.last_name == "" ? userDetails.last_name : data.last_name
+      );
+      formData.append("created_by.username", userDetails.username);
+      formData.append(
+        "created_by.email",
+        data.email == "" ? userDetails.email : data.email
+      );
+      formData.append("created_by.password", data.password);
+      if (data.photo[0] != undefined) {
+        formData.append("created_by.photo", data.photo[0]);
+      }
+      formData.append("institute_name", userFullDetails.institute_name);
+      formData.append("is_verified", userFullDetails.is_verified);
+    } else {
+      formData.append(
+        "created_by.first_name",
+        data.first_name == "" ? userDetails.first_name : data.first_name
+      );
+      formData.append(
+        "created_by.last_name",
+        data.last_name == "" ? userDetails.last_name : data.last_name
+      );
+      formData.append("created_by.username", userDetails.username);
+      formData.append(
+        "created_by.email",
+        data.email == "" ? userDetails.email : data.email
+      );
+      formData.append("created_by.password", data.password);
 
       if (data.photo[0] != undefined) {
-        formData.append("created_by.photo", data.photo[0])
+        formData.append("created_by.photo", data.photo[0]);
       }
-      formData.append("institute_name", userFullDetails.institute_name)
-      formData.append("is_verified", userFullDetails.is_verified)
+      formData.append("school_section", userFullDetails.school_section);
+      formData.append("school_roll", userFullDetails.school_roll);
     }
-    else {
-
-
-      formData.append("created_by.first_name", (data.first_name == "") ? userDetails.first_name : data.first_name)
-      formData.append("created_by.last_name", (data.last_name == "") ? userDetails.last_name : data.last_name)
-      formData.append("created_by.username", userDetails.username)
-      formData.append("created_by.email", (data.email == "") ? userDetails.email : data.email)
-      formData.append("created_by.password", data.password)
-
-      if (data.photo[0] != undefined) {
-        formData.append("created_by.photo", data.photo[0])
-      }
-      formData.append("school_section", userFullDetails.school_section)
-      formData.append("school_roll", userFullDetails.school_roll)
-
-    }
-
 
     ApiService.updateProfile(formData, userDetails.id)
       .then(function (res) {
-        swal("Success!", "Profile Updated Successfully!", "success")
+        swal("Success!", "Profile Updated Successfully!", "success");
         window.location.reload();
       })
       .catch(function (res) {
         swal("Failed!", "Please Try Again!", "error");
-      })
-  }
-
-
+      });
+  };
 
   return (
     <>
@@ -205,7 +254,6 @@ function Profile() {
                               autoComplete="off"
                               type="email"
                               defaultValue={userDetails.email}
-
                               required
                               {...register("email")}
                             />
@@ -260,7 +308,6 @@ function Profile() {
                       </Grid>
                     </Grid>
                     <Grid container>
-
                       <Grid item xs={12} lg={6}>
                         <FormGroup>
                           <FormLabel>New Password</FormLabel>
@@ -277,7 +324,6 @@ function Profile() {
                               autoComplete="off"
                               type="password"
                               placeholder="Password"
-
                               {...register("password")}
                             />
                           </FormControl>
@@ -303,12 +349,15 @@ function Profile() {
                       </Grid>
                     </Grid>
 
-                    <Box textAlign="center" marginTop="1.5rem" marginBottom="1.5rem">
+                    <Box
+                      textAlign="center"
+                      marginTop="1.5rem"
+                      marginBottom="1.5rem"
+                    >
                       <Button color="primary" variant="contained" type="submit">
                         Update Profile
                       </Button>
                     </Box>
-
                   </form>
                 </div>
               </CardContent>
@@ -328,7 +377,11 @@ function Profile() {
                   <Box position="relative">
                     <Box
                       component="img"
-                      src={(userDetails.photo == null) ? require("assets/img/theme/defaultImage.png").default : userDetails.photo}
+                      src={
+                        userDetails.photo == null
+                          ? require("assets/img/theme/defaultImage.png").default
+                          : userDetails.photo
+                      }
                       alt="..."
                       maxWidth="200px"
                       height="200px"
@@ -400,7 +453,6 @@ function Profile() {
                   >
                     Email: {userDetails.email}
                   </Box>
-
                 </Box>
               </Box>
             </Card>
