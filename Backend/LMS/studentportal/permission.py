@@ -36,8 +36,11 @@ class AccessPermission(permissions.BasePermission):
 
 
 class AdminPermission(permissions.BasePermission):
-    def has_object_permission(self, request, view, obj):
-        return (request.user.is_admin)
+    def has_permission(self, request, view):
+        if request.user.is_admin:
+            return (request.user.is_admin)
+        else:
+            return False
 
 
 

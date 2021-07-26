@@ -60,6 +60,7 @@ function Register() {
         .then(function (response) {
           reset();
           swal("Congratulations!", "Account Created Successfully!", "success");
+          window.location.replace('/auth/login')
         })
         .catch(function (error) {
           swal("Registration Failed!", "Please Try Again!", "error");

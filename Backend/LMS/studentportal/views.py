@@ -42,12 +42,18 @@ class UserAuthentication(ObtainAuthToken):
 
 
 class AdminList(generics.ListCreateAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, AdminPermission]
     queryset = User.objects.all()
     serializer_class = AdminSerializer
+    def list(self, request):
+        # queryset = User.objects.filter(is_admin=True).all()
+        queryset = User.objects.all()
+        serializer = AdminSerializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class AdminDetail(generics.RetrieveUpdateDestroyAPIView):
-
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, AdminPermission]
     queryset = User.objects.all()
     serializer_class = AdminSerializer
 
@@ -123,7 +129,7 @@ class StudentDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
     def perform_destroy(self, instance):
-        user = instance.user
+        user = instance.created_by
         school_section = instance.school_section
         user.delete()
         instance.delete()
@@ -164,7 +170,7 @@ class TeacherDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TeacherSerializer
 
     def perform_destroy(self, instance):
-        user = instance.user
+        user = instance.created_by
         user.delete()
         instance.delete()
 
@@ -626,11 +632,17 @@ class QuizScore(generics.ListAPIView):
             school = SchoolSection.objects.get(pk=teacher.institute_name.id)
         if school:
             quiz = None
-            quiz = Quiz.objects.filter(Q(school=school.id) & Q(pk=pk)).all()
+            quiz = Quiz.objects.filter(Q(pk=pk)).all()
             if quiz:
                 queryset = Score.objects.filter(quiz=pk).all()
-        else:
-            queryset = []
+                temp = []
+                for i in queryset:
+                    if (i.student.school_section==school):
+                        temp.append(i)
+
+                queryset = temp
+            else:
+                queryset = []
         # except:
         #     queryset = []
 

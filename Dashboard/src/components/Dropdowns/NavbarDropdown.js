@@ -15,7 +15,6 @@ import DirectionsRun from "@material-ui/icons/DirectionsRun";
 import LiveHelp from "@material-ui/icons/LiveHelp"; */
 import Person from "@material-ui/icons/Person";
 
-
 // core components
 import componentStyles from "assets/theme/components/navbar-dropdown.js";
 
@@ -31,11 +30,25 @@ export default function NavbarDropdown() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [userDetails, setUserDetails] = useState([]);
   useEffect(() => {
-    ApiService.getUserDetailsOnly(AuthService.getUserId())
-      .then((res) => {
-        setUserDetails(res.data)
-      })
-      .catch((err) => console.log(err));
+    if (AuthService.isAdmin()) {
+      ApiService.getUserDetailsOnly(AuthService.getUserId())
+        .then((res) => {
+          setUserDetails(res.data);
+        })
+        .catch((err) => console.log(err));
+    } else if (AuthService.isTeacher()) {
+      ApiService.getUserTeacherDetailsOnly(AuthService.getUserId())
+        .then((res) => {
+          setUserDetails(res.data.created_by);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      ApiService.getUserStudentDetailsOnly(AuthService.getUserId())
+        .then((res) => {
+          setUserDetails(res.data.created_by);
+        })
+        .catch((err) => console.log(err));
+    }
   }, []);
 
   const isMenuOpen = Boolean(anchorEl);
@@ -87,48 +100,6 @@ export default function NavbarDropdown() {
           <span>My Profile</span>
         </Link>
       </Box>
-      {/* <Box
-        display="flex!important"
-        alignItems="center!important"
-        component={MenuItem}
-        onClick={handleMenuClose}
-      >
-        <Box
-          component={Settings}
-          width="1.25rem!important"
-          height="1.25rem!important"
-          marginRight="1rem"
-        />
-        <span>Settings</span>
-      </Box> */}
-      {/* <Box
-        display="flex!important"
-        alignItems="center!important"
-        component={MenuItem}
-        onClick={handleMenuClose}
-      >
-        <Box
-          component={EventNote}
-          width="1.25rem!important"
-          height="1.25rem!important"
-          marginRight="1rem"
-        />
-        <span>Activity</span>
-      </Box> */}
-      {/* <Box
-        display="flex!important"
-        alignItems="center!important"
-        component={MenuItem}
-        onClick={handleMenuClose}
-      >
-        <Box
-          component={LiveHelp}
-          width="1.25rem!important"
-          height="1.25rem!important"
-          marginRight="1rem"
-        />
-        <span>Support</span>
-      </Box> */}
       <Divider component="div" classes={{ root: classes.dividerRoot }} />
       <Box
         display="flex!important"
@@ -163,7 +134,11 @@ export default function NavbarDropdown() {
       >
         <Avatar
           alt="..."
-          src={(userDetails.photo == null) ? require("assets/img/theme/defaultImage.png").default : userDetails.photo}
+          src={
+            userDetails.photo == null
+              ? require("assets/img/theme/defaultImage.png").default
+              : userDetails.photo
+          }
           classes={{
             root: classes.avatarRoot,
           }}

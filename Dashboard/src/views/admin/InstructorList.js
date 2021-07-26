@@ -66,7 +66,6 @@ const onClickStatus = (
   });
 };
 const TableList = ({ list, index, schoolList }) => {
-  console.log(schoolList);
   const classes = useStyles();
   return (
     <TableRow hover key={list.id}>
