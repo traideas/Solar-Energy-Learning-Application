@@ -76,10 +76,20 @@ const TableList = ({ list, index }) => {
       >
         {index = index + 1}
       </TableCell>
-      <TableCell classes={{ root: classes.tableCellRoot }} >
+      <TableCell classes={{ root: classes.tableCellRoot }}
+        style={{
+          whiteSpace: 'normal',
+          wordWrap: 'break-word'
+        }}
+      >
         {list.title}
       </TableCell>
-      <TableCell classes={{ root: classes.tableCellRoot }} >
+      <TableCell classes={{ root: classes.tableCellRoot }} style={{ width: "40%" }}
+        style={{
+          whiteSpace: 'normal',
+          wordWrap: 'break-word'
+        }}
+      >
         {list.description}
       </TableCell>
       <TableCell classes={{ root: classes.tableCellRoot }}>
