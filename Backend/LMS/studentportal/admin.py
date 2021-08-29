@@ -16,4 +16,9 @@ admin.site.register(DocMaterial)
 admin.site.register(Score)
 admin.site.register(Quiz)
 admin.site.register(Question)
+admin.site.register(Assignment)
+admin.site.register(AssignmentSubmission)
+admin.site.register(AssignmentScore)
+
+
 

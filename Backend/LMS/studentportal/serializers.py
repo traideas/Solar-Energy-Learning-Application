@@ -404,6 +404,16 @@ class TeacherSerializer(serializers.ModelSerializer):
 
         return instance
 
+    def to_representation(self, instance):
+        data = super(TeacherSerializer, self).to_representation(instance)
+        school = model_to_dict(instance.institute_name)
+        # user['photo'] = None
+        institute_name = school
+        data['institute_name'] = school
+        # data['file'] = 'http://127.0.0.1:8000/media/' + str(instance.file)
+
+        return data
+
 
 
 
@@ -624,6 +634,130 @@ class QuizSerializer(serializers.ModelSerializer):
 
         material.save()
         return material
+
+
+
+
+
+class AssignmentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Assignment
+        fields = ['id', 'created_by', 'title', 'school', 'description', 'submission_date', 'mark', 'photo']
+        extra_kwargs = {
+            'id': {'read_only': True},
+            'title': {'required': True},
+            'school': {'read_only': True},
+            'created_by': {'required': True},
+            'description': {'required': False},
+            'submission_date': {'required': True},
+            'mark': {'required': True},
+            'photo': {'required': False}
+        }
+
+
+    def validate(self, data):
+        try:
+            user = data.get('created_by')
+            # record = User.objects.get(pk=user.id)
+        except:
+            # record = None
+            pass
+        if user.is_student:
+            raise serializers.ValidationError("This User has no permission to create any assignment")
+        return super().validate(data)
+
+
+    def create(self, validated_data):
+        user = validated_data['created_by']
+        material = Assignment.objects.create(**validated_data)
+        if user.is_admin:
+            material.public = True
+
+        else:
+            teacher = Teacher.objects.get(pk=user.id)
+            material.school = teacher.institute_name
+
+        material.save()
+        return material
+
+
+
+
+class AssignmentSubmissionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AssignmentSubmission
+        fields = ['id', 'assignment','created_by', 'file', 'submission_date', 'late_submission']
+        extra_kwargs = {
+            'id': {'read_only': True},
+            'created_by': {'required': True},
+            'assignment': {'required': True},
+            'file': {'required': True},
+            'submission_date': {'read_only': True},
+            'late_submission': {'read_only': True}
+        }
+
+
+
+    def validate(self, data):
+        student = data.get('student')
+        assignment = data.get('assignment')
+        # sku = data.get('sku')
+
+        record = AssignmentSubmission.objects.filter(student=student, assignment=assignment).first()
+        print(student.school_section)
+        print(assignment.school)
+        if assignment.school!=None and assignment.school.id == student.school_section.id:
+            raise serializers.ValidationError("Student does not belong to the specific school")
+        if record:
+            raise serializers.ValidationError("Assignment been submitted")
+
+
+        return super().validate(data)
+
+
+
+    def validate(self, data):
+        try:
+            student = data.get('created_by')
+            # record = User.objects.get(pk=user.id)
+        except:
+            # record = None
+            pass
+        if student.created_by.is_student == False:
+            raise serializers.ValidationError("This User has no permission to submit an assignment")
+        return super().validate(data)
+
+
+    def create(self, validated_data):
+        material = AssignmentSubmission.objects.create(**validated_data)
+        submitted_date = material.submission_date
+        submission_date = material.assignment.submission_date
+        if submission_date < submitted_date:
+            material.late_submission = True
+        material.save()
+        return material
+
+
+
+
+class AssignmentScoreSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AssignmentScore
+        fields = ['id', 'student', 'assignment', 'totalMarks', 'score', 'date']
+        extra_kwargs = {'id': {'read_only': True},
+                        'student': {'required': True},
+                        'assignment': {'required': True},
+                        'totalMarks': {'required': False},
+                        'score': {'required': True},
+                        'date': {'read_only': True},
+                        }
+
+
+
+
+
 
 
 

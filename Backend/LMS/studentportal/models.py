@@ -192,40 +192,40 @@ class Comment(models.Model):
         return self.comment
 
 
-# class Assignment(models.Model):
-#     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='AssignmentList')
-#     school = models.ForeignKey(SchoolSection, on_delete=models.CASCADE, related_name='school_assignment', blank=True)
-#     title = models.CharField(max_length=500)
-#     description = models.CharField(max_length=2500)
-#     created_date = models.DateField(blank=False, auto_now_add=True)
-#     submission_date = models.DateField(blank=True, null=True)
-#     mark = models.IntegerField()
-#
-#
-#
-#
-#
-# class AssignmentSubmission(models.Model):
-#     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE, related_name='Assignment')
-#     create_by = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='AssignmentSubmission')
-#     file = models.FileField(blank=False)
-#     submission_date = models.DateField(blank=True, null=True)
-#     late_submission = models.BooleanField(default=False)
-#
-#
-#
-# class AssignmentScore(models.Model):
-#     student = models.ForeignKey('studentportal.Student', on_delete=models.CASCADE, related_name='assignmentScore')
-#     assignment = models.ForeignKey(Assignment, related_name='assignmentscore', on_delete=models.CASCADE)
-#     totalMarks = models.IntegerField()
-#     score = models.IntegerField()
-#     date = models.DateField(blank=False, auto_now_add=True)
-#
-#     # class Meta:
-#     #     constraints = [
-#     #         models.UniqueConstraint(fields=['student', 'quiz'],
-#     #                                 name='unique_student_quiz'),
-#     #     ]
+class Assignment(models.Model):
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='AssignmentList')
+    school = models.ForeignKey(SchoolSection, on_delete=models.CASCADE, related_name='school_assignment', blank=True, null=True)
+    title = models.CharField(max_length=500)
+    description = models.CharField(max_length=2500)
+    created_date = models.DateField(blank=False, auto_now_add=True)
+    submission_date = models.DateField(blank=False, null=True)
+    photo = models.FileField(blank=False)
+    mark = models.IntegerField()
+    public = models.BooleanField(default=False)
+    def __str__(self):
+        return self.title
+
+
+
+
+class AssignmentSubmission(models.Model):
+    assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE, related_name='Assignment')
+    created_by = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='AssignmentSubmission')
+    file = models.FileField(blank=False)
+    submission_date = models.DateField(auto_now_add=True)
+    late_submission = models.BooleanField(default=False)
+
+
+
+
+class AssignmentScore(models.Model):
+    student = models.ForeignKey('studentportal.Student', on_delete=models.CASCADE, related_name='assignmentScore')
+    assignment = models.ForeignKey(Assignment, related_name='assignmentscore', on_delete=models.CASCADE)
+    totalMarks = models.IntegerField()
+    score = models.IntegerField()
+    date = models.DateField(blank=False, auto_now_add=True)
+
+
 
 class Score(models.Model):
     student = models.ForeignKey('studentportal.Student', on_delete=models.CASCADE, related_name='studentScore')

@@ -66,6 +66,16 @@ class QuizPermission(permissions.BasePermission):
             if(obj.student.school_section.id == obj.quiz.school.id):
                 return (request.user.is_student)
 
+
+
+class RestrictStudent(permissions.BasePermission):
+    def has_permission(self, request, view):
+        if request.user.is_student == False:
+            return (True)
+        else:
+            return False
+
+
 class IsCreatedBy(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         # Read permissions are allowed to any request,
