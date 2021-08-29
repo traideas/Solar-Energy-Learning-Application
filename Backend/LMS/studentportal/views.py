@@ -596,6 +596,142 @@ class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CommentSerializer
 
 
+
+
+
+# class AssignmentList(generics.ListCreateAPIView):
+#     queryset = Assignment.objects.all()
+#     serializer_class = AssignmentSerializer
+#
+#
+#
+# class AssignmentDetail(generics.RetrieveUpdateDestroyAPIView):
+#     # permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+#     #                       IsCreatedBy]
+#     queryset = Assignment.objects.all()
+#     serializer_class = AssignmentSerializer
+
+
+
+
+
+
+
+
+
+
+
+
+
+class AssignmentListPrivate(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,IsCreatedBy]
+    #                       IsOwnerOrReadOnly]
+    queryset = Assignment.objects.all().order_by('-id')
+    serializer_class = AssignmentSerializer
+
+    def list(self, request):
+        user = request.user
+        school = None
+        try:
+            if (user.is_admin):
+                queryset = Assignment.objects.all(Q(public=False)).order_by('-id')
+                serializer = AssignmentSerializer(queryset, many=True)
+                return Response(serializer.data)
+        except:
+            queryset = []
+            pass
+
+        try:
+            if (user.is_student):
+                student = Student.objects.get(pk=user.id)
+                school = SchoolSection.objects.get(pk=student.school_section.id)
+
+            elif user.is_teacher:
+                teacher = Teacher.objects.get(pk=user.id)
+                school = SchoolSection.objects.get(pk=teacher.institute_name.id)
+            queryset = Assignment.objects.filter(Q(school=school.id)).all().order_by('-id')
+
+        except:
+            queryset = []
+            pass
+        serializer = AssignmentSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+
+class AssignmentListPublic(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    #                       IsOwnerOrReadOnly]
+    queryset = Assignment.objects.all().order_by('-id')
+    serializer_class = AssignmentSerializer
+
+    def list(self, request):
+        queryset = Assignment.objects.filter(Q(public=True)).all().order_by('-id')
+        serializer = AssignmentSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+
+class AssignmentList(generics.ListCreateAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    #                       IsOwnerOrReadOnly]
+    print("good")
+    queryset = Assignment.objects.all().order_by('-id')
+    serializer_class = AssignmentSerializer
+
+    def list(self, request):
+        user = request.user
+        print(user)
+
+        school = None
+        try:
+            if (user.is_admin):
+                queryset = Assignment.objects.all().order_by('-id')
+                serializer = AssignmentSerializer(queryset, many=True)
+                return Response(serializer.data)
+        except:
+            queryset = []
+            pass
+
+        try:
+            if (user.is_student):
+                student = Student.objects.get(pk=user.id)
+                school = SchoolSection.objects.get(pk=student.school_section.id)
+
+            elif user.is_teacher:
+                teacher = Teacher.objects.get(pk=user.id)
+                school = SchoolSection.objects.get(pk=teacher.institute_name.id)
+            queryset = Assignment.objects.filter(Q(school=school.id) | Q(public=True)).all().order_by('-id')
+
+        except:
+            queryset = []
+            pass
+        serializer = AssignmentSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+
+class AssignmentDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                          IsCreatedBy]
+    queryset = Assignment.objects.all()
+    serializer_class = AssignmentSerializer
+
+
+
+
+class AssignmentSubmissionList(generics.ListCreateAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    queryset = AssignmentSubmission.objects.all()
+    serializer_class = AssignmentSubmissionSerializer
+
+
+
+class AssignmentSubmissionDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                          IsCreatedBy]
+    queryset = AssignmentSubmission.objects.all()
+    serializer_class = AssignmentSubmissionSerializer
+
+
+
 class ScoreList(generics.ListCreateAPIView):
     queryset = Score.objects.all()
     serializer_class = ScoreSerializer
@@ -604,6 +740,26 @@ class ScoreList(generics.ListCreateAPIView):
 class ScoreDetail(generics.RetrieveDestroyAPIView):
     queryset = Score.objects.all()
     serializer_class = ScoreSerializer
+
+
+class AssignmentScoreList(generics.ListAPIView):
+    queryset = AssignmentScore.objects.all()
+    serializer_class = AssignmentScoreSerializer
+
+
+class AssignmentScoreList(generics.ListCreateAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                          RestrictStudent]
+    queryset = AssignmentScore.objects.all()
+    serializer_class = AssignmentScoreSerializer
+
+
+class AssignmentScoreDetail(generics.RetrieveDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                          IsCreatedBy]
+    queryset = AssignmentScore.objects.all()
+    serializer_class = AssignmentScoreSerializer
+
 
 
 class QuizScore(generics.ListAPIView):
@@ -648,4 +804,52 @@ class QuizScore(generics.ListAPIView):
 
 
         serializer = ScoreSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+
+
+
+
+class AssignmentScoreById(generics.ListAPIView):
+    queryset = AssignmentScore.objects.all()
+    serializer_class = AssignmentScoreSerializer
+    # lookup_field = 'pk'
+    # print(lookup_field)
+    def list(self, request, pk):
+
+        creator = request.user
+        school = None
+        try:
+            if (creator.is_admin):
+                queryset = AssignmentScore.objects.filter(quiz=pk).all().order_by('-id')
+                serializer = AssignmentScoreSerializer(queryset, many=True)
+                return Response(serializer.data)
+        except:
+            pass
+        # try:
+        if (creator.is_student):
+            student = Student.objects.get(pk=creator.id)
+            school = SchoolSection.objects.get(pk=student.school_section.id)
+
+        elif creator.is_teacher:
+            teacher = Teacher.objects.get(pk=creator.id)
+            school = SchoolSection.objects.get(pk=teacher.institute_name.id)
+        if school:
+            assignment = None
+            assignment = Assignment.objects.filter(Q(pk=pk)).all()
+            if assignment:
+                queryset = AssignmentScore.objects.filter(assignment=pk).all()
+                temp = []
+                for i in queryset:
+                    if (i.student.school_section==school):
+                        temp.append(i)
+
+                queryset = temp
+            else:
+                queryset = []
+        # except:
+        #     queryset = []
+
+
+        serializer = AssignmentScoreSerializer(queryset, many=True)
         return Response(serializer.data)

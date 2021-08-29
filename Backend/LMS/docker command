@@ -1,0 +1,10 @@
+sudo docker-compose up # for running the docker
+
+sudo docker-compose exec solarlms sh # for getting the bash
+
+# then run the migration command in the docker bash
+
+python manage.py makemigrations studentportal
+
+python manage.py migrate studentportal
+
