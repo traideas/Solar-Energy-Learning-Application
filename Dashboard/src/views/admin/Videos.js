@@ -30,6 +30,7 @@ import configData from '../../configData.json'
 import ApiService from "../../services/api.service";
 import AuthService from "../../services/auth.service";
 import swal from "sweetalert";
+
 const useStyles = makeStyles(componentStyles);
 
 const onClickDelete =
@@ -130,7 +131,6 @@ const TableList = ({ list, index }) => {
 }
 
 const Videos = (props) => {
-
 
   const [videoDetails, setvideoDetails] = useState([])
 
