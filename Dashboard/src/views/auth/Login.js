@@ -96,16 +96,7 @@ function Login({ history }) {
                   {...register("password")}
                 />
               </FormControl>
-              <FormControlLabel
-                value="end"
-                control={<Checkbox color="primary" />}
-                label="Remeber me"
-                labelPlacement="end"
-                classes={{
-                  root: classes.formControlLabelRoot,
-                  label: classes.formControlLabelLabel,
-                }}
-              />
+
               <Box textAlign="center" marginTop="1.5rem" marginBottom="1.5rem">
                 <Button color="primary" variant="contained" type="submit">
                   Sign in
