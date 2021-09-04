@@ -33,12 +33,7 @@ import Institute from "views/admin/Institute";
 import ViewQuizScore from "views/admin/ViewQuizScore";
 
 var routes = [
-  {
-    href: "/",
-    name: "MyREL 0.01",
-    icon: FlashOn,
-    upgradeToPro: true,
-  },
+
   {
     path: "/index",
     name: "Discussion",
@@ -236,5 +231,6 @@ var routes = [
     layout: "/admin",
     invisible: true,
   },
+
 ];
 export default routes;
