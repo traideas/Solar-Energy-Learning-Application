@@ -1,5 +1,6 @@
 import axios from "axios";
 import configData from '../configData.json'
+import swal from 'sweetalert';
 
 const registerTeacher = (
   first_name,
@@ -41,6 +42,8 @@ const registerStudent = (
   });
 };
 
+const delay = ms => new Promise(res => setTimeout(res, ms));
+
 const login = (username, password) => {
   return axios
     .post(configData.SERVER_URL + "api/auth/", {
@@ -60,6 +63,10 @@ const login = (username, password) => {
           localStorage.setItem("tusoKe36kie", JSON.stringify(data.token));
           localStorage.setItem("Teas7jkdb13sduiw", JSON.stringify(data.is_teacher));
           localStorage.setItem("s4u8i2sdyf", JSON.stringify(data.user_id));
+        }
+        else {
+          swal("Login Failed!", "Your account is not verified!", "error");
+          await delay(9000);
         }
       }
       else if (data.is_admin) {

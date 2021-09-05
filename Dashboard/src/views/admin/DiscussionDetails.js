@@ -16,9 +16,8 @@ import Avatar from "@material-ui/core/Avatar";
 import Tooltip from "@material-ui/core/Tooltip";
 import FormControl from "@material-ui/core/FormControl";
 import Grid from "@material-ui/core/Grid";
-import GetAppIcon from "@material-ui/icons/GetApp";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
-import Icon from "@material-ui/core/Icon";
+
 // core components
 import Header from "components/Headers/Header.js";
 import componentStyles from "assets/theme/views/admin/profile.js";
@@ -54,58 +53,62 @@ const CommentList = ({ list }) => {
   const classes = useStyles();
   return (
     <Card classes={{ root: classes.cardRoot }} style={{ marginTop: "20px" }}>
+      <CardHeader
+        subheader={
+          <Grid
+            container
+            component={Box}
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Grid item xs="auto">
+              <Tooltip title={list.created_by.name} placement="top">
+                <Avatar
+                  classes={{ root: classes.avatarRoot }}
+                  alt="..."
+                  src={
+                    list.created_by.photo == configData.SERVER_URL + "media/"
+                      ? require("assets/img/theme/defaultImage.png").default
+                      : list.created_by.photo
+                  }
+                />
+              </Tooltip>
+              <br />
+              <span><i>{list.created_by.name}</i></span>
+            </Grid>
+            <Grid item xs="auto">
+              <Box justifyContent="flex-end" display="flex" flexWrap="wrap">
+                {list.created_date}
+              </Box>
+            </Grid>
+            {AuthService.isAdmin() == false || AuthService.isAdmin() == null ? (
+              ""
+            ) : (
+              <Grid item xs="auto">
+                <Box justifyContent="flex-end" display="flex" flexWrap="wrap">
+                  <Button
+                    onClick={() => onClickDelete(list.id)}
+                    variant="contained"
+                    size="small"
+                    style={{ backgroundColor: "red", borderColor: "red" }}
+                  >
+                    <Box
+                      component={DeleteOutlineIcon}
+                      position="relative"
+                      top="2px"
+                    />{" "}
+                    Delete
+                  </Button>
+                </Box>
+              </Grid>
+            )}
+          </Grid>
+        }
+        classes={{ root: classes.cardHeaderRoot }}
+      ></CardHeader>
       <CardContent>
         <p>{list.comment}</p>
       </CardContent>
-      <CardActions>
-        <Grid
-          container
-          component={Box}
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <Grid item xs="auto">
-            <Tooltip title={list.created_by.name} placement="top">
-              <Avatar
-                classes={{ root: classes.avatarRoot }}
-                alt="..."
-                src={
-                  list.created_by.photo == configData.SERVER_URL + "media/"
-                    ? require("assets/img/theme/defaultImage.png").default
-                    : list.created_by.photo
-                }
-              />
-            </Tooltip>
-          </Grid>
-          <Grid item xs="auto">
-            <Box justifyContent="flex-end" display="flex" flexWrap="wrap">
-              {list.created_date}
-            </Box>
-          </Grid>
-
-          {AuthService.isAdmin() == false || AuthService.isAdmin() == null ? (
-            ""
-          ) : (
-            <Grid item xs="auto">
-              <Box justifyContent="flex-end" display="flex" flexWrap="wrap">
-                <Button
-                  onClick={() => onClickDelete(list.id)}
-                  variant="contained"
-                  size="small"
-                  style={{ backgroundColor: "red", borderColor: "red" }}
-                >
-                  <Box
-                    component={DeleteOutlineIcon}
-                    position="relative"
-                    top="2px"
-                  />{" "}
-                  Delete
-                </Button>
-              </Box>
-            </Grid>
-          )}
-        </Grid>
-      </CardActions>
     </Card>
   );
 };
@@ -188,6 +191,8 @@ function CreateDiscussion() {
                       }
                     />
                   </Tooltip>
+                  <br />
+                  <span><b>{created_by.name}</b></span>
                 </Grid>
                 <Grid item xs="auto">
                   <Box justifyContent="flex-end" display="flex" flexWrap="wrap">
@@ -237,7 +242,7 @@ function CreateDiscussion() {
           </CardActions>
         </Card>
         {comments.map((list) => (
-          <CommentList list={list} />
+          <CommentList list={list} key={list.id} />
         ))}
       </Container>
     </>

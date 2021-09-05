@@ -16,7 +16,6 @@ import DiscussionDetails from "views/admin/DiscussionDetails"
 import InstructorList from "views/admin/InstructorList"
 
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import FlashOn from "@material-ui/icons/FlashOn";
 import Person from "@material-ui/icons/Person";
 import VpnKey from "@material-ui/icons/VpnKey";
 import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
@@ -106,7 +105,7 @@ var routes = [
     divider: true,
   },
   {
-    title: "Stendard Metarials",
+    title: "Standard Materials",
   },
   {
     path: "/videos",
@@ -123,6 +122,7 @@ var routes = [
     component: CreateVideos,
     layout: "/admin",
     invisible: true,
+    adminOnly: true,
   },
   {
     path: "/slides",
@@ -138,6 +138,7 @@ var routes = [
     component: CreateSlides,
     layout: "/admin",
     invisible: true,
+    adminOnly: true,
   },
   {
     path: "/articles",
@@ -153,12 +154,15 @@ var routes = [
     component: CreateArticles,
     layout: "/admin",
     invisible: true,
+    adminOnly: true,
   },
   {
     divider: true,
+    invisible: true,
   },
   {
-    title: "Additional Metarials",
+    title: "Additional Materials",
+    invisible: true,
   },
   {
     path: "/additional_videos",
@@ -167,6 +171,7 @@ var routes = [
     iconColor: "Primary",
     component: Videos,
     layout: "/admin",
+    invisible: true,
   },
   {
     path: "/additional_slides",
@@ -175,6 +180,7 @@ var routes = [
     iconColor: "Success",
     component: Slides,
     layout: "/admin",
+    invisible: true,
   },
   {
     path: "/additional_articles",
@@ -183,6 +189,7 @@ var routes = [
     iconColor: "Error",
     component: Articles,
     layout: "/admin",
+    invisible: true,
   },
   {
     divider: true,
