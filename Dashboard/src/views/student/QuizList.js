@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link, Redirect
- } from "react-router-dom";
+import {
+  Link
+} from "react-router-dom";
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -61,23 +62,27 @@ const TableList = ({ list, index, score }) => {
         ""
       ) : (
         <TableCell classes={{ root: classes.tableCellRoot }}>
-          <Link
-            to={{
-              pathname: "/admin/attempt_quiz",
-              quiz: list,
-              questions: list.questions,
-            }}
+
+          <Button
+            variant="contained"
+            size="small"
+            color="primary"
+            onClick={() => handleClick(list.questions, list.title)}
+            disabled={score[0] ? true : false}
           >
-            <Button
-              variant="contained"
-              size="small"
-              color="primary"
-              onClick={() => handleClick(list.questions, list.title)}
+            <Link
+              to={{
+                pathname: "/admin/attempt_quiz",
+                quiz: list,
+                questions: list.questions,
+              }}
+              style={{ textDecoration: "none", color: score[0] ? "black" : "white" }}
             >
               <Box component={VisibilityIcon} position="relative" top="2px" />{" "}
               Attempt Quiz
-            </Button>
-          </Link>
+            </Link>
+          </Button>
+
         </TableCell>
       )}
       {AuthService.isStudent() == false || AuthService.isStudent() == null ? (
@@ -94,7 +99,7 @@ const TableList = ({ list, index, score }) => {
               color="primary"
             >
               <Box component={VisibilityIcon} position="relative" top="2px" />{" "}
-              View Quiz Scoresssss
+              View Quiz Scores
             </Button>
           </Link>
         </TableCell>
@@ -111,17 +116,17 @@ const QuizList = () => {
   const classes = useStyles();
   const [quizDetails, setQuizDetails] = useState([]);
   const [studentScore, setStudentScore] = useState([])
-  
+
   useEffect(() => {
     ApiService.getQuizDetails()
-    .then((res) => setQuizDetails(res.data))
-    .catch((err) => console.log(err));
+      .then((res) => setQuizDetails(res.data))
+      .catch((err) => console.log(err));
   }, []);
 
   useEffect(() => {
     ApiService.getUserDetails(AuthService.getUserId())
-    .then(({data}) => setStudentScore(data.studentScore))
-    .catch(err => console.log(err))
+      .then(({ data }) => setStudentScore(data.studentScore))
+      .catch(err => console.log(err))
   }, [])
 
   return (
@@ -189,7 +194,7 @@ const QuizList = () => {
                     Upload Date
                   </TableCell> */}
                   {AuthService.isStudent() == false ||
-                  AuthService.isStudent() == null ? (
+                    AuthService.isStudent() == null ? (
                     ""
                   ) : (
                     <TableCell

@@ -122,6 +122,7 @@ var routes = [
     component: CreateVideos,
     layout: "/admin",
     invisible: true,
+    adminOnly: true,
   },
   {
     path: "/slides",
@@ -137,6 +138,7 @@ var routes = [
     component: CreateSlides,
     layout: "/admin",
     invisible: true,
+    adminOnly: true,
   },
   {
     path: "/articles",
@@ -152,12 +154,15 @@ var routes = [
     component: CreateArticles,
     layout: "/admin",
     invisible: true,
+    adminOnly: true,
   },
   {
     divider: true,
+    invisible: true,
   },
   {
     title: "Additional Materials",
+    invisible: true,
   },
   {
     path: "/additional_videos",
@@ -166,6 +171,7 @@ var routes = [
     iconColor: "Primary",
     component: Videos,
     layout: "/admin",
+    invisible: true,
   },
   {
     path: "/additional_slides",
@@ -174,6 +180,7 @@ var routes = [
     iconColor: "Success",
     component: Slides,
     layout: "/admin",
+    invisible: true,
   },
   {
     path: "/additional_articles",
@@ -182,6 +189,7 @@ var routes = [
     iconColor: "Error",
     component: Articles,
     layout: "/admin",
+    invisible: true,
   },
   {
     divider: true,
