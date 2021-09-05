@@ -343,6 +343,15 @@ class StudentSerializer(serializers.ModelSerializer):
         return instance
 
 
+    def to_representation(self, instance):
+        data = super(StudentSerializer, self).to_representation(instance)
+        school = model_to_dict(instance.school_section)
+
+        school_name = school['school_name']
+        data['school_section'] = school_name
+        # data['file'] = 'http://127.0.0.1:8000/media/' + str(instance.file)
+
+        return data
 
 
 
