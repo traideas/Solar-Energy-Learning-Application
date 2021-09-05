@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import Container from "@material-ui/core/Container";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -12,7 +11,6 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Pagination from "@material-ui/lab/Pagination";
 import Avatar from "@material-ui/core/Avatar";
 import Create from "@material-ui/icons/Create";
 // core components
@@ -65,7 +63,7 @@ const onClickStatus = (
     }
   });
 };
-const TableList = ({ list, index, schoolList }) => {
+const TableList = ({ list, index }) => {
   const classes = useStyles();
   return (
     <TableRow hover key={list.id}>
@@ -84,7 +82,7 @@ const TableList = ({ list, index, schoolList }) => {
         {list.created_by.email}
       </TableCell>
       <TableCell classes={{ root: classes.tableCellRoot }}>
-        {schoolList[0].school_name}
+        {list.institute_name.school_name}
       </TableCell>
       <TableCell classes={{ root: classes.tableCellRoot }}>
         <Avatar
@@ -129,7 +127,7 @@ const TableList = ({ list, index, schoolList }) => {
               list.created_by.username,
               list.created_by.email,
               list.is_verified == true ? 0 : 1,
-              list.institute_name,
+              list.institute_name.id,
               list.created_by.photo
             )
           }
@@ -143,13 +141,6 @@ const TableList = ({ list, index, schoolList }) => {
 
 const InstructorList = () => {
   const [teacherList, setTeacherList] = useState([]);
-  const [schoolList, setSchoolList] = useState([]);
-
-  useEffect(() => {
-    ApiService.getSchoolList()
-      .then((res) => setSchoolList(res.data))
-      .catch((err) => console.log(err));
-  }, []);
 
   useEffect(() => {
     ApiService.getTeacherList()
@@ -243,9 +234,6 @@ const InstructorList = () => {
                     list={list}
                     key={list.id}
                     index={index}
-                    schoolList={schoolList.filter(
-                      (school) => school.id === list.institute_name
-                    )}
                   />
                 ))}
               </TableBody>
