@@ -81,7 +81,7 @@ const Admin = () => {
           routes={routes}
           logo={{
             innerLink: "/admin/index",
-            imgSrc: require("../assets/img/brand/MyREL.png").default,
+            imgSrc: AuthService.isTeacher() == true ? require("../assets/img/brand/MyREL-I.png").default : AuthService.isStudent() == true ? require("../assets/img/brand/MyREL-S.png").default : require("../assets/img/brand/MyREL.png").default,
             imgAlt: "...",
           }}
           dropdown={<NavbarDropdown />}
