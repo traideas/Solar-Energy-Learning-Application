@@ -16,7 +16,6 @@ import DiscussionDetails from "views/admin/DiscussionDetails"
 import InstructorList from "views/admin/InstructorList"
 
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import FlashOn from "@material-ui/icons/FlashOn";
 import Person from "@material-ui/icons/Person";
 import VpnKey from "@material-ui/icons/VpnKey";
 import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
@@ -106,7 +105,7 @@ var routes = [
     divider: true,
   },
   {
-    title: "Stendard Metarials",
+    title: "Standard Materials",
   },
   {
     path: "/videos",
@@ -158,7 +157,7 @@ var routes = [
     divider: true,
   },
   {
-    title: "Additional Metarials",
+    title: "Additional Materials",
   },
   {
     path: "/additional_videos",
