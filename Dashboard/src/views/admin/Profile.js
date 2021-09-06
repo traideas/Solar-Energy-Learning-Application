@@ -51,6 +51,7 @@ function Profile() {
       ApiService.getUserStudentDetailsOnly(AuthService.getUserId())
         .then((res) => {
           setUserDetails(res.data.created_by);
+          setUserSchool(res.data.school_section.school)
         })
         .catch((err) => console.log(err));
     }
@@ -142,7 +143,7 @@ function Profile() {
       if (data.photo[0] != undefined) {
         formData.append("created_by.photo", data.photo[0]);
       }
-      formData.append("school_section", userFullDetails.school_section);
+      formData.append("school_section", userFullDetails.school_section.school_id);
       formData.append("school_roll", userFullDetails.school_roll);
     }
 
@@ -463,7 +464,7 @@ function Profile() {
                     alignItems="center"
                     justifyContent="center"
                   >
-                    {AuthService.isAdmin() === true ? "" : "School:"} {AuthService.isTeacher() === true ? userSchool : ""}
+                    {AuthService.isAdmin() === true ? "" : "School: " + userSchool}
                   </Box>
                 </Box>
               </Box>
