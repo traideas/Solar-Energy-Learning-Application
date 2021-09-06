@@ -33,39 +33,46 @@ import swal from "sweetalert";
 
 const useStyles = makeStyles(componentStyles);
 
-const onClickDelete = (id) => {
-  swal({
-    title: "Are you sure?",
-    text: "You want to change instructor status!",
-    icon: "warning",
-    buttons: true,
-    dangerMode: true,
-  }).then((willChange) => {
-    if (willChange) {
-      ApiService.deleteQuiz(id)
-        .then(function (res) {
-          swal("Success!", "Quiz Deleted Successfully!", "success");
-          window.location.reload();
-        })
-        .catch(function (res) {
-          swal("Failed!", "Please Try Again!", "error");
-        });
-    }
-  });
-};
-
 const TableList = ({ list, index }) => {
+  console.log(list);
   const [userName, setUserName] = useState("");
+  const [studentScoreId, setStudentScoreId] = useState();
+  const classes = useStyles();
   useEffect(() => {
     ApiService.getUserStudentDetailsOnly(list.student)
-      .then((res) =>
-        setUserName(
-          `${res.data.created_by?.first_name} ${res.data.created_by?.last_name}`
-        )
+      .then(
+        ({
+          data: {
+            created_by: { first_name, last_name },
+            studentScore,
+          },
+        }) => {
+          setUserName(`${first_name} ${last_name}`);
+          setStudentScoreId(studentScore[0]?.id);
+        }
       )
       .catch((err) => console.log(err));
   }, []);
-  const classes = useStyles();
+  const onClickReset = (studentScoreId) => {
+    swal({
+      title: "Are you sure?",
+      text: "You want to reset the student score",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willChange) => {
+      if (willChange) {
+        ApiService.resetScore(studentScoreId)
+          .then(function (res) {
+            swal("Success!", "Student score was reseted!", "success");
+            window.location.reload();
+          })
+          .catch(function (res) {
+            swal("Failed!", "Please Try Again!", "error");
+          });
+      }
+    });
+  };
   return (
     <TableRow hover key={list.id}>
       <TableCell
@@ -81,6 +88,17 @@ const TableList = ({ list, index }) => {
       </TableCell>
       <TableCell classes={{ root: classes.tableCellRoot }}>
         {list.score}/{list.totalMarks}
+      </TableCell>
+      <TableCell classes={{ root: classes.tableCellRoot }}>
+        <Button
+          onClick={() => onClickReset(studentScoreId)}
+          variant="contained"
+          size="small"
+          style={{ backgroundColor: "green", borderColor: "green" }}
+        >
+          <Box component={DeleteOutlineIcon} position="relative" top="2px" />{" "}
+          Reset
+        </Button>
       </TableCell>
     </TableRow>
   );
@@ -121,7 +139,7 @@ const ViewQuizScore = ({ location }) => {
                     variant="h3"
                     marginBottom="0!important"
                   >
-                    Quiz List
+                    Quiz Score
                   </Box>
                 </Grid>
               </Grid>
@@ -159,6 +177,14 @@ const ViewQuizScore = ({ location }) => {
                     }}
                   >
                     Score
+                  </TableCell>
+                  <TableCell
+                    classes={{
+                      root:
+                        classes.tableCellRoot + " " + classes.tableCellRootHead,
+                    }}
+                  >
+                    Reset
                   </TableCell>
                 </TableRow>
               </TableHead>

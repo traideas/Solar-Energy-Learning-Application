@@ -113,7 +113,6 @@ const getUserStudentDetailsOnly = (id) => {
   return axios.get(configData.SERVER_URL + "student/" + id + "/", config);
 };
 
-
 const getArticleDetails = () => {
   return axios.get(configData.SERVER_URL + "document_public/", config);
 };
@@ -148,8 +147,7 @@ const getQuizById = (id) => {
 
 const getQuizScoreById = (id) => {
   return axios.get(configData.SERVER_URL + "quiz_score/" + id, config);
-}
-
+};
 
 const setQuizScore = (
   student,
@@ -172,7 +170,6 @@ const setQuizScore = (
   return axios.post(configData.SERVER_URL + "score/", data, config);
 };
 
-
 const getDiscussionDetails = () => {
   return axios.get(configData.SERVER_URL + "discussion/", config);
 };
@@ -188,7 +185,7 @@ const getTeacherList = () => {
 const postSchoolList = (school_name, created_by) => {
   return axios.post(configData.SERVER_URL + "school/", {
     school_name: school_name,
-    created_by: created_by
+    created_by: created_by,
   });
 };
 
@@ -197,8 +194,8 @@ const getSchoolList = () => {
 };
 
 const getSchoolByID = (id) => {
-  return axios.get("http://localhost:8000/school/" + id + "/", id)
-}
+  return axios.get("http://localhost:8000/school/" + id + "/", id);
+};
 
 const changeInstructorStatus = (
   id,
@@ -250,16 +247,32 @@ const deleteQuiz = (id) => {
   return axios.delete(configData.SERVER_URL + "quiz/" + id + "/", config);
 };
 
+const resetScore = (id) => {
+  return axios.delete(configData.SERVER_URL + "score/" + id, config);
+};
+
 const updateProfile = (formData, id) => {
   if (authService.isAdmin()) {
-    return axios.put(configData.SERVER_URL + "user_admin/" + id + "/", formData, config);
+    return axios.put(
+      configData.SERVER_URL + "user_admin/" + id + "/",
+      formData,
+      config
+    );
   }
   if (authService.isTeacher()) {
-    return axios.put(configData.SERVER_URL + "teacher/" + id + "/", formData, config);
+    return axios.put(
+      configData.SERVER_URL + "teacher/" + id + "/",
+      formData,
+      config
+    );
   } else {
-    return axios.put(configData.SERVER_URL + "student/" + id + "/", formData, config);
+    return axios.put(
+      configData.SERVER_URL + "student/" + id + "/",
+      formData,
+      config
+    );
   }
-}
+};
 
 export default {
   uploadVideoContent,
@@ -295,8 +308,6 @@ export default {
   getAddSlideDetails,
   getAddArticleDetails,
   getUserStudentDetailsOnly,
-  getUserTeacherDetailsOnly
-
+  getUserTeacherDetailsOnly,
+  resetScore
 };
-
-

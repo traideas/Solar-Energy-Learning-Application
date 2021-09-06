@@ -37,7 +37,7 @@ const onClickDelete =
   ) => {
     swal({
       title: "Are you sure?",
-      text: "You want to change instructor status!",
+      text: "You want to delete the quiz",
       icon: "warning",
       buttons: true,
       dangerMode: true,

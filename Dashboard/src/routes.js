@@ -217,7 +217,7 @@ var routes = [
   },
   {
     path: "/quiz_list",
-    name: "Quiz List",
+    name: "Quiz",
     icon: RateReviewIcon,
     component: QuizList,
     layout: "/admin",
