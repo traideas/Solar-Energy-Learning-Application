@@ -99,7 +99,7 @@ const TableList = ({ list, index, score }) => {
               color="primary"
             >
               <Box component={VisibilityIcon} position="relative" top="2px" />{" "}
-              View Quiz Scores
+              Quiz results
             </Button>
           </Link>
         </TableCell>
