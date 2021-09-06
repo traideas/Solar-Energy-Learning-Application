@@ -348,7 +348,7 @@ class StudentSerializer(serializers.ModelSerializer):
         school = model_to_dict(instance.school_section)
 
         school_name = school['school_name']
-        data['school_section'] = school_name
+        data['school_section'] = {'school': school_name, 'school_id': school['id']}
         # data['file'] = 'http://127.0.0.1:8000/media/' + str(instance.file)
 
         return data
