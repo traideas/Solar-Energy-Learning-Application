@@ -32,6 +32,7 @@ function Profile() {
   const classes = useStyles();
   const theme = useTheme();
   const [userDetails, setUserDetails] = useState([]);
+  const [userSchool, setUserSchool] = useState([]);
   useEffect(() => {
     if (AuthService.isAdmin()) {
       ApiService.getUserDetailsOnly(AuthService.getUserId())
@@ -43,6 +44,7 @@ function Profile() {
       ApiService.getUserTeacherDetailsOnly(AuthService.getUserId())
         .then((res) => {
           setUserDetails(res.data.created_by);
+          setUserSchool(res.data.institute_name.school_name)
         })
         .catch((err) => console.log(err));
     } else {
@@ -119,7 +121,7 @@ function Profile() {
       if (data.photo[0] != undefined) {
         formData.append("created_by.photo", data.photo[0]);
       }
-      formData.append("institute_name", userFullDetails.institute_name);
+      formData.append("institute_name", userFullDetails.institute_name.id);
       formData.append("is_verified", userFullDetails.is_verified);
     } else {
       formData.append(
@@ -452,6 +454,16 @@ function Profile() {
                     justifyContent="center"
                   >
                     Email: {userDetails.email}
+                  </Box>
+                  <Box
+                    component={Typography}
+                    variant="h5"
+                    fontWeight="300!important"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    {AuthService.isAdmin() === true ? "" : "School:"} {AuthService.isTeacher() === true ? userSchool : ""}
                   </Box>
                 </Box>
               </Box>
