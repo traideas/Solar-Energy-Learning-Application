@@ -8,7 +8,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardHeader from "@material-ui/core/CardHeader";
 import Container from "@material-ui/core/Container";
 import Table from "@material-ui/core/Table";
@@ -17,30 +16,18 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Pagination from "@material-ui/lab/Pagination";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import Tooltip from "@material-ui/core/Tooltip";
-import Avatar from "@material-ui/core/Avatar";
 // core components
 import Header from "components/Headers/Header.js";
 import componentStyles from "assets/theme/views/admin/tables.js";
 import VisibilityIcon from "@material-ui/icons/Visibility";
-
-import configData from "../../configData.json";
-
 //Api Services
 import ApiService from "../../services/api.service";
 import AuthService from "services/auth.service";
-import AttemptQuiz from "./AttemptQuiz";
+
 
 const useStyles = makeStyles(componentStyles);
-
-const handleClick = (questions, title) => {
-  {
-    /* <AttemptQuiz questions={questions} title={title} /> */
-  }
-};
 
 const TableList = ({ list, index, score }) => {
   const classes = useStyles();
@@ -67,7 +54,6 @@ const TableList = ({ list, index, score }) => {
             variant="contained"
             size="small"
             color="primary"
-            onClick={() => handleClick(list.questions, list.title)}
             disabled={score[0] ? true : false}
           >
             <Link
