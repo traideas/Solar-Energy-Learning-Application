@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import swal from "sweetalert";
-// react plugin used to create datetimepicker
-import ReactDatetime from "react-datetime";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import { useTheme } from "@material-ui/core/styles";
-import Avatar from "@material-ui/core/Avatar";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import CardHeader from "@material-ui/core/CardHeader";
 import Container from "@material-ui/core/Container";
 import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
@@ -26,11 +22,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 
 import Typography from "@material-ui/core/Typography";
-// @material-ui/lab components
-import Autocomplete from "@material-ui/lab/Autocomplete";
-// @material-ui/icons components
 
-import KeyboardArrowDown from "@material-ui/icons/KeyboardArrowDown";
 // core components
 import UserHeader from "components/Headers/Header.js";
 
