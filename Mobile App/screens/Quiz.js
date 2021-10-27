@@ -9,6 +9,7 @@ import {
 import { Block, Card } from "galio-framework";
 import axios from 'axios'
 import configData from '../services/configData.json'
+import useAxios from "../hooks/useAxios";
 
 const QuizItem = ({ item, onPress }) => {
   const { title, description, photo } = item;
@@ -21,7 +22,8 @@ const QuizItem = ({ item, onPress }) => {
 
 const Quiz = ({ navigation }) => {
   const [isLoading, setLoading] = useState(true);
-  const [DATA, setDATA] = useState([]);
+  const [DATA] = useAxios("quiz/")
+  /* const [DATA, setDATA] = useState([]);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
@@ -34,7 +36,7 @@ const Quiz = ({ navigation }) => {
         .finally(() => setLoading(false));
     });
     return unsubscribe
-  }, [navigation]);
+  }, [navigation]); */
 
   const handlePress = (item) => {
     navigation.navigate("QuizDetails", item);

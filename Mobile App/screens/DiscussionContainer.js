@@ -8,6 +8,7 @@ import { Block, Card, Button } from "galio-framework";
 import { FlatList } from "react-native-gesture-handler";
 import axios from "axios";
 import configData from '../services/configData.json'
+import useAxios from "../hooks/useAxios";
 
 
 const Discussion = ({ item, onPress }) => {
@@ -22,7 +23,8 @@ const Discussion = ({ item, onPress }) => {
 
 export default function DiscussionContainer({ navigation }) {
   const [isLoading, setLoading] = useState(true);
-  const [DATA, setDATA] = useState([]);
+  const [DATA] = useAxios("discussion/")
+/*   const [DATA, setDATA] = useState([]);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
@@ -35,7 +37,7 @@ export default function DiscussionContainer({ navigation }) {
         .finally(() => setLoading(false));
     });
     return unsubscribe;
-  }, [navigation]);
+  }, [navigation]); */
 
   const renderItem = ({ item }) => {
     const handlePress = (item) => {
