@@ -11,7 +11,11 @@ import { useForm } from "react-hook-form";
 import configData from '../services/configData.json'
 import AuthService from "../services/auth.service";
 
-
+const config = {
+  headers: {
+    Authorization: `Token cacd713f5fd0c18ce15a6fc9bc9d9337663b2131`,
+  },
+};
 export default CreateDiscussion = ({ navigation }) => {
   const { control, handleSubmit } = useForm();
   const [userID, setUserID] = useState();
@@ -21,7 +25,7 @@ export default CreateDiscussion = ({ navigation }) => {
       "title": title,
       "description": description,
       "created_by": userID,
-    })
+    }, config)
       .then(res => {
         Alert.alert("Great", "Discussion Created Successfully!")
         navigation.goBack()

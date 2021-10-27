@@ -5,6 +5,7 @@ import { Block, Card } from "galio-framework";
 import { FlatList } from "react-native-gesture-handler";
 import axios from "axios";
 import configData from '../services/configData.json'
+import useAxios from "../hooks/useAxios";
 
 const VideoCard = ({ item, onPress }) => {
   const { title, description, photo, created_by } = item;
@@ -19,17 +20,7 @@ const VideoCard = ({ item, onPress }) => {
 
 export default VideoContent = ({ navigation }) => {
   const [isLoading, setLoading] = useState(false);
-  const [DATA, setDATA] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get(configData.SERVER_URL + "video/")
-      .then(({ data }) => {
-        setDATA(data);
-      })
-      .catch((err) => console.log(err))
-      .finally(() => setLoading(false));
-  }, []);
+  const [DATA] = useAxios("video_public/")
 
   const renderItem = ({ item }) => {
     const handlePress = (item) => {

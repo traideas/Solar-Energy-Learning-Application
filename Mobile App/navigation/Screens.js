@@ -393,9 +393,14 @@ export default function OnBoardingStack(props) {
           headerShown: false,
         }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="AuthRoute"
         component={AuthStack}
+        options={{ headerShown: false }}
+      /> */}
+      <Stack.Screen
+        name="AuthRoute"
+        component={DrawerStack}
         options={{ headerShown: false }}
       />
       <Stack.Screen
