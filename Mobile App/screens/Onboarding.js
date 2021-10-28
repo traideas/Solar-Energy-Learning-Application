@@ -6,9 +6,9 @@ import {
   StatusBar,
   Dimensions,
   SafeAreaView,
-  AsyncStorage,
 } from "react-native";
 import { Block, Button, Text, theme } from "galio-framework";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { height, width } = Dimensions.get("screen");
 

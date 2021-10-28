@@ -74,7 +74,9 @@ const CommentList = ({ list }) => {
                 />
               </Tooltip>
               <br />
-              <span><i>{list.created_by.name}</i></span>
+              <span>
+                <i>{list.created_by.name}</i>
+              </span>
             </Grid>
             <Grid item xs="auto">
               <Box justifyContent="flex-end" display="flex" flexWrap="wrap">
@@ -192,7 +194,9 @@ function CreateDiscussion() {
                     />
                   </Tooltip>
                   <br />
-                  <span><b>{created_by.name}</b></span>
+                  <span>
+                    <b>{created_by.name}</b>
+                  </span>
                 </Grid>
                 <Grid item xs="auto">
                   <Box justifyContent="flex-end" display="flex" flexWrap="wrap">

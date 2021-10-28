@@ -1,15 +1,19 @@
 import React, { useState } from "react";
-import { StyleSheet, Image, ScrollView, AsyncStorage, Alert } from "react-native";
+import { StyleSheet, Image, ScrollView, Alert } from "react-native";
 import { Block, Text, Button } from "galio-framework";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import Input from '../components/Input'
 import configData from '../services/configData.json'
 import AuthService from "../services/auth.service";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import useConfig from "../hooks/useConfig";
 
-export default Discussion = ({ route }) => {
+
+
+export default Discussion = ({ route, navigation }) => {
+  const [config] = useConfig()
   const { title, description, comments, id, created_date, created_by } = route.params;
-  // console.log(comments)
   const [allComments, setAllComments] = useState(comments);
   const { control, handleSubmit, reset } = useForm();
 
@@ -44,11 +48,11 @@ export default Discussion = ({ route }) => {
         "comment": comment,
         "discussion": id,
         "created_by": userID,
-      })
+      }, config)
       .then((res) => {
-
         reset()
         Alert.alert("Great", "Comment Added Successfully!")
+        navigation.push("DiscussionContainer")
         //setAllComments(prevState => [...prevState, { comment: comment }])
       })
       .catch((err) => {

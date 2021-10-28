@@ -1,6 +1,6 @@
-import { AsyncStorage } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-/* const getUserID = () => {
+const getUserID = () => {
   const id = AsyncStorage.getItem("user_id")
     .then((value) => {
       if (value == null) {
@@ -11,7 +11,11 @@ import { AsyncStorage } from "react-native";
     })
     .catch((err) => console.log(err));
   console.log(id);
-}; */
+};
+
+const getConfigToken = async () => {
+  return await AsyncStorage.getItem("token")
+}
 
 const displayData = async () => {
     return await AsyncStorage.getItem("user_id"); 
@@ -19,5 +23,6 @@ const displayData = async () => {
 
 export default {
   //getUserID,
-  displayData
+  displayData,
+  getConfigToken
 };
