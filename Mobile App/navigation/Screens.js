@@ -4,9 +4,9 @@ import {
   Animated,
   Dimensions,
   Alert,
-  AsyncStorage,
   StyleSheet,
 } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { createStackNavigator } from "@react-navigation/stack";
 import {
@@ -393,16 +393,16 @@ export default function OnBoardingStack(props) {
           headerShown: false,
         }}
       />
-      {/* <Stack.Screen
+      <Stack.Screen
         name="AuthRoute"
         component={AuthStack}
         options={{ headerShown: false }}
-      /> */}
-      <Stack.Screen
+      />
+      {/* <Stack.Screen
         name="AuthRoute"
         component={DrawerStack}
         options={{ headerShown: false }}
-      />
+      /> */}
       <Stack.Screen
         name="HomeRoute"
         component={DrawerStack}

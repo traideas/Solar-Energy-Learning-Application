@@ -10,6 +10,7 @@ import { Block, Card } from "galio-framework";
 import axios from 'axios'
 import configData from '../services/configData.json'
 import useAxios from "../hooks/useAxios";
+import useConfig from "../hooks/useConfig";
 
 const QuizItem = ({ item, onPress }) => {
   const { title, description, photo } = item;
@@ -20,14 +21,9 @@ const QuizItem = ({ item, onPress }) => {
   );
 };
 
-const config = {
-  headers: {
-    Authorization: `Token 0699bb9409e56fb69eaec6229e6ffea8ff5e6ac8`,
-  },
-};
-
 const Quiz = ({ navigation }) => {
   const [isLoading, setLoading] = useState(true);
+  const [config] = useConfig()
   //const [DATA] = useAxios("quiz/")
   //console.log(DATA)
   const [DATA, setDATA] = useState([]);

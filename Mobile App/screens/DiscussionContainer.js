@@ -35,7 +35,7 @@ export default function DiscussionContainer({ navigation }) {
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       axios
-        .get(configData.SERVER_URL + "discussion/")
+        .get(configData.SERVER_URL + "discussion/", config)
         .then(({ data }) => {
           setDATA(data);
         })

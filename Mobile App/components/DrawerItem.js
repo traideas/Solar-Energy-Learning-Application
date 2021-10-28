@@ -3,8 +3,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   Linking,
-  AsyncStorage,
 } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Block, Text, theme } from "galio-framework";
 
 import Icon from "./Icon";
