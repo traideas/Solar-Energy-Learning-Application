@@ -20,15 +20,22 @@ const QuizItem = ({ item, onPress }) => {
   );
 };
 
+const config = {
+  headers: {
+    Authorization: `Token 0699bb9409e56fb69eaec6229e6ffea8ff5e6ac8`,
+  },
+};
+
 const Quiz = ({ navigation }) => {
   const [isLoading, setLoading] = useState(true);
-  const [DATA] = useAxios("quiz/")
-  /* const [DATA, setDATA] = useState([]);
+  //const [DATA] = useAxios("quiz/")
+  //console.log(DATA)
+  const [DATA, setDATA] = useState([]);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       axios
-        .get(configData.SERVER_URL + "quiz/")
+        .get(configData.SERVER_URL + "quiz/", config)
         .then(({ data }) => {
           setDATA(data);
         })
@@ -36,7 +43,7 @@ const Quiz = ({ navigation }) => {
         .finally(() => setLoading(false));
     });
     return unsubscribe
-  }, [navigation]); */
+  }, [navigation]);
 
   const handlePress = (item) => {
     navigation.navigate("QuizDetails", item);

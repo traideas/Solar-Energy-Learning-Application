@@ -21,10 +21,16 @@ const Discussion = ({ item, onPress }) => {
   );
 };
 
+const config = {
+  headers: {
+    Authorization: `Token 0699bb9409e56fb69eaec6229e6ffea8ff5e6ac8`,
+  },
+};
+
 export default function DiscussionContainer({ navigation }) {
   const [isLoading, setLoading] = useState(true);
-  const [DATA] = useAxios("discussion/")
-/*   const [DATA, setDATA] = useState([]);
+  //const [DATA] = useAxios("discussion/")
+  const [DATA, setDATA] = useState([]);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
@@ -37,7 +43,7 @@ export default function DiscussionContainer({ navigation }) {
         .finally(() => setLoading(false));
     });
     return unsubscribe;
-  }, [navigation]); */
+  }, [navigation]);
 
   const renderItem = ({ item }) => {
     const handlePress = (item) => {

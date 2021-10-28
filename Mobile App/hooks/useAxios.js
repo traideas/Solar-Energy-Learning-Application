@@ -10,7 +10,7 @@ import configData from "../services/configData.json";
 
 const config = {
   headers: {
-    Authorization: `Token cacd713f5fd0c18ce15a6fc9bc9d9337663b2131`,
+    Authorization: `Token 0699bb9409e56fb69eaec6229e6ffea8ff5e6ac8`,
   },
 };
 
