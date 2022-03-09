@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -32,30 +33,42 @@ function AttemptQuiz({ location }) {
   const { register, handleSubmit } = useForm();
   const [questions, setQuestions] = useState([]);
   const [ansHide, setansHide] = useState(false);
+  const [userAns, setUserAns] = useState([]);
   useEffect(() => {
     ApiService.getQuizById(id)
       .then((res) => setQuestions(res.data.questions))
       .catch((err) => console.log(err));
   }, []);
   const onSubmit = ({ userAnswer }) => {
-    //console.log(userAnswer);
+    console.log(parseInt(userAnswer));
+    setUserAns(userAnswer);
     const totalQuestion = userAnswer.length;
     const totalMarks = userAnswer.length;
     let right = 0;
     userAnswer.map((answer, i) => {
-      console.log(questions[i].answer);
+      //console.log(questions[i].answer);
       if (answer == questions[i].answer) {
         right = right + 1;
       }
     });
-    const wrong = totalMarks - right
-    const score = right
-    ApiService.setQuizScore(AuthService.getUserId(), id, totalQuestion, totalMarks, right, wrong, score)
-      .then(res => {
-        swal("Great!", "Your Score is " + right, "success")
-        setansHide(true)
+    const wrong = totalMarks - right;
+    const score = right;
+    ApiService.setQuizScore(
+      AuthService.getUserId(),
+      id,
+      totalQuestion,
+      totalMarks,
+      right,
+      wrong,
+      score
+    )
+      .then((res) => {
+        swal("Great!", "Your Score is " + right, "success");
+        setansHide(true);
       })
-      .catch(err => swal("Sorry!", "You already attempted this quiz!", "warning"))
+      .catch((err) =>
+        swal("Sorry!", "You already attempted this quiz!", "warning")
+      );
   };
   return (
     <>
@@ -151,23 +164,54 @@ function AttemptQuiz({ location }) {
                           }}
                         />
                       </RadioGroup>
-                      <Box display={ansHide == true ? "" : "none"}>
-                        <p style={{ padding: "10px", backgroundColor: "greenyellow", fontWeight: "700" }}>Correct Answer: {(answer == 1) ? options_1 : (answer == 2) ? options_2 : (answer == 3) ? options_3 : options_4}</p>
-                      </Box>
-
+                      {userAns[index] != answer ? (
+                        <Box display={ansHide == true ? "" : "none"}>
+                          {console.log(userAns[index], answer)}
+                          <p
+                            style={{
+                              padding: "10px",
+                              backgroundColor: "orange",
+                              fontWeight: "700",
+                              color: "black",
+                            }}
+                          >
+                            Correct Answer:{" "}
+                            {answer === 1
+                              ? options_1
+                              : answer === 2
+                              ? options_2
+                              : answer === 3
+                              ? options_3
+                              : options_4}
+                          </p>
+                        </Box>
+                      ) : (
+                        ""
+                      )}
                       <hr />
                       <br />
                     </Grid>
                   )
                 )}
-                <Button
-                  type="submit"
-                  color="primary"
-                  variant="contained"
-                  fullWidth
-                >
-                  Submit Answers
-                </Button>
+                {ansHide ? (
+                  <Button color="primary" variant="contained" fullWidth>
+                    <Link
+                      to="/admin/quizlist"
+                      style={{ textDecoration: "none", color: "white" }}
+                    >
+                      Back to quiz page
+                    </Link>
+                  </Button>
+                ) : (
+                  <Button
+                    type="submit"
+                    color="primary"
+                    variant="contained"
+                    fullWidth
+                  >
+                    Submit Answers
+                  </Button>
+                )}
               </Grid>
             </form>
           </CardContent>

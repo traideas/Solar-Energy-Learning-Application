@@ -65,18 +65,20 @@ const TableList = ({ list, index }) => {
       >
         {(index = index + 1)}
       </TableCell>
-      <TableCell classes={{ root: classes.tableCellRoot }}
+      <TableCell
+        classes={{ root: classes.tableCellRoot }}
         style={{
-          whiteSpace: 'normal',
-          wordWrap: 'break-word'
+          whiteSpace: "normal",
+          wordWrap: "break-word",
         }}
       >
         {list.title}
       </TableCell>
-      <TableCell classes={{ root: classes.tableCellRoot }}
+      <TableCell
+        classes={{ root: classes.tableCellRoot }}
         style={{
-          whiteSpace: 'normal',
-          wordWrap: 'break-word'
+          whiteSpace: "normal",
+          wordWrap: "break-word",
         }}
       >
         {list.description}
@@ -180,8 +182,8 @@ const Articles = (props) => {
                           : ""
                         : AuthService.isAdmin() == false ||
                           AuthService.isAdmin() == null
-                          ? "none"
-                          : ""
+                        ? "none"
+                        : ""
                     }
                   >
                     <Link to="/admin/articles/createarticles">
@@ -252,7 +254,7 @@ const Articles = (props) => {
                     File
                   </TableCell>
                   {AuthService.isAdmin() == false ||
-                    AuthService.isAdmin() == null ? (
+                  AuthService.isAdmin() == null ? (
                     ""
                   ) : (
                     <TableCell
