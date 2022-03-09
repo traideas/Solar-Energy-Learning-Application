@@ -274,6 +274,35 @@ const updateProfile = (formData, id) => {
   }
 };
 
+const uploadAssignment = (
+  title,
+  description,
+  created_by,
+  photo,
+  file,
+  status
+) => {
+  const today = new Date()
+  const fDate =
+  today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+  let formData = new FormData();
+  formData.append("title", title);
+  formData.append("description", description);
+  formData.append("created_by", created_by);
+  if (photo[0] != undefined) {
+    formData.append("photo", photo[0]);
+  }
+  formData.append("file", file[0]);
+  formData.append("status", status);
+  formData.append("mark", 100);
+  formData.append("submission_date", fDate);
+  return axios.post(configData.SERVER_URL + "assignment/", formData, config);
+};
+
+const getAssignments = () => {
+  return axios.get(configData.SERVER_URL + "assignment/", config);
+};
+
 export default {
   uploadVideoContent,
   uploadSlideContent,
@@ -309,5 +338,7 @@ export default {
   getAddArticleDetails,
   getUserStudentDetailsOnly,
   getUserTeacherDetailsOnly,
-  resetScore
+  resetScore,
+  uploadAssignment,
+  getAssignments
 };

@@ -14,6 +14,8 @@ import CreateQuiz from "views/admin/CreateQuiz";
 import CreateDiscussion from "views/admin/CreateDiscussion"
 import DiscussionDetails from "views/admin/DiscussionDetails"
 import InstructorList from "views/admin/InstructorList"
+import Assignments from "views/admin/Assignments";
+
 
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Person from "@material-ui/icons/Person";
@@ -26,10 +28,14 @@ import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import RateReviewIcon from '@material-ui/icons/RateReview';
 import RecentActorsIcon from '@material-ui/icons/RecentActors';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+
 import QuizList from "views/student/QuizList";
 import AttemptQuiz from "views/student/AttemptQuiz";
 import Institute from "views/admin/Institute";
 import ViewQuizScore from "views/admin/ViewQuizScore";
+import CreateAssignment from "views/admin/CreateAssignment";
+
 
 var routes = [
 
@@ -195,11 +201,18 @@ var routes = [
     divider: true,
   },
   {
-    title: "Quizes",
+    title: "Quizzes",
+  },
+  {
+    path: "/quizlist",
+    name: "Quiz",
+    icon: RateReviewIcon,
+    component: QuizList,
+    layout: "/admin",
   },
   {
     path: "/quiz",
-    name: "Create Quizes",
+    name: "Manage Quizes",
     icon: QuestionAnswerIcon,
     iconColor: "light",
     component: ViewQuiz,
@@ -215,16 +228,10 @@ var routes = [
     invisible: true,
     adminOnly: true,
   },
-  {
-    path: "/quiz_list",
-    name: "Quiz",
-    icon: RateReviewIcon,
-    component: QuizList,
-    layout: "/admin",
-  },
+
   {
     path: "/view_score",
-    name: "",
+    name: "Quiz Score",
     icon: RateReviewIcon,
     component: ViewQuizScore,
     layout: "/admin",
@@ -237,6 +244,26 @@ var routes = [
     component: AttemptQuiz,
     layout: "/admin",
     invisible: true,
+  },
+  {
+    divider: true,
+  },
+  {
+    title: "Activities",
+  },
+  {
+    path: "/assignment",
+    name: "Assignments",
+    icon: AssignmentIcon,
+    component: Assignments,
+    layout: "/admin"
+  },
+  {
+    path: "/createAssignment",
+    name: "Create Assignment",
+    component: CreateAssignment,
+    layout: "/admin",
+    invisible: true
   },
 
 ];

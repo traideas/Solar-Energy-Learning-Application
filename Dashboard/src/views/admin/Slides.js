@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -20,9 +20,9 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Avatar from "@material-ui/core/Avatar";
 // core components
 import Header from "components/Headers/Header.js";
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import configData from '../../configData.json'
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import configData from "../../configData.json";
 import componentStyles from "assets/theme/views/admin/tables.js";
 
 //Api Services
@@ -31,63 +31,54 @@ import AuthService from "../../services/auth.service";
 import swal from "sweetalert";
 const useStyles = makeStyles(componentStyles);
 
-const onClickDelete =
-  (
-    id
-  ) => {
-    swal({
-      title: "Are you sure?",
-      text: "You want to change instructor status!",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    })
-      .then((willChange) => {
-        if (willChange) {
-          ApiService.deleteSlide
-            (
-              id
-            )
-            .then(function (res) {
-              swal("Success!", "Slide Deleted Successfully!", "success")
-              window.location.reload();
-            })
-            .catch(function (res) {
-              swal("Failed!", "Please Try Again!", "error");
-            })
-        }
-      });
-  };
+const onClickDelete = (id) => {
+  swal({
+    title: "Are you sure?",
+    text: "You want to delete the slide!",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  }).then((willChange) => {
+    if (willChange) {
+      ApiService.deleteSlide(id)
+        .then(function (res) {
+          swal("Success!", "Slide Deleted Successfully!", "success");
+          window.location.reload();
+        })
+        .catch(function (res) {
+          swal("Failed!", "Please Try Again!", "error");
+        });
+    }
+  });
+};
 
 const TableList = ({ list, index }) => {
-  const classes = useStyles()
+  const classes = useStyles();
   return (
-
     <TableRow hover key={list.id}>
       <TableCell
         classes={{
-          root:
-            classes.tableCellRoot +
-            " " +
-            classes.tableCellRootBodyHead,
+          root: classes.tableCellRoot + " " + classes.tableCellRootBodyHead,
         }}
         variant="head"
-
       >
-        {index = index + 1}
+        {(index = index + 1)}
       </TableCell>
-      <TableCell classes={{ root: classes.tableCellRoot }}
+      <TableCell
+        classes={{ root: classes.tableCellRoot }}
         style={{
-          whiteSpace: 'normal',
-          wordWrap: 'break-word'
+          whiteSpace: "normal",
+          wordWrap: "break-word",
         }}
       >
         {list.title}
       </TableCell>
-      <TableCell classes={{ root: classes.tableCellRoot }} style={{ width: "40%" }}
+      <TableCell
+        classes={{ root: classes.tableCellRoot }}
         style={{
-          whiteSpace: 'normal',
-          wordWrap: 'break-word'
+          width: "40%",
+          whiteSpace: "normal",
+          wordWrap: "break-word",
         }}
       >
         {list.description}
@@ -100,7 +91,11 @@ const TableList = ({ list, index }) => {
           <Avatar
             classes={{ root: classes.avatarRoot }}
             alt="..."
-            src={(list.created_by.photo == configData.SERVER_URL + "media/") ? require("assets/img/theme/defaultImage.png").default : list.created_by.photo}
+            src={
+              list.created_by.photo == configData.SERVER_URL + "media/"
+                ? require("assets/img/theme/defaultImage.png").default
+                : list.created_by.photo
+            }
           />
         </Tooltip>
       </TableCell>
@@ -113,23 +108,27 @@ const TableList = ({ list, index }) => {
         </a>
       </TableCell>
 
-      {(AuthService.isAdmin() == false || AuthService.isAdmin() == null) ? "" : <TableCell classes={{ root: classes.tableCellRoot }}>
-
-        <Button onClick={() => onClickDelete(list.id)} variant="contained" size="small" style={{ backgroundColor: "red", borderColor: "red" }}>
-          <Box component={DeleteOutlineIcon} position="relative" top="2px" />{" "}
-          Delete
-        </Button>
-
-      </TableCell>}
-
+      {AuthService.isAdmin() == false || AuthService.isAdmin() == null ? (
+        ""
+      ) : (
+        <TableCell classes={{ root: classes.tableCellRoot }}>
+          <Button
+            onClick={() => onClickDelete(list.id)}
+            variant="contained"
+            size="small"
+            style={{ backgroundColor: "red", borderColor: "red" }}
+          >
+            <Box component={DeleteOutlineIcon} position="relative" top="2px" />{" "}
+            Delete
+          </Button>
+        </TableCell>
+      )}
     </TableRow>
-  )
-}
+  );
+};
 
 const Slides = (props) => {
-
-
-  const [slideDetails, setslideDetails] = useState([])
+  const [slideDetails, setslideDetails] = useState([]);
 
   useEffect(() => {
     if (props.location.pathname === "/admin/additional_slides") {
@@ -141,7 +140,6 @@ const Slides = (props) => {
         .then((res) => setslideDetails(res.data))
         .catch((err) => console.log(err));
     }
-
   }, []);
   const classes = useStyles();
 
@@ -170,19 +168,27 @@ const Slides = (props) => {
                     component={Typography}
                     variant="h3"
                     marginBottom="0!important"
-                  >
-
-                  </Box>
+                  ></Box>
                 </Grid>
                 <Grid item xs="auto">
                   <Box
                     justifyContent="flex-end"
                     display="flex"
                     flexWrap="wrap"
-                    display={(props.location.pathname === "/admin/additional_slides") ? (AuthService.isTeacher() == false || AuthService.isTeacher() == null) ? "none" : "" : (AuthService.isAdmin() == false || AuthService.isAdmin() == null) ? "none" : ""}>
-                    <Link to='/admin/slides/createslides'>
-                      <Button variant="contained" color="primary" size="small"
-                      >
+                    display={
+                      props.location.pathname === "/admin/additional_slides"
+                        ? AuthService.isTeacher() == false ||
+                          AuthService.isTeacher() == null
+                          ? "none"
+                          : ""
+                        : AuthService.isAdmin() == false ||
+                          AuthService.isAdmin() == null
+                        ? "none"
+                        : ""
+                    }
+                  >
+                    <Link to="/admin/slides/createslides">
+                      <Button variant="contained" color="primary" size="small">
                         Create New
                       </Button>
                     </Link>
@@ -248,7 +254,10 @@ const Slides = (props) => {
                   >
                     File
                   </TableCell>
-                  {(AuthService.isAdmin() == false || AuthService.isAdmin() == null) ? "" :
+                  {AuthService.isAdmin() == false ||
+                  AuthService.isAdmin() == null ? (
+                    ""
+                  ) : (
                     <TableCell
                       classes={{
                         root:
@@ -258,17 +267,14 @@ const Slides = (props) => {
                       }}
                     >
                       Action
-                    </TableCell>}
-
+                    </TableCell>
+                  )}
                 </TableRow>
               </TableHead>
               <TableBody>
-                {
-                  slideDetails.map((list, index) => (
-                    <TableList list={list} key={list.id} index={index} />
-                  ))
-                }
-
+                {slideDetails.map((list, index) => (
+                  <TableList list={list} key={list.id} index={index} />
+                ))}
               </TableBody>
             </Box>
           </TableContainer>

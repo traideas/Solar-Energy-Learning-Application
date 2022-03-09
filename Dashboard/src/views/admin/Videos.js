@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -22,9 +22,9 @@ import Avatar from "@material-ui/core/Avatar";
 // core components
 import Header from "components/Headers/Header.js";
 import componentStyles from "assets/theme/views/admin/tables.js";
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import configData from '../../configData.json'
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import configData from "../../configData.json";
 
 //Api Services
 import ApiService from "../../services/api.service";
@@ -33,64 +33,54 @@ import swal from "sweetalert";
 
 const useStyles = makeStyles(componentStyles);
 
-const onClickDelete =
-  (
-    id
-  ) => {
-    swal({
-      title: "Are you sure?",
-      text: "You want to change instructor status!",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    })
-      .then((willChange) => {
-        if (willChange) {
-          ApiService.deleteVideo
-            (
-              id
-            )
-            .then(function (res) {
-              swal("Success!", "Video Deleted Successfully!", "success")
-              window.location.reload();
-            })
-            .catch(function (res) {
-              swal("Failed!", "Please Try Again!", "error");
-            })
-        }
-      });
-  };
+const onClickDelete = (id) => {
+  swal({
+    title: "Are you sure?",
+    text: "You want to delete the video!",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  }).then((willChange) => {
+    if (willChange) {
+      ApiService.deleteVideo(id)
+        .then(function (res) {
+          swal("Success!", "Video Deleted Successfully!", "success");
+          window.location.reload();
+        })
+        .catch(function (res) {
+          swal("Failed!", "Please Try Again!", "error");
+        });
+    }
+  });
+};
 
 const TableList = ({ list, index }) => {
-  const classes = useStyles()
+  const classes = useStyles();
 
   return (
-
     <TableRow hover key={list.id}>
       <TableCell
         classes={{
-          root:
-            classes.tableCellRoot +
-            " " +
-            classes.tableCellRootBodyHead,
+          root: classes.tableCellRoot + " " + classes.tableCellRootBodyHead,
         }}
         variant="head"
-
       >
-        {index = index + 1}
+        {(index = index + 1)}
       </TableCell>
-      <TableCell classes={{ root: classes.tableCellRoot }}
+      <TableCell
+        classes={{ root: classes.tableCellRoot }}
         style={{
-          whiteSpace: 'normal',
-          wordWrap: 'break-word'
+          whiteSpace: "normal",
+          wordWrap: "break-word",
         }}
       >
         {list.title}
       </TableCell>
-      <TableCell classes={{ root: classes.tableCellRoot }}
+      <TableCell
+        classes={{ root: classes.tableCellRoot }}
         style={{
-          whiteSpace: 'normal',
-          wordWrap: 'break-word'
+          whiteSpace: "normal",
+          wordWrap: "break-word",
         }}
       >
         {list.description}
@@ -103,7 +93,11 @@ const TableList = ({ list, index }) => {
           <Avatar
             classes={{ root: classes.avatarRoot }}
             alt="..."
-            src={(list.created_by.photo == configData.SERVER_URL + "media/") ? require("assets/img/theme/defaultImage.png").default : list.created_by.photo}
+            src={
+              list.created_by.photo == configData.SERVER_URL + "media/"
+                ? require("assets/img/theme/defaultImage.png").default
+                : list.created_by.photo
+            }
           />
         </Tooltip>
       </TableCell>
@@ -117,22 +111,27 @@ const TableList = ({ list, index }) => {
         </a>
       </TableCell>
 
-      {(AuthService.isAdmin() == false || AuthService.isAdmin() == null) ? "" : <TableCell classes={{ root: classes.tableCellRoot }}>
-
-        <Button onClick={() => onClickDelete(list.id)} variant="contained" size="small" style={{ backgroundColor: "red", borderColor: "red" }}>
-          <Box component={DeleteOutlineIcon} position="relative" top="2px" />{" "}
-          Delete
-        </Button>
-
-      </TableCell>}
-
+      {AuthService.isAdmin() == false || AuthService.isAdmin() == null ? (
+        ""
+      ) : (
+        <TableCell classes={{ root: classes.tableCellRoot }}>
+          <Button
+            onClick={() => onClickDelete(list.id)}
+            variant="contained"
+            size="small"
+            style={{ backgroundColor: "red", borderColor: "red" }}
+          >
+            <Box component={DeleteOutlineIcon} position="relative" top="2px" />{" "}
+            Delete
+          </Button>
+        </TableCell>
+      )}
     </TableRow>
-  )
-}
+  );
+};
 
 const Videos = (props) => {
-
-  const [videoDetails, setvideoDetails] = useState([])
+  const [videoDetails, setvideoDetails] = useState([]);
 
   useEffect(() => {
     if (props.location.pathname === "/admin/additional_videos") {
@@ -144,7 +143,6 @@ const Videos = (props) => {
         .then((res) => setvideoDetails(res.data))
         .catch((err) => console.log(err));
     }
-
   }, []);
   const classes = useStyles();
 
@@ -173,19 +171,27 @@ const Videos = (props) => {
                     component={Typography}
                     variant="h3"
                     marginBottom="0!important"
-                  >
-
-                  </Box>
+                  ></Box>
                 </Grid>
                 <Grid item xs="auto">
                   <Box
                     justifyContent="flex-end"
                     display="flex"
                     flexWrap="wrap"
-                    display={(props.location.pathname === "/admin/additional_videos") ? (AuthService.isTeacher() == false || AuthService.isTeacher() == null) ? "none" : "" : (AuthService.isAdmin() == false || AuthService.isAdmin() == null) ? "none" : ""}>
-                    <Link to='/admin/videos/createvideos'>
-                      <Button variant="contained" color="primary" size="small"
-                      >
+                    display={
+                      props.location.pathname === "/admin/additional_videos"
+                        ? AuthService.isTeacher() == false ||
+                          AuthService.isTeacher() == null
+                          ? "none"
+                          : ""
+                        : AuthService.isAdmin() == false ||
+                          AuthService.isAdmin() == null
+                        ? "none"
+                        : ""
+                    }
+                  >
+                    <Link to="/admin/videos/createvideos">
+                      <Button variant="contained" color="primary" size="small">
                         Create New
                       </Button>
                     </Link>
@@ -251,7 +257,10 @@ const Videos = (props) => {
                   >
                     File
                   </TableCell>
-                  {(AuthService.isAdmin() == false || AuthService.isAdmin() == null) ? "" :
+                  {AuthService.isAdmin() == false ||
+                  AuthService.isAdmin() == null ? (
+                    ""
+                  ) : (
                     <TableCell
                       classes={{
                         root:
@@ -261,16 +270,14 @@ const Videos = (props) => {
                       }}
                     >
                       Action
-                    </TableCell>}
-
+                    </TableCell>
+                  )}
                 </TableRow>
               </TableHead>
               <TableBody>
-                {
-                  videoDetails.map((list, index) => (
-                    <TableList list={list} key={list.id} index={index} />
-                  ))
-                }
+                {videoDetails.map((list, index) => (
+                  <TableList list={list} key={list.id} index={index} />
+                ))}
               </TableBody>
             </Box>
           </TableContainer>

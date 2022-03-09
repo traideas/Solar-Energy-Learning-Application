@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Link
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -26,7 +24,6 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 import ApiService from "../../services/api.service";
 import AuthService from "services/auth.service";
 
-
 const useStyles = makeStyles(componentStyles);
 
 const TableList = ({ list, index, score }) => {
@@ -41,15 +38,23 @@ const TableList = ({ list, index, score }) => {
       >
         {(index = index + 1)}
       </TableCell>
-      <TableCell classes={{ root: classes.tableCellRoot }}>
-        <Box style={{}}>{list.title}</Box>
+      <TableCell
+        style={{
+          width: "60%",
+          whiteSpace: "normal",
+          wordWrap: "break-word",
+        }}
+        classes={{ root: classes.tableCellRoot }}
+      >
+        <Box>
+          <h3>{list.title}</h3>
+        </Box>
         <Box>{list.description}</Box>
       </TableCell>
       {AuthService.isStudent() == false || AuthService.isStudent() == null ? (
         ""
       ) : (
         <TableCell classes={{ root: classes.tableCellRoot }}>
-
           <Button
             variant="contained"
             size="small"
@@ -62,13 +67,15 @@ const TableList = ({ list, index, score }) => {
                 quiz: list,
                 questions: list.questions,
               }}
-              style={{ textDecoration: "none", color: score[0] ? "black" : "white" }}
+              style={{
+                textDecoration: "none",
+                color: score[0] ? "black" : "white",
+              }}
             >
               <Box component={VisibilityIcon} position="relative" top="2px" />{" "}
               Attempt Quiz
             </Link>
           </Button>
-
         </TableCell>
       )}
       {AuthService.isStudent() == false || AuthService.isStudent() == null ? (
@@ -76,14 +83,10 @@ const TableList = ({ list, index, score }) => {
           <Link
             to={{
               pathname: "/admin/view_score",
-              state: list.id
+              state: list.id,
             }}
           >
-            <Button
-              variant="contained"
-              size="small"
-              color="primary"
-            >
+            <Button variant="contained" size="small" color="primary">
               <Box component={VisibilityIcon} position="relative" top="2px" />{" "}
               Quiz results
             </Button>
@@ -101,7 +104,7 @@ const TableList = ({ list, index, score }) => {
 const QuizList = () => {
   const classes = useStyles();
   const [quizDetails, setQuizDetails] = useState([]);
-  const [studentScore, setStudentScore] = useState([])
+  const [studentScore, setStudentScore] = useState([]);
 
   useEffect(() => {
     ApiService.getQuizDetails()
@@ -112,8 +115,8 @@ const QuizList = () => {
   useEffect(() => {
     ApiService.getUserDetails(AuthService.getUserId())
       .then(({ data }) => setStudentScore(data.studentScore))
-      .catch(err => console.log(err))
-  }, [])
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <>
@@ -180,7 +183,7 @@ const QuizList = () => {
                     Upload Date
                   </TableCell> */}
                   {AuthService.isStudent() == false ||
-                    AuthService.isStudent() == null ? (
+                  AuthService.isStudent() == null ? (
                     ""
                   ) : (
                     <TableCell
@@ -206,12 +209,13 @@ const QuizList = () => {
               </TableHead>
               <TableBody>
                 {quizDetails.map((list, index) => (
-                  <TableList list={list} key={list.id} index={index}
-                    score={
-                      studentScore?.filter(
-                        score => score.quiz === list.id
-                      )
-                    }
+                  <TableList
+                    list={list}
+                    key={list.id}
+                    index={index}
+                    score={studentScore?.filter(
+                      (score) => score.quiz === list.id
+                    )}
                   />
                 ))}
               </TableBody>

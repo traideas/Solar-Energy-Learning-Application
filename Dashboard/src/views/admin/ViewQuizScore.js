@@ -109,6 +109,45 @@ const ViewQuizScore = ({ location }) => {
       .then((res) => setQuiz(res.data))
       .catch((err) => console.log(err));
   }, []);
+  console.log(quiz);
+
+  if (quiz?.length === 0)
+    return (
+      <>
+        <Header />
+        {/* Page content */}
+        <Container
+          maxWidth={false}
+          component={Box}
+          marginTop="-6rem"
+          classes={{ root: classes.containerRoot }}
+        >
+          <Card classes={{ root: classes.cardRoot }}>
+            <CardHeader
+              subheader={
+                <Grid
+                  container
+                  component={Box}
+                  alignItems="center"
+                  justifyContent="space-between"
+                >
+                  <Grid item xs="auto">
+                    <Box
+                      component={Typography}
+                      variant="h3"
+                      marginBottom="0!important"
+                    >
+                      No student attempted the quiz
+                    </Box>
+                  </Grid>
+                </Grid>
+              }
+              classes={{ root: classes.cardHeaderRoot }}
+            ></CardHeader>
+          </Card>
+        </Container>
+      </>
+    );
 
   return (
     <>

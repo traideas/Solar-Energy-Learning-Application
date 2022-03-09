@@ -21,12 +21,19 @@ const QuizItem = ({ item, onPress }) => {
   );
 };
 
+const config = {
+  headers: {
+    Authorization: `Token 0699bb9409e56fb69eaec6229e6ffea8ff5e6ac8`,
+  },
+};
+
 const Quiz = ({ navigation }) => {
   const [isLoading, setLoading] = useState(true);
-  const [config] = useConfig()
+  //const [config] = useConfig()
   //const [DATA] = useAxios("quiz/")
   //console.log(DATA)
   const [DATA, setDATA] = useState([]);
+  console.log(DATA)
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {

@@ -6,7 +6,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardHeader from "@material-ui/core/CardHeader";
 import Container from "@material-ui/core/Container";
 import Table from "@material-ui/core/Table";
@@ -15,33 +14,35 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-// @material-ui/lab components
-
-// @material-ui/icons components
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import Tooltip from "@material-ui/core/Tooltip";
+import Avatar from "@material-ui/core/Avatar";
 // core components
 import Header from "components/Headers/Header.js";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import configData from "../../configData.json";
 import componentStyles from "assets/theme/views/admin/tables.js";
 
 //Api Services
 import ApiService from "../../services/api.service";
+import AuthService from "../../services/auth.service";
 import swal from "sweetalert";
 const useStyles = makeStyles(componentStyles);
 
 const onClickDelete = (id) => {
   swal({
     title: "Are you sure?",
-    text: "You want to delete the quiz",
+    text: "You want to change instructor status!",
     icon: "warning",
     buttons: true,
     dangerMode: true,
   }).then((willChange) => {
     if (willChange) {
-      ApiService.deleteQuiz(id)
+      ApiService.deleteArticle(id)
         .then(function (res) {
-          swal("Success!", "Quiz Deleted Successfully!", "success");
+          swal("Success!", "Slide Deleted Successfully!", "success");
           window.location.reload();
         })
         .catch(function (res) {
@@ -50,9 +51,22 @@ const onClickDelete = (id) => {
     }
   });
 };
+
 const TableList = ({ list, index }) => {
   const classes = useStyles();
-
+  if (list.length === 0)
+    return (
+      <TableRow>
+        <TableCell
+          classes={{
+            root: classes.tableCellRoot + " " + classes.tableCellRootBodyHead,
+          }}
+          variant="head"
+        >
+          No Activity has been created
+        </TableCell>
+      </TableRow>
+    );
   return (
     <TableRow hover key={list.id}>
       <TableCell
@@ -63,47 +77,81 @@ const TableList = ({ list, index }) => {
       >
         {(index = index + 1)}
       </TableCell>
-      <TableCell classes={{ root: classes.tableCellRoot }}>
-        {list.title}
-      </TableCell>
       <TableCell
+        classes={{ root: classes.tableCellRoot }}
         style={{
-          width: "40%",
           whiteSpace: "normal",
           wordWrap: "break-word",
         }}
+      >
+        {list.title}
+      </TableCell>
+      <TableCell
         classes={{ root: classes.tableCellRoot }}
+        style={{
+          whiteSpace: "normal",
+          wordWrap: "break-word",
+        }}
       >
         {list.description}
       </TableCell>
       <TableCell classes={{ root: classes.tableCellRoot }}>
-        {list.start_date}
+        {list.upload_date}
       </TableCell>
       <TableCell classes={{ root: classes.tableCellRoot }}>
-        {list.questions.length}
+        <Tooltip title={list.created_by.name} placement="top">
+          <Avatar
+            classes={{ root: classes.avatarRoot }}
+            alt="..."
+            src={
+              list.created_by.photo == configData.SERVER_URL + "media/"
+                ? require("assets/img/theme/defaultImage.png").default
+                : list.created_by.photo
+            }
+          />
+        </Tooltip>
       </TableCell>
       <TableCell classes={{ root: classes.tableCellRoot }}>
-        <Button
-          onClick={() => onClickDelete(list.id)}
-          variant="contained"
-          size="small"
-          style={{ backgroundColor: "red", borderColor: "red" }}
-        >
-          <Box component={DeleteOutlineIcon} position="relative" top="2px" />{" "}
-          Delete
-        </Button>
+        <a href={list.file} target="_blank">
+          <Button variant="contained" size="small" color="primary">
+            <Box component={VisibilityIcon} position="relative" top="2px" />{" "}
+            View
+          </Button>
+        </a>
       </TableCell>
+      {/* {AuthService.isAdmin() == false || AuthService.isAdmin() == null ? (
+        ""
+      ) : (
+        <TableCell classes={{ root: classes.tableCellRoot }}>
+          <Button
+            onClick={() => onClickDelete(list.id)}
+            variant="contained"
+            size="small"
+            style={{ backgroundColor: "red", borderColor: "red" }}
+          >
+            <Box component={DeleteOutlineIcon} position="relative" top="2px" />{" "}
+            Delete
+          </Button>
+        </TableCell>
+      )} */}
     </TableRow>
   );
 };
 
-const ViewQuiz = () => {
-  const [quizDetails, setquizDetails] = useState([]);
+const Assignments = (props) => {
+  const [articleDetails, setarticleDetails] = useState([]);
   useEffect(() => {
-    ApiService.getQuizDetails()
-      .then((res) => setquizDetails(res.data))
-      .catch((err) => console.log(err));
+    if (props.location.pathname === "/admin/additional_articles") {
+      ApiService.getAddArticleDetails()
+        .then((res) => setarticleDetails(res.data))
+        .catch((err) => console.log(err));
+    } else {
+      ApiService.getAssignments()
+        .then((res) => setarticleDetails(res.data))
+        .catch((err) => console.log(err));
+    }
   }, []);
+
   const classes = useStyles();
 
   return (
@@ -131,11 +179,26 @@ const ViewQuiz = () => {
                     component={Typography}
                     variant="h3"
                     marginBottom="0!important"
-                  >Quiz List</Box>
+                  ></Box>
                 </Grid>
                 <Grid item xs="auto">
-                  <Box justifyContent="flex-end" display="flex" flexWrap="wrap">
-                    <Link to="/admin/createquiz">
+                  <Box
+                    justifyContent="flex-end"
+                    display="flex"
+                    flexWrap="wrap"
+                    display={
+                      props.location.pathname === "/admin/additional_articles"
+                        ? AuthService.isTeacher() == false ||
+                          AuthService.isTeacher() == null
+                          ? "none"
+                          : ""
+                        : AuthService.isAdmin() == false ||
+                          AuthService.isAdmin() == null
+                        ? "none"
+                        : ""
+                    }
+                  >
+                    <Link to="/admin/createAssignment">
                       <Button variant="contained" color="primary" size="small">
                         Create New
                       </Button>
@@ -186,14 +249,13 @@ const ViewQuiz = () => {
                   >
                     Upload Date
                   </TableCell>
-
                   <TableCell
                     classes={{
                       root:
                         classes.tableCellRoot + " " + classes.tableCellRootHead,
                     }}
                   >
-                    Questions
+                    Created By
                   </TableCell>
                   <TableCell
                     classes={{
@@ -201,26 +263,36 @@ const ViewQuiz = () => {
                         classes.tableCellRoot + " " + classes.tableCellRootHead,
                     }}
                   >
-                    Action
+                    File
                   </TableCell>
+                  {AuthService.isAdmin() == false ||
+                  AuthService.isAdmin() == null ? (
+                    ""
+                  ) : (
+                    <TableCell
+                      classes={{
+                        root:
+                          classes.tableCellRoot +
+                          " " +
+                          classes.tableCellRootHead,
+                      }}
+                    >
+                      Action
+                    </TableCell>
+                  )}
                 </TableRow>
               </TableHead>
               <TableBody>
-                {quizDetails.map((list, index) => (
+                {articleDetails.map((list, index) => (
                   <TableList list={list} key={list.id} index={index} />
                 ))}
               </TableBody>
             </Box>
           </TableContainer>
-          <Box
-            classes={{ root: classes.cardActionsRoot }}
-            component={CardActions}
-            justifyContent="flex-end"
-          ></Box>
         </Card>
       </Container>
     </>
   );
 };
 
-export default ViewQuiz;
+export default Assignments;

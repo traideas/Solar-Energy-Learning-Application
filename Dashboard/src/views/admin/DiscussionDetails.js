@@ -31,7 +31,7 @@ const useStyles = makeStyles(componentStyles);
 const onClickDelete = (id) => {
   swal({
     title: "Are you sure?",
-    text: "You want to change instructor status!",
+    text: "You want to delete this comment!",
     icon: "warning",
     buttons: true,
     dangerMode: true,
