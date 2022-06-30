@@ -24,3 +24,12 @@ services:
     ports:
     - 33073:3306
 
+  dashboard:
+    build: ../../Dashboard/Dockerfile
+    container_name: frontend_c
+    ports:
+    - '3000:3000'
+    stdin_open: true
+    tty: true
+  
+

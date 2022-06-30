@@ -119,7 +119,7 @@ const TableList = ({ list, index }) => {
           </Button>
         </a>
       </TableCell>
-      {/* {AuthService.isAdmin() == false || AuthService.isAdmin() == null ? (
+      {AuthService.isAdmin() == false || AuthService.isAdmin() == null ? (
         ""
       ) : (
         <TableCell classes={{ root: classes.tableCellRoot }}>
@@ -133,7 +133,7 @@ const TableList = ({ list, index }) => {
             Delete
           </Button>
         </TableCell>
-      )} */}
+      )}
     </TableRow>
   );
 };
@@ -182,7 +182,7 @@ const Assignments = (props) => {
                   ></Box>
                 </Grid>
                 <Grid item xs="auto">
-                  <Box
+                {/*   <Box
                     justifyContent="flex-end"
                     display="flex"
                     flexWrap="wrap"
@@ -197,6 +197,17 @@ const Assignments = (props) => {
                         ? "none"
                         : ""
                     }
+                  >
+                    <Link to="/admin/createAssignment">
+                      <Button variant="contained" color="primary" size="small">
+                        Create New
+                      </Button>
+                    </Link>
+                  </Box> */}
+                  <Box
+                    justifyContent="flex-end"
+                    display="flex"
+                    flexWrap="wrap"
                   >
                     <Link to="/admin/createAssignment">
                       <Button variant="contained" color="primary" size="small">
