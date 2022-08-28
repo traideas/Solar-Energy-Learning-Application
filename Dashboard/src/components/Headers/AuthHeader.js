@@ -29,7 +29,7 @@ const AuthHeader = () => {
               container
               justifyContent="center"
               color={theme.palette.white.main}
-            >
+            >s
               <Grid item lg={5} md={6} xs={12}>
                 <h1>Welcome!</h1>
                 <Box
@@ -44,38 +44,7 @@ const AuthHeader = () => {
             </Box>
           </Box>
         </Container>
-        <Box
-          position="absolute"
-          zIndex="100"
-          height="70px"
-          top="auto"
-          bottom="0"
-          pointerEvents="none"
-          left="0"
-          right="0"
-          width="100%"
-          overflow="hidden"
-          transform="translateZ(0)"
-        >
-          <Box
-            bottom="0"
-            position="absolute"
-            pointerEvents="none"
-            component="svg"
-            xmlns="http://www.w3.org/2000/svg"
-            preserveAspectRatio="none"
-            version="1.1"
-            viewBox="0 0 2560 100"
-            x="0"
-            y="0"
-          >
-            <Box
-              component="polygon"
-              fill={theme.palette.dark.main}
-              points="2560 0 2560 100 0 100"
-            />
-          </Box>
-        </Box>
+        
       </Box>
     </>
   );

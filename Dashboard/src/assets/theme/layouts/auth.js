@@ -1,6 +1,7 @@
 const componentStyles = (theme) => ({
   bgDefault: {
-    backgroundColor: theme.palette.dark.main,
+    background:
+    "linear-gradient(87deg," + theme.palette.info.main + ",#1171ef)",
   },
 });
 

@@ -73,6 +73,8 @@ const Auth = () => {
         </Container>
       </div>
       <AuthFooter />
+
+      
     </>
   );
 };
