@@ -653,7 +653,19 @@ class AssignmentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Assignment
-        fields = ['id', 'created_by', 'title', 'school', 'description', 'submission_date', 'mark', 'photo']
+        fields = ['id',
+                  'created_by',
+                  'title',
+                  'school',
+                  'description',
+                  'submission_date',
+                  'mark',
+                  'photo',
+                  'upload_date',
+                  'file',
+                  'status',
+                  'public'
+                  ]
         extra_kwargs = {
             'id': {'read_only': True},
             'title': {'required': True},
@@ -661,9 +673,29 @@ class AssignmentSerializer(serializers.ModelSerializer):
             'created_by': {'required': True},
             'description': {'required': False},
             'submission_date': {'required': True},
-            'mark': {'required': True},
-            'photo': {'required': False}
+            'upload_date': {'read_only': True, 'required': False},
+            'mark': {'required': False},
+            'photo': {'required': False},
+            'file': {'required': False},
+            'public': {'read_only': True, 'required': False},
+            'status': {'read_only': True, 'required': False},
         }
+
+
+
+    # def to_representation(self, instance):
+    #     data = super(AssignmentSerializer, self).to_representation(instance)
+    #     user = model_to_dict(instance.created_by)
+    #     # user['photo'] = None
+    #     created_by = {
+    #         'name': user["first_name"] + " " + user["last_name"],
+    #         'photo': os.getenv('MEDIA_SERVER')+'/media/' + str(instance.created_by.photo)
+    #     }
+    #     data['created_by'] = created_by
+    #     data['file'] = os.getenv('MEDIA_SERVER')+'/media/' + str(instance.file)
+    #
+    #
+    #     return data
 
 
     def validate(self, data):
