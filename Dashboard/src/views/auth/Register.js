@@ -26,6 +26,7 @@ import componentStyles from "assets/theme/views/auth/register.js";
 //Services
 import AuthService from "../../services/auth.service";
 import ApiService from "../../services/api.service";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -46,7 +47,7 @@ function Register() {
     email,
     password,
     institute_name,
-    userType
+    userType,
   }) => {
     if (userType == 1) {
       AuthService.registerStudent(
@@ -60,7 +61,7 @@ function Register() {
         .then(function (response) {
           reset();
           swal("Congratulations!", "Account Created Successfully!", "success");
-          window.location.replace('/auth/login')
+          window.location.replace("/auth/login");
         })
         .catch(function (error) {
           swal("Registration Failed!", "Please Try Again!", "error");
@@ -82,12 +83,17 @@ function Register() {
           swal("Registration Failed!", "Please Try Again!", "error");
         });
     }
-
   };
 
   return (
     <>
-      <Grid item xs={12} lg={6} md={8}>
+      <Box component={Grid} container style={{ width: "100%", margin: 0 }}> <Grid
+        item
+        xs={11}
+        lg={8}
+        md={9}
+        style={{ margin: "auto", marginTop: "15rem" }}
+      >
         <Card classes={{ root: classes.cardRoot }}>
           <CardContent classes={{ root: classes.cardContent }}>
             <Box
@@ -104,7 +110,7 @@ function Register() {
               <FormControl
                 variant="filled"
                 component={Box}
-                width="48%"
+                width="100%"
                 marginBottom="1.5rem!important"
               >
                 <FilledInput
@@ -124,7 +130,7 @@ function Register() {
               <FormControl
                 variant="filled"
                 component={Box}
-                width="48%"
+                width="100%"
                 marginBottom="1.5rem!important"
                 style={{ float: "right" }}
               >
@@ -182,13 +188,11 @@ function Register() {
                   <MenuItem value="" disabled>
                     Select Your School
                   </MenuItem>
-                  {
-                    schools.map(({ school_name, id }) => (
-                      <MenuItem key={id} value={id}>
-                        {school_name}
-                      </MenuItem>
-                    ))
-                  }
+                  {schools.map(({ school_name, id }) => (
+                    <MenuItem key={id} value={id}>
+                      {school_name}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
               <FormControl
@@ -248,17 +252,12 @@ function Register() {
                   name="userType"
                   {...register("userType")}
                   required
-
                 >
                   <MenuItem value="" disabled>
                     Choose your Role
                   </MenuItem>
-                  <MenuItem value="1">
-                    Student
-                  </MenuItem>
-                  <MenuItem value="2">
-                    Teacher
-                  </MenuItem>
+                  <MenuItem value="1">Student</MenuItem>
+                  <MenuItem value="2">Teacher</MenuItem>
                 </Select>
               </FormControl>
 
@@ -270,7 +269,17 @@ function Register() {
             </form>
           </CardContent>
         </Card>
-      </Grid>
+        <Box
+            style={{
+              textAlign: "center",
+              marginTop: "2rem",
+              fontSize:"18px"
+            }}
+          >
+            Already have an account? <Link to="/auth/login">Log in</Link>
+          </Box>
+      </Grid></Box>
+     
     </>
   );
 }

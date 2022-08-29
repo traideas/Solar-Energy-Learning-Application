@@ -76,23 +76,26 @@ const Auth = () => {
           <Grid
             item
             xs={12}
-            lg={6}
-            md={6}
+            lg={8}
+            md={8}
             style={{
               background:
                 "linear-gradient(87deg," +
-                theme.palette.info.main +
-                ",#1171ef)",
+                "#1171ef," +
+                theme.palette.info.main + ")"
+               //backgroundColor:"#6577B3"
+                
             }}
           >
             <AuthNavbar />
             {/* <AuthHeader /> */}
           </Grid>
-          <Grid item xs={12} lg={6} md={6}>
+          <Grid item xs={12} lg={4} md={4}>
             <Switch>
               {getRoutes(routes)}
               <Redirect from="*" to="/auth/login" />
             </Switch>
+            <AuthFooter />
           </Grid>
         </Box>
       
