@@ -22,10 +22,12 @@ import componentStyles from "assets/theme/views/admin/profile.js";
 import ApiService from '../../services/api.service'
 import AuthService from '../../services/auth.service'
 import swal from "sweetalert";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(componentStyles);
 
 function CreateSlides() {
+  const history = useHistory();
   const classes = useStyles();
   const theme = useTheme();
   const { register, handleSubmit, reset } = useForm();
@@ -36,7 +38,7 @@ function CreateSlides() {
     ApiService.uploadSlideContent(title, description, created_by, photo, file, status)
       .then(function (res) {
         reset()
-        swal("Success!", "Slide Content Created Successfully!", "success")
+        swal("Success!", "Slide Content Created Successfully!", "success").then(history.push("/admin/slides"));
       })
       .catch(function (res) {
         swal("Failed!", "Please Try Again!", "error");

@@ -34,7 +34,7 @@ const useStyles = makeStyles(componentStyles);
 const onClickDelete = (id) => {
   swal({
     title: "Are you sure?",
-    text: "You want to change instructor status!",
+    text: "You want to delete this!",
     icon: "warning",
     buttons: true,
     dangerMode: true,
@@ -42,7 +42,7 @@ const onClickDelete = (id) => {
     if (willChange) {
       ApiService.deleteArticle(id)
         .then(function (res) {
-          swal("Success!", "Slide Deleted Successfully!", "success");
+          swal("Success!", "Deleted Successfully!", "success");
           window.location.reload();
         })
         .catch(function (res) {

@@ -24,7 +24,7 @@ import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(componentStyles);
 
-function Login({ history }) {
+function Login() {
   const classes = useStyles();
   const theme = useTheme();
   const { register, handleSubmit } = useForm();
@@ -44,12 +44,27 @@ function Login({ history }) {
         <Grid
           item
           xs={11}
-          lg={8}
-          md={9}
-          style={{ margin: "auto", marginTop: "15rem" }}
+          lg={10}
+          md={10}
+          style={{ margin: "auto", marginTop: "3rem" }}
         >
-          
-          <Card classes={{ root: classes.cardRoot }}>
+          <Box
+            style={{
+              textAlign: "center",
+              fontSize: "18px",
+              marginBottom: "1rem"
+            }}
+          >
+            <Link to="/auth/register">How to use guide</Link>
+          </Box>
+          <Card
+            classes={{ root: classes.cardRoot }}
+            style={
+              {
+                //backgroundColor: "#B2F9FC",
+              }
+            }
+          >
             <CardContent classes={{ root: classes.cardContent }}>
               <Box
                 color={theme.palette.gray[600]}
@@ -120,7 +135,7 @@ function Login({ history }) {
             style={{
               textAlign: "center",
               marginTop: "2rem",
-              fontSize:"18px"
+              fontSize: "18px",
             }}
           >
             Don't have an account? <Link to="/auth/register">Sign up</Link>

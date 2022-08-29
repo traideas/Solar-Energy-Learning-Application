@@ -19,28 +19,41 @@ import Typography from "@material-ui/core/Typography";
 import UserHeader from "components/Headers/Header.js";
 import componentStyles from "assets/theme/views/admin/profile.js";
 
-import ApiService from '../../services/api.service'
-import AuthService from '../../services/auth.service'
+import ApiService from "../../services/api.service";
+import AuthService from "../../services/auth.service";
 import swal from "sweetalert";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(componentStyles);
 
 function CreateArticles() {
+  const history = useHistory();
   const classes = useStyles();
   const theme = useTheme();
   const { register, handleSubmit, reset } = useForm();
 
   const onSubmit = ({ title, description, file, photo }) => {
-    const created_by = AuthService.getUserId()
-    const status = 1
-    ApiService.uploadArticleContent(title, description, created_by, photo, file, status)
+    const created_by = AuthService.getUserId();
+    const status = 1;
+    ApiService.uploadArticleContent(
+      title,
+      description,
+      created_by,
+      photo,
+      file,
+      status
+    )
       .then(function (res) {
-        reset()
-        swal("Success!", "Article Content Created Successfully!", "success")
+        reset();
+        swal(
+          "Success!",
+          "Article Content Created Successfully!",
+          "success"
+        ).then(history.push("/admin/articles"));
       })
       .catch(function (res) {
         swal("Failed!", "Please Try Again!", "error");
-      })
+      });
   };
 
   return (
@@ -71,7 +84,9 @@ function CreateArticles() {
               <Grid container>
                 <Grid item xs={12} lg={12}>
                   <FormGroup>
-                    <FormLabel>Article Title <b style={{ color: "red" }}>*</b></FormLabel>
+                    <FormLabel>
+                      Article Title <b style={{ color: "red" }}>*</b>
+                    </FormLabel>
                     <FormControl
                       variant="filled"
                       component={Box}
@@ -94,7 +109,9 @@ function CreateArticles() {
                 </Grid>
                 <Grid item xs={12}>
                   <FormGroup>
-                    <FormLabel>Article Description <b style={{ color: "red" }}>*</b></FormLabel>
+                    <FormLabel>
+                      Article Description <b style={{ color: "red" }}>*</b>
+                    </FormLabel>
                     <FormControl
                       variant="filled"
                       component={Box}
@@ -134,7 +151,9 @@ function CreateArticles() {
                 </Grid>
                 <Grid item xs={12} lg={6}>
                   <FormGroup>
-                    <FormLabel>Upload Article <b style={{ color: "red" }}>*</b></FormLabel>
+                    <FormLabel>
+                      Upload Article <b style={{ color: "red" }}>*</b>
+                    </FormLabel>
 
                     <FormControl
                       variant="filled"

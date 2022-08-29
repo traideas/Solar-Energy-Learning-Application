@@ -27,19 +27,21 @@ import {
 import { KeyboardArrowDown } from "@material-ui/icons";
 import axios from "axios";
 import AuthService from "../../services/auth.service";
-import configData from '../../configData.json'
+import configData from "../../configData.json";
+import { useHistory } from "react-router-dom";
 
-const accessToken = JSON.parse(localStorage.getItem("tusoKe36kie"))
+const accessToken = JSON.parse(localStorage.getItem("tusoKe36kie"));
 
 const config = {
   headers: {
-    'Authorization': `Token ${accessToken}`
-  }
-}
+    Authorization: `Token ${accessToken}`,
+  },
+};
 
 const useStyles = makeStyles(componentStyles);
 
 const CreateQuiz = () => {
+  const history = useHistory();
   //form schema builder
   const validationSchema = Yup.object().shape({
     numberOfQuize: Yup.string().required("Number of Quize is required"),
@@ -75,30 +77,38 @@ const CreateQuiz = () => {
     if (photo[0] != undefined) {
       formData.append("photo", photo[0]);
     }
-    formData.append("total_marks", 0)
+    formData.append("total_marks", 0);
     axios
       .post(configData.SERVER_URL + "quiz/", formData, config)
       .then(({ data }) => {
         quizes.map(({ question, a, b, c, d, correct_option }) => {
-          axios.post(configData.SERVER_URL + "question/", {
-            quiz: data.id,
-            question: question,
-            options_1: a,
-            options_2: b,
-            options_3: c,
-            options_4: d,
-            answer: correct_option,
-            mark: Math.floor(Math.random() * 101),
-          }, config).then(function (res) {
-            reset()
-            swal("Success!", "Quiz Created Successfully!", "success")
-          })
+          axios
+            .post(
+              configData.SERVER_URL + "question/",
+              {
+                quiz: data.id,
+                question: question,
+                options_1: a,
+                options_2: b,
+                options_3: c,
+                options_4: d,
+                answer: correct_option,
+                mark: Math.floor(Math.random() * 101),
+              },
+              config
+            )
+            .then(function (res) {
+              reset();
+              swal("Success!", "Quiz Created Successfully!", "success").then(
+                history.push("/admin/quizlist")
+              );
+            })
             .catch(function (res) {
               swal("Failed!", "Please Try Again!", "error");
-            })
+            });
         });
       })
-      .then((err) => swal("Failed!", "Please Try Again!", "error"));
+      //.then((err) => swal("Failed!", "Please Try Again!", "error"));
   };
 
   return (
@@ -125,7 +135,9 @@ const CreateQuiz = () => {
               <Grid container>
                 <Grid item xs={6}>
                   <FormGroup>
-                    <FormLabel>Quiz Title <b style={{ color: "red" }}>*</b></FormLabel>
+                    <FormLabel>
+                      Quiz Title <b style={{ color: "red" }}>*</b>
+                    </FormLabel>
                     <FormControl
                       variant="filled"
                       component={Box}
@@ -167,7 +179,9 @@ const CreateQuiz = () => {
 
                 <Grid item xs={6}>
                   <FormGroup>
-                    <FormLabel>Quiz Description <b style={{ color: "red" }}>*</b></FormLabel>
+                    <FormLabel>
+                      Quiz Description <b style={{ color: "red" }}>*</b>
+                    </FormLabel>
                     <FormControl>
                       <FilledInput
                         autoComplete="off"

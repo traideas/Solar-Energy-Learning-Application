@@ -182,7 +182,7 @@ const Assignments = (props) => {
                   ></Box>
                 </Grid>
                 <Grid item xs="auto">
-                {/*   <Box
+                  {/*   <Box
                     justifyContent="flex-end"
                     display="flex"
                     flexWrap="wrap"
@@ -206,11 +206,15 @@ const Assignments = (props) => {
                   </Box> */}
                   <Box
                     justifyContent="flex-end"
-                    display="flex"
+                    display={AuthService.isStudent() === true ? "none" : "flex"}
                     flexWrap="wrap"
                   >
                     <Link to="/admin/createAssignment">
-                      <Button variant="contained" color="primary" size="small">
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        size="small"
+                      >
                         Create New
                       </Button>
                     </Link>

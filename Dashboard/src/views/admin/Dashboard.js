@@ -45,7 +45,7 @@ function Dashboard() {
   const onClickDelete = (id) => {
     swal({
       title: "Are you sure?",
-      text: "You want to change instructor status!",
+      text: "You want to delete this!",
       icon: "warning",
       buttons: true,
       dangerMode: true,

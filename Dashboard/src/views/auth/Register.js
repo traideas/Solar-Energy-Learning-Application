@@ -78,6 +78,7 @@ function Register() {
         .then(function (response) {
           reset();
           swal("Congratulations!", "Account Created Successfully!", "success");
+          window.location.replace("/auth/login");
         })
         .catch(function (error) {
           swal("Registration Failed!", "Please Try Again!", "error");
@@ -87,199 +88,214 @@ function Register() {
 
   return (
     <>
-      <Box component={Grid} container style={{ width: "100%", margin: 0 }}> <Grid
-        item
-        xs={11}
-        lg={8}
-        md={9}
-        style={{ margin: "auto", marginTop: "15rem" }}
-      >
-        <Card classes={{ root: classes.cardRoot }}>
-          <CardContent classes={{ root: classes.cardContent }}>
-            <Box
-              color={theme.palette.gray[600]}
-              textAlign="center"
-              marginBottom="1.5rem"
-              fontSize="1.3rem"
-            >
-              <Box fontSize="80%" fontWeight="700" component="small">
-                Sign up with credentials
-              </Box>
-            </Box>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <FormControl
-                variant="filled"
-                component={Box}
-                width="100%"
-                marginBottom="1.5rem!important"
-              >
-                <FilledInput
-                  autoComplete="off"
-                  type="text"
-                  placeholder="First Name"
-                  name="first_name"
-                  required
-                  {...register("first_name")}
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <AccountBoxIcon />
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
-              <FormControl
-                variant="filled"
-                component={Box}
-                width="100%"
-                marginBottom="1.5rem!important"
-                style={{ float: "right" }}
-              >
-                <FilledInput
-                  autoComplete="off"
-                  type="text"
-                  placeholder="Last Name"
-                  name="last_name"
-                  required
-                  {...register("last_name")}
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <AccountBoxIcon />
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
-              <FormControl
-                variant="filled"
-                component={Box}
-                width="100%"
-                marginBottom="1.5rem!important"
-              >
-                <FilledInput
-                  autoComplete="off"
-                  type="email"
-                  placeholder="Email"
-                  name="email"
-                  required
-                  {...register("email")}
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <Email />
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
-              <FormControl
-                variant="filled"
-                component={Box}
-                width="100%"
-                marginBottom="1.5rem!important"
-              >
-                <Select
-                  defaultValue=""
-                  IconComponent={KeyboardArrowDown}
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <School /> &nbsp; School
-                    </InputAdornment>
-                  }
-                  name="institute_name"
-                  {...register("institute_name")}
-                >
-                  <MenuItem value="" disabled>
-                    Select Your School
-                  </MenuItem>
-                  {schools.map(({ school_name, id }) => (
-                    <MenuItem key={id} value={id}>
-                      {school_name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <FormControl
-                variant="filled"
-                component={Box}
-                width="100%"
-                marginBottom="1.5rem!important"
-              >
-                <FilledInput
-                  autoComplete="off"
-                  type="text"
-                  placeholder="Username"
-                  name="username"
-                  required
-                  {...register("username")}
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <FingerprintIcon />
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
-              <FormControl
-                variant="filled"
-                component={Box}
-                width="100%"
-                marginBottom="1.5rem!important"
-              >
-                <FilledInput
-                  autoComplete="off"
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                  required
-                  {...register("password")}
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <Lock />
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
-              <FormControl
-                variant="filled"
-                component={Box}
-                width="100%"
-                marginBottom="1.5rem!important"
-              >
-                <Select
-                  defaultValue=""
-                  IconComponent={KeyboardArrowDown}
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <AccountBoxIcon /> &nbsp; User Type
-                    </InputAdornment>
-                  }
-                  name="userType"
-                  {...register("userType")}
-                  required
-                >
-                  <MenuItem value="" disabled>
-                    Choose your Role
-                  </MenuItem>
-                  <MenuItem value="1">Student</MenuItem>
-                  <MenuItem value="2">Teacher</MenuItem>
-                </Select>
-              </FormControl>
-
-              <Box textAlign="center" marginTop="1.5rem" marginBottom="1.5rem">
-                <Button color="primary" variant="contained" type="submit">
-                  Create Account
-                </Button>
-              </Box>
-            </form>
-          </CardContent>
-        </Card>
+      <Box component={Grid} container style={{ width: "100%", margin: 0 }}>
+        {" "}
+        <Grid
+          item
+          xs={11}
+          lg={10}
+          md={10}
+          style={{ margin: "auto", marginTop: "3rem" }}
+        >
         <Box
             style={{
               textAlign: "center",
+              fontSize: "18px",
+              marginBottom: "1rem"
+            }}
+          >
+            <Link to="/auth/register">How to use guide</Link>
+          </Box>
+          <Card classes={{ root: classes.cardRoot }}>
+            <CardContent classes={{ root: classes.cardContent }}>
+              <Box
+                color={theme.palette.gray[600]}
+                textAlign="center"
+                marginBottom="1.5rem"
+                fontSize="1.3rem"
+              >
+                <Box fontSize="80%" fontWeight="700" component="small">
+                  Sign up with credentials
+                </Box>
+              </Box>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <FormControl
+                  variant="filled"
+                  component={Box}
+                  width="100%"
+                  marginBottom="1.5rem!important"
+                >
+                  <FilledInput
+                    autoComplete="off"
+                    type="text"
+                    placeholder="First Name"
+                    name="first_name"
+                    required
+                    {...register("first_name")}
+                    startAdornment={
+                      <InputAdornment position="start">
+                        <AccountBoxIcon />
+                      </InputAdornment>
+                    }
+                  />
+                </FormControl>
+                <FormControl
+                  variant="filled"
+                  component={Box}
+                  width="100%"
+                  marginBottom="1.5rem!important"
+                  style={{ float: "right" }}
+                >
+                  <FilledInput
+                    autoComplete="off"
+                    type="text"
+                    placeholder="Last Name"
+                    name="last_name"
+                    required
+                    {...register("last_name")}
+                    startAdornment={
+                      <InputAdornment position="start">
+                        <AccountBoxIcon />
+                      </InputAdornment>
+                    }
+                  />
+                </FormControl>
+                <FormControl
+                  variant="filled"
+                  component={Box}
+                  width="100%"
+                  marginBottom="1.5rem!important"
+                >
+                  <FilledInput
+                    autoComplete="off"
+                    type="email"
+                    placeholder="Email"
+                    name="email"
+                    required
+                    {...register("email")}
+                    startAdornment={
+                      <InputAdornment position="start">
+                        <Email />
+                      </InputAdornment>
+                    }
+                  />
+                </FormControl>
+                <FormControl
+                  variant="filled"
+                  component={Box}
+                  width="100%"
+                  marginBottom="1.5rem!important"
+                >
+                  <Select
+                    defaultValue=""
+                    IconComponent={KeyboardArrowDown}
+                    startAdornment={
+                      <InputAdornment position="start">
+                        <School /> &nbsp; School
+                      </InputAdornment>
+                    }
+                    name="institute_name"
+                    {...register("institute_name")}
+                  >
+                    <MenuItem value="" disabled>
+                      Select Your School
+                    </MenuItem>
+                    {schools.map(({ school_name, id }) => (
+                      <MenuItem key={id} value={id}>
+                        {school_name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                <FormControl
+                  variant="filled"
+                  component={Box}
+                  width="100%"
+                  marginBottom="1.5rem!important"
+                >
+                  <FilledInput
+                    autoComplete="off"
+                    type="text"
+                    placeholder="Username"
+                    name="username"
+                    required
+                    {...register("username")}
+                    startAdornment={
+                      <InputAdornment position="start">
+                        <FingerprintIcon />
+                      </InputAdornment>
+                    }
+                  />
+                </FormControl>
+                <FormControl
+                  variant="filled"
+                  component={Box}
+                  width="100%"
+                  marginBottom="1.5rem!important"
+                >
+                  <FilledInput
+                    autoComplete="off"
+                    type="password"
+                    placeholder="Password"
+                    name="password"
+                    required
+                    {...register("password")}
+                    startAdornment={
+                      <InputAdornment position="start">
+                        <Lock />
+                      </InputAdornment>
+                    }
+                  />
+                </FormControl>
+                <FormControl
+                  variant="filled"
+                  component={Box}
+                  width="100%"
+                  marginBottom="1.5rem!important"
+                >
+                  <Select
+                    defaultValue=""
+                    IconComponent={KeyboardArrowDown}
+                    startAdornment={
+                      <InputAdornment position="start">
+                        <AccountBoxIcon /> &nbsp; User Type
+                      </InputAdornment>
+                    }
+                    name="userType"
+                    {...register("userType")}
+                    required
+                  >
+                    <MenuItem value="" disabled>
+                      Choose your Role
+                    </MenuItem>
+                    <MenuItem value="1">Student</MenuItem>
+                    <MenuItem value="2">Teacher</MenuItem>
+                  </Select>
+                </FormControl>
+
+                <Box
+                  textAlign="center"
+                  marginTop="1.5rem"
+                  marginBottom="1.5rem"
+                >
+                  <Button color="primary" variant="contained" type="submit">
+                    Create Account
+                  </Button>
+                </Box>
+              </form>
+            </CardContent>
+          </Card>
+          <Box
+            style={{
+              textAlign: "center",
               marginTop: "2rem",
-              fontSize:"18px"
+              fontSize: "18px",
             }}
           >
             Already have an account? <Link to="/auth/login">Log in</Link>
           </Box>
-      </Grid></Box>
-     
+        </Grid>
+      </Box>
     </>
   );
 }
