@@ -3,6 +3,7 @@ from studentportal.models import *
 import json
 from django.forms.models import model_to_dict
 import os
+from dotenv import load_dotenv
 
 
 #
@@ -26,9 +27,7 @@ import os
 #
 #
 
-
-
-
+load_dotenv()
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -36,6 +35,8 @@ class CommentSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def to_representation(self, instance):
+        url = '' 
+        
         data = super(CommentSerializer, self).to_representation(instance)
         # print(data)
         # print( model_to_dict(instance.created_by))
@@ -43,7 +44,7 @@ class CommentSerializer(serializers.ModelSerializer):
         # user['photo'] = None
         created_by = {
             'name': user["first_name"]+" "+ user["last_name"],
-            'photo': 'http://127.0.0.1:8000/media/'+ str(instance.created_by.photo)
+            'photo': os.getenv('MEDIA_SERVER')+'/media/'+ str(instance.created_by.photo)
         }
         # print(str(instance.created_by.photo))
 
@@ -71,11 +72,11 @@ class DiscussionSerializer(serializers.ModelSerializer):
         # user['photo'] = None
         created_by = {
             'name': user["first_name"] + " " + user["last_name"],
-            'photo': 'http://127.0.0.1:8000/media/' + str(instance.created_by.photo)
+            'photo': os.getenv('MEDIA_SERVER')+'/media/' + str(instance.created_by.photo)
         }
 
         data['created_by'] = created_by
-        data['file'] = 'http://127.0.0.1:8000/media/' + str(instance.file)
+        data['file'] = os.getenv('MEDIA_SERVER')+'/media/' + str(instance.file)
 
         return data
 
@@ -349,7 +350,7 @@ class StudentSerializer(serializers.ModelSerializer):
 
         school_name = school['school_name']
         data['school_section'] = {'school': school_name, 'school_id': school['id']}
-        # data['file'] = 'http://127.0.0.1:8000/media/' + str(instance.file)
+        # data['file'] = os.getenv('MEDIA_SERVER')+'/media/' + str(instance.file)
 
         return data
 
@@ -419,7 +420,7 @@ class TeacherSerializer(serializers.ModelSerializer):
         # user['photo'] = None
         institute_name = school
         data['institute_name'] = school
-        # data['file'] = 'http://127.0.0.1:8000/media/' + str(instance.file)
+        # data['file'] = os.getenv('MEDIA_SERVER')+'/media/' + str(instance.file)
 
         return data
 
@@ -445,12 +446,12 @@ class VideoSerializer(serializers.ModelSerializer):
         # user['photo'] = None
         created_by = {
             'name': user["first_name"] + " " + user["last_name"],
-            'photo': 'http://127.0.0.1:8000/media/' + str(instance.created_by.photo)
+            'photo': os.getenv('MEDIA_SERVER')+'/media/' + str(instance.created_by.photo)
         }
 
         # print(str(instance.created_by.photo))
         data['created_by'] = created_by
-        data['file'] = 'http://127.0.0.1:8000/media/' + str(instance.file)
+        data['file'] = os.getenv('MEDIA_SERVER')+'/media/' + str(instance.file)
         # data['created_by'] = "hello"
         return data
 
@@ -505,10 +506,10 @@ class PPTXSerializer(serializers.ModelSerializer):
         # user['photo'] = None
         created_by = {
             'name': user["first_name"] + " " + user["last_name"],
-            'photo': 'http://127.0.0.1:8000/media/' + str(instance.created_by.photo)
+            'photo': os.getenv('MEDIA_SERVER')+'/media/' + str(instance.created_by.photo)
         }
         data['created_by'] = created_by
-        data['file'] = 'http://127.0.0.1:8000/media/' + str(instance.file)
+        data['file'] = os.getenv('MEDIA_SERVER')+'/media/' + str(instance.file)
 
         return data
 
@@ -557,10 +558,10 @@ class DocSerializer(serializers.ModelSerializer):
         # user['photo'] = None
         created_by = {
             'name': user["first_name"] + " " + user["last_name"],
-            'photo': 'http://127.0.0.1:8000/media/' + str(instance.created_by.photo)
+            'photo': os.getenv('MEDIA_SERVER')+'/media/' + str(instance.created_by.photo)
         }
         data['created_by'] = created_by
-        data['file'] = 'http://127.0.0.1:8000/media/' + str(instance.file)
+        data['file'] = os.getenv('MEDIA_SERVER')+'/media/' + str(instance.file)
 
         return data
 
