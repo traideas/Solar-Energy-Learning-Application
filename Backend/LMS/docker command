@@ -6,6 +6,8 @@ sudo docker-compose exec solarlms sh # for getting the bash
 
 python manage.py makemigrations studentportal
 
+python manage.py migrate
+# for creating migration without session use the below command
 python manage.py migrate studentportal
 
 python manage.py createsuperuser 
