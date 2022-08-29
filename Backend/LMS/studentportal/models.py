@@ -201,7 +201,12 @@ class Assignment(models.Model):
     submission_date = models.DateField(blank=False, null=True)
     photo = models.FileField(blank=False)
     mark = models.IntegerField()
+    material_type = models.CharField(blank=True, max_length=1000, null=True)
+    file = models.FileField(blank=True, null=True)
+    status = models.BooleanField(default=False)
     public = models.BooleanField(default=False)
+    upload_date = models.DateField(blank=False, auto_now_add=True)
+
     def __str__(self):
         return self.title
 
