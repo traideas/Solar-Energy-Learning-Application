@@ -5,9 +5,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-
+import { useTheme } from "@material-ui/core/styles";
 // core components
-import AuthNavbar from "components/Navbars/AuthNavbar.js";
+import AuthNavbar from "components/Navbars/AuthNavbarNew.js";
 import AuthHeader from "components/Headers/AuthHeader.js";
 import AuthFooter from "components/Footers/AuthFooter.js";
 
@@ -18,22 +18,22 @@ import componentStyles from "assets/theme/layouts/auth.js";
 const useStyles = makeStyles(componentStyles);
 
 const Auth = () => {
-  const classes = useStyles();
-  const mainContent = React.useRef(null);
-  const location = useLocation();
+  // const classes = useStyles();
+  // const mainContent = React.useRef(null);
+  // const location = useLocation();
 
-  React.useEffect(() => {
-    document.body.classList.add(classes.bgDefault);
-    return () => {
-      document.body.classList.remove(classes.bgDefault);
-    };
-  });
-  React.useEffect(() => {
-    document.documentElement.scrollTop = 0;
-    document.scrollingElement.scrollTop = 0;
-    mainContent.current.scrollTop = 0;
-  }, [location]);
-
+  // React.useEffect(() => {
+  //   document.body.classList.add(classes.bgDefault);
+  //   return () => {
+  //     document.body.classList.remove(classes.bgDefault);
+  //   };
+  // });
+  // React.useEffect(() => {
+  //   document.documentElement.scrollTop = 0;
+  //   document.scrollingElement.scrollTop = 0;
+  //   mainContent.current.scrollTop = 0;
+  // }, [location]);
+  const theme = useTheme();
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
       if (prop.layout === "/auth") {
@@ -52,10 +52,10 @@ const Auth = () => {
 
   return (
     <>
-      <div className="main-content" ref={mainContent}>
-        <AuthNavbar />
+     
+        {/* <AuthNavbar />
         <AuthHeader />
-        {/* Page content */}
+       
         <Container
           component={Box}
           maxWidth="xl"
@@ -70,11 +70,33 @@ const Auth = () => {
               <Redirect from="*" to="/auth/login" />
             </Switch>
           </Box>
-        </Container>
-      </div>
-      <AuthFooter />
+        </Container> */}
 
+        <Box component={Grid} container style={{ width: "100%", margin:0 }}>
+          <Grid
+            item
+            xs={12}
+            lg={6}
+            md={6}
+            style={{
+              background:
+                "linear-gradient(87deg," +
+                theme.palette.info.main +
+                ",#1171ef)",
+            }}
+          >
+            <AuthNavbar />
+            {/* <AuthHeader /> */}
+          </Grid>
+          <Grid item xs={12} lg={6} md={6}>
+            <Switch>
+              {getRoutes(routes)}
+              <Redirect from="*" to="/auth/login" />
+            </Switch>
+          </Grid>
+        </Box>
       
+      {/* <AuthFooter /> */}
     </>
   );
 };
