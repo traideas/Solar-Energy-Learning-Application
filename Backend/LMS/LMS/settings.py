@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-mb2oq7=d3#1l4v+e+dp2^7t$w3bn0x3h4a6ca5+c8zal8pdl0c'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -152,7 +152,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Cors Header
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://localhost:46031"
-]
+#CORS_ALLOWED_ORIGINS = [
+#    "http://localhost:3000",
+#    "http://localhost:46031"
+#]
+CORS_ALLOW_ALL_ORIGINS = True
