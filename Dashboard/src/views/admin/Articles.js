@@ -271,9 +271,27 @@ const Articles = (props) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {articleDetails.map((list, index) => (
-                  <TableList list={list} key={list.id} index={index} />
-                ))}
+                {articleDetails.length === 0 ? (
+                  <>
+                    <TableRow>
+                      <TableCell
+                        classes={{
+                          root:
+                            classes.tableCellRoot +
+                            " " +
+                            classes.tableCellRootBodyHead,
+                        }}
+                        variant="head"
+                      >
+                        No article was uploaded
+                      </TableCell>
+                    </TableRow>
+                  </>
+                ) : (
+                  articleDetails.map((list, index) => (
+                    <TableList list={list} key={list.id} index={index} />
+                  ))
+                )}
               </TableBody>
             </Box>
           </TableContainer>

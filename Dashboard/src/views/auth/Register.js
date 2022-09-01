@@ -28,6 +28,8 @@ import AuthService from "../../services/auth.service";
 import ApiService from "../../services/api.service";
 import { Link } from "react-router-dom";
 
+import pdf from "./guide.pdf";
+
 const useStyles = makeStyles(componentStyles);
 
 function Register() {
@@ -97,14 +99,16 @@ function Register() {
           md={10}
           style={{ margin: "auto", marginTop: "3rem" }}
         >
-        <Box
+          <Box
             style={{
               textAlign: "center",
               fontSize: "18px",
-              marginBottom: "1rem"
+              marginBottom: "1rem",
             }}
           >
-            <Link to="/auth/register">How to use guide</Link>
+            <a href={pdf} target="_blank">
+              How to use guide
+            </a>
           </Box>
           <Card classes={{ root: classes.cardRoot }}>
             <CardContent classes={{ root: classes.cardContent }}>

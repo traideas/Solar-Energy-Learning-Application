@@ -100,7 +100,7 @@ const CreateQuiz = () => {
             .then(function (res) {
               reset();
               swal("Success!", "Quiz Created Successfully!", "success").then(
-                history.push("/admin/quizlist")
+                history.push("/admin/quiz")
               );
             })
             .catch(function (res) {

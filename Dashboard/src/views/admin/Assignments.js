@@ -34,15 +34,15 @@ const useStyles = makeStyles(componentStyles);
 const onClickDelete = (id) => {
   swal({
     title: "Are you sure?",
-    text: "You want to change instructor status!",
+    text: "You want delete the assignment!",
     icon: "warning",
     buttons: true,
     dangerMode: true,
   }).then((willChange) => {
     if (willChange) {
-      ApiService.deleteArticle(id)
+      ApiService.deleteAssignment(id)
         .then(function (res) {
-          swal("Success!", "Slide Deleted Successfully!", "success");
+          swal("Success!", "Assignment Deleted Successfully!", "success");
           window.location.reload();
         })
         .catch(function (res) {
@@ -54,19 +54,6 @@ const onClickDelete = (id) => {
 
 const TableList = ({ list, index }) => {
   const classes = useStyles();
-  if (list.length === 0)
-    return (
-      <TableRow>
-        <TableCell
-          classes={{
-            root: classes.tableCellRoot + " " + classes.tableCellRootBodyHead,
-          }}
-          variant="head"
-        >
-          No Activity has been created
-        </TableCell>
-      </TableRow>
-    );
   return (
     <TableRow hover key={list.id}>
       <TableCell
@@ -112,10 +99,10 @@ const TableList = ({ list, index }) => {
         </Tooltip>
       </TableCell>
       <TableCell classes={{ root: classes.tableCellRoot }}>
-        <a href={list.file} target="_blank">
+        <a href={`http://myrel.ukm.my:7000${list.file}`} target="_blank">
           <Button variant="contained" size="small" color="primary">
             <Box component={VisibilityIcon} position="relative" top="2px" />{" "}
-            View
+            view
           </Button>
         </a>
       </TableCell>
@@ -210,11 +197,7 @@ const Assignments = (props) => {
                     flexWrap="wrap"
                   >
                     <Link to="/admin/createAssignment">
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        size="small"
-                      >
+                      <Button variant="contained" color="primary" size="small">
                         Create New
                       </Button>
                     </Link>
@@ -298,9 +281,27 @@ const Assignments = (props) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {articleDetails.map((list, index) => (
-                  <TableList list={list} key={list.id} index={index} />
-                ))}
+                {articleDetails.length === 0 ? (
+                  <>
+                    <TableRow>
+                      <TableCell
+                        classes={{
+                          root:
+                            classes.tableCellRoot +
+                            " " +
+                            classes.tableCellRootBodyHead,
+                        }}
+                        variant="head"
+                      >
+                        No Activity has been created
+                      </TableCell>
+                    </TableRow>
+                  </>
+                ) : (
+                  articleDetails.map((list, index) => (
+                    <TableList list={list} key={list.id} index={index} />
+                  ))
+                )}
               </TableBody>
             </Box>
           </TableContainer>

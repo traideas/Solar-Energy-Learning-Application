@@ -272,9 +272,27 @@ const Slides = (props) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {slideDetails.map((list, index) => (
-                  <TableList list={list} key={list.id} index={index} />
-                ))}
+                {slideDetails.length === 0 ? (
+                  <>
+                    <TableRow>
+                      <TableCell
+                        classes={{
+                          root:
+                            classes.tableCellRoot +
+                            " " +
+                            classes.tableCellRootBodyHead,
+                        }}
+                        variant="head"
+                      >
+                        No slides was uploaded
+                      </TableCell>
+                    </TableRow>
+                  </>
+                ) : (
+                  slideDetails.map((list, index) => (
+                    <TableList list={list} key={list.id} index={index} />
+                  ))
+                )}
               </TableBody>
             </Box>
           </TableContainer>

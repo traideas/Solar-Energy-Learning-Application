@@ -194,7 +194,7 @@ function AttemptQuiz({ location }) {
                   )
                 )}
                 {ansHide ? (
-                  <Button color="primary" variant="contained" fullWidth>
+                  <Button color="#48A14D !important" variant="contained" fullWidth>
                     <Link
                       to="/admin/quizlist"
                       style={{ textDecoration: "none", color: "white" }}

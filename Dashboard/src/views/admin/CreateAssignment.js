@@ -32,7 +32,14 @@ function CreateAssignment() {
   const theme = useTheme();
   const { register, handleSubmit, reset } = useForm();
 
-  const onSubmit = ({ title, description, file, photo }) => {
+  const onSubmit = ({
+    title,
+    description,
+    file,
+    photo,
+    submission_date,
+    mark,
+  }) => {
     const created_by = AuthService.getUserId();
     const status = 1;
     ApiService.uploadAssignment(
@@ -41,7 +48,9 @@ function CreateAssignment() {
       created_by,
       photo,
       file,
-      status
+      status,
+      submission_date,
+      mark
     )
       .then(function (res) {
         reset();
@@ -130,6 +139,56 @@ function CreateAssignment() {
                     </FormControl>
                   </FormGroup>
                 </Grid>
+                <Grid item xs={6} lg={6}>
+                  <FormGroup>
+                    <FormLabel>
+                      Submission date <b style={{ color: "red" }}>*</b>
+                    </FormLabel>
+                    <FormControl
+                      variant="filled"
+                      component={Box}
+                      width="100%"
+                      marginBottom="1rem!important"
+                    >
+                      <Box
+                        paddingLeft="0.75rem"
+                        paddingRight="0.75rem"
+                        component={FilledInput}
+                        autoComplete="off"
+                        type="date"
+                        placeholder="Article Title"
+                        name="title"
+                        required
+                        {...register("submission_date")}
+                      />
+                    </FormControl>
+                  </FormGroup>
+                </Grid>
+                <Grid item xs={6} lg={6}>
+                  <FormGroup>
+                    <FormLabel>
+                      Marks <b style={{ color: "red" }}>*</b>
+                    </FormLabel>
+                    <FormControl
+                      variant="filled"
+                      component={Box}
+                      width="100%"
+                      marginBottom="1rem!important"
+                    >
+                      <Box
+                        paddingLeft="0.75rem"
+                        paddingRight="0.75rem"
+                        component={FilledInput}
+                        autoComplete="off"
+                        type="text"
+                        placeholder="Article Title"
+                        name="title"
+                        required
+                        {...register("mark")}
+                      />
+                    </FormControl>
+                  </FormGroup>
+                </Grid>
                 <Grid hidden item xs={12} lg={6}>
                   <FormGroup>
                     <FormLabel>Upload Thumbnil</FormLabel>
@@ -151,9 +210,7 @@ function CreateAssignment() {
                 </Grid>
                 <Grid item xs={12} lg={6}>
                   <FormGroup>
-                    <FormLabel>
-                      Upload Assignment <b style={{ color: "red" }}>*</b>
-                    </FormLabel>
+                    <FormLabel>Upload Assignment</FormLabel>
 
                     <FormControl
                       variant="filled"
@@ -165,9 +222,7 @@ function CreateAssignment() {
                         autoComplete="off"
                         type="file"
                         name="file"
-                        accept=".pdf"
                         {...register("file")}
-                        required
                       />
                     </FormControl>
                   </FormGroup>

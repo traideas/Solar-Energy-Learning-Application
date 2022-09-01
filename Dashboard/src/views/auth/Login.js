@@ -21,6 +21,7 @@ import componentStyles from "assets/theme/views/auth/login.js";
 //auth.service imports
 import AuthService from "../../services/auth.service";
 import { Link } from "react-router-dom";
+import pdf from "./guide.pdf";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -52,10 +53,12 @@ function Login() {
             style={{
               textAlign: "center",
               fontSize: "18px",
-              marginBottom: "1rem"
+              marginBottom: "1rem",
             }}
           >
-            <Link to="/auth/register">How to use guide</Link>
+            <a href={pdf} target="_blank">
+              How to use guide
+            </a>
           </Box>
           <Card
             classes={{ root: classes.cardRoot }}
