@@ -107,7 +107,7 @@ function Register() {
             }}
           >
             <a href={pdf} target="_blank">
-              How to use guide
+            User's Guide
             </a>
           </Box>
           <Card classes={{ root: classes.cardRoot }}>
