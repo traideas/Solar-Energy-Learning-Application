@@ -22,6 +22,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 
 import Typography from "@material-ui/core/Typography";
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 
 // core components
 import UserHeader from "components/Headers/Header.js";
@@ -34,6 +35,27 @@ import AuthService from "../../services/auth.service";
 
 const useStyles = makeStyles(componentStyles);
 const useStylesButtons = makeStyles(componentStylesButtons);
+
+const onClickDelete = (id) => {
+  swal({
+    title: "Are you sure?",
+    text: "You want to delete this school!",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  }).then((willChange) => {
+    if (willChange) {
+      ApiService.deleteSchool(id)
+        .then(function (res) {
+          swal("Success!", "School Deleted Successfully!", "success");
+          window.location.reload();
+        })
+        .catch(function (res) {
+          swal("Failed!", "Please Try Again!", "error");
+        });
+    }
+  });
+};
 
 const TableList = ({ list, index }) => {
   const classes = useStyles();
@@ -54,6 +76,21 @@ const TableList = ({ list, index }) => {
       <TableCell classes={{ root: classes.tableCellRoot }}>
         {list.student_count}
       </TableCell>
+      {AuthService.isAdmin() == false || AuthService.isAdmin() == null ? (
+        ""
+      ) : (
+        <TableCell classes={{ root: classes.tableCellRoot }}>
+          <Button
+            onClick={() => onClickDelete(list.id)}
+            variant="contained"
+            size="small"
+            style={{ backgroundColor: "red", borderColor: "red" }}
+          >
+            <Box component={DeleteOutlineIcon} position="relative" top="2px" />{" "}
+            Delete
+          </Button>
+        </TableCell>
+      )}
     </TableRow>
   );
 };
@@ -80,7 +117,7 @@ const Institute = () => {
       })
       .catch((err) => {
         swal("Sorry!", "Unable to add school!", "warning");
-        reset()
+        reset();
       });
   };
   return (
@@ -205,12 +242,40 @@ const Institute = () => {
                         >
                           Student Count
                         </TableCell>
+                        <TableCell
+                          classes={{
+                            root:
+                              classes.tableCellRoot +
+                              " " +
+                              classes.tableCellRootHead,
+                          }}
+                        >
+                          Action
+                        </TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {schools.map((list, index) => (
-                        <TableList list={list} key={list.id} index={index} />
-                      ))}
+                      {schools.length === 0 ? (
+                        <>
+                          <TableRow>
+                            <TableCell
+                              classes={{
+                                root:
+                                  classes.tableCellRoot +
+                                  " " +
+                                  classes.tableCellRootBodyHead,
+                              }}
+                              variant="head"
+                            >
+                              No schools was created
+                            </TableCell>
+                          </TableRow>
+                        </>
+                      ) : (
+                        schools.map((list, index) => (
+                          <TableList list={list} key={list.id} index={index} />
+                        ))
+                      )}
                     </TableBody>
                   </Box>
                 </TableContainer>

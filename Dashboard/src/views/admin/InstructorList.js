@@ -229,13 +229,27 @@ const InstructorList = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {teacherList.map((list, index) => (
-                  <TableList
-                    list={list}
-                    key={list.id}
-                    index={index}
-                  />
-                ))}
+                {teacherList.length === 0 ? (
+                  <>
+                    <TableRow>
+                      <TableCell
+                        classes={{
+                          root:
+                            classes.tableCellRoot +
+                            " " +
+                            classes.tableCellRootBodyHead,
+                        }}
+                        variant="head"
+                      >
+                        No Instructor was registered
+                      </TableCell>
+                    </TableRow>
+                  </>
+                ) : (
+                  teacherList.map((list, index) => (
+                    <TableList list={list} key={list.id} index={index} />
+                  ))
+                )}
               </TableBody>
             </Box>
           </TableContainer>

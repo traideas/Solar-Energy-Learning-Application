@@ -194,7 +194,7 @@ const getSchoolList = () => {
 };
 
 const getSchoolByID = (id) => {
-  return axios.get("http://localhost:8000/school/" + id + "/", id);
+  return axios.get(configData.SERVER_URL + "school/" + id + "/", id);
 };
 
 const changeInstructorStatus = (
@@ -239,8 +239,16 @@ const deleteSlide = (id) => {
   return axios.delete(configData.SERVER_URL + "pptx/" + id + "/", config);
 };
 
+const deleteSchool = (id) => {
+  return axios.delete(configData.SERVER_URL + "school/" + id + "/", config);
+};
+
 const deleteArticle = (id) => {
   return axios.delete(configData.SERVER_URL + "document/" + id + "/", config);
+};
+
+const deleteAssignment = (id) => {
+  return axios.delete(configData.SERVER_URL + "assignment/" + id , config);
 };
 
 const deleteQuiz = (id) => {
@@ -282,9 +290,9 @@ const uploadAssignment = (
   file,
   status
 ) => {
-  const today = new Date()
+  const today = new Date();
   const fDate =
-  today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+    today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
   let formData = new FormData();
   formData.append("title", title);
   formData.append("description", description);
@@ -340,5 +348,7 @@ export default {
   getUserTeacherDetailsOnly,
   resetScore,
   uploadAssignment,
-  getAssignments
+  getAssignments,
+  deleteSchool,
+  deleteAssignment
 };

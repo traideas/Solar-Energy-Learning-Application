@@ -22,10 +22,12 @@ import componentStyles from "assets/theme/views/admin/profile.js";
 import ApiService from '../../services/api.service'
 import AuthService from '../../services/auth.service'
 import swal from "sweetalert";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(componentStyles);
 
 function CreateVideos() {
+  const history = useHistory();
   const classes = useStyles();
   const theme = useTheme();
   const { register, handleSubmit, reset } = useForm();
@@ -36,7 +38,7 @@ function CreateVideos() {
     ApiService.uploadVideoContent(title, description, created_by, photo, file, status)
       .then(function (res) {
         reset()
-        swal("Success!", "Video Content Created Successfully!", "success")
+        swal("Success!", "Video Content Created Successfully!", "success").then(history.push("/admin/videos"));
       })
       .catch(function (res) {
         swal("Failed!", "Please Try Again!", "error");

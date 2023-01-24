@@ -275,9 +275,27 @@ const Videos = (props) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {videoDetails.map((list, index) => (
-                  <TableList list={list} key={list.id} index={index} />
-                ))}
+                {videoDetails.length === 0 ? (
+                  <>
+                    <TableRow>
+                      <TableCell
+                        classes={{
+                          root:
+                            classes.tableCellRoot +
+                            " " +
+                            classes.tableCellRootBodyHead,
+                        }}
+                        variant="head"
+                      >
+                        No video was uploaded
+                      </TableCell>
+                    </TableRow>
+                  </>
+                ) : (
+                  videoDetails.map((list, index) => (
+                    <TableList list={list} key={list.id} index={index} />
+                  ))
+                )}
               </TableBody>
             </Box>
           </TableContainer>

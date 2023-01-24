@@ -19,7 +19,7 @@ import NavbarDropdown from "components/Dropdowns/NavbarDropdown.js";
 import routes from "routes.js";
 
 import componentStyles from "assets/theme/layouts/admin.js";
-import AuthService from "../services/auth.service"
+import AuthService from "../services/auth.service";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -39,8 +39,7 @@ const Admin = () => {
         if (prop.adminOnly) {
           if (AuthService.isAdmin() == false || AuthService.isAdmin() == null) {
             return null;
-          }
-          else {
+          } else {
             return (
               <Route
                 exact
@@ -81,7 +80,12 @@ const Admin = () => {
           routes={routes}
           logo={{
             innerLink: "/admin/index",
-            imgSrc: AuthService.isTeacher() == true ? require("../assets/img/brand/MyREL-I.png").default : AuthService.isStudent() == true ? require("../assets/img/brand/MyREL-S.png").default : require("../assets/img/brand/MyREL.png").default,
+            imgSrc:
+              AuthService.isTeacher() == true
+                ? require("../assets/img/brand/MyREL-I.png").default
+                : AuthService.isStudent() == true
+                ? require("../assets/img/brand/MyREL-S.png").default
+                : require("../assets/img/brand/MyREL.png").default,
             imgAlt: "...",
           }}
           dropdown={<NavbarDropdown />}

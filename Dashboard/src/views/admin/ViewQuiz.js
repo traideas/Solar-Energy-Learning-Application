@@ -131,7 +131,9 @@ const ViewQuiz = () => {
                     component={Typography}
                     variant="h3"
                     marginBottom="0!important"
-                  >Quiz List</Box>
+                  >
+                    Quiz List
+                  </Box>
                 </Grid>
                 <Grid item xs="auto">
                   <Box justifyContent="flex-end" display="flex" flexWrap="wrap">
@@ -206,17 +208,35 @@ const ViewQuiz = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {quizDetails.map((list, index) => (
-                  <TableList list={list} key={list.id} index={index} />
-                ))}
+                {quizDetails.length === 0 ? (
+                  <>
+                    <TableRow>
+                      <TableCell
+                        classes={{
+                          root:
+                            classes.tableCellRoot +
+                            " " +
+                            classes.tableCellRootBodyHead,
+                        }}
+                        variant="head"
+                      >
+                        No quiz was created
+                      </TableCell>
+                    </TableRow>
+                  </>
+                ) : (
+                  quizDetails.map((list, index) => (
+                    <TableList list={list} key={list.id} index={index} />
+                  ))
+                )}
               </TableBody>
             </Box>
           </TableContainer>
-          <Box
+          {/* <Box
             classes={{ root: classes.cardActionsRoot }}
             component={CardActions}
             justifyContent="flex-end"
-          ></Box>
+          ></Box> */}
         </Card>
       </Container>
     </>

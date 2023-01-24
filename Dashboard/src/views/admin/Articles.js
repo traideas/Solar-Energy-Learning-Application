@@ -34,7 +34,7 @@ const useStyles = makeStyles(componentStyles);
 const onClickDelete = (id) => {
   swal({
     title: "Are you sure?",
-    text: "You want to change instructor status!",
+    text: "You want to delete this!",
     icon: "warning",
     buttons: true,
     dangerMode: true,
@@ -42,7 +42,7 @@ const onClickDelete = (id) => {
     if (willChange) {
       ApiService.deleteArticle(id)
         .then(function (res) {
-          swal("Success!", "Slide Deleted Successfully!", "success");
+          swal("Success!", "Deleted Successfully!", "success");
           window.location.reload();
         })
         .catch(function (res) {
@@ -271,9 +271,27 @@ const Articles = (props) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {articleDetails.map((list, index) => (
-                  <TableList list={list} key={list.id} index={index} />
-                ))}
+                {articleDetails.length === 0 ? (
+                  <>
+                    <TableRow>
+                      <TableCell
+                        classes={{
+                          root:
+                            classes.tableCellRoot +
+                            " " +
+                            classes.tableCellRootBodyHead,
+                        }}
+                        variant="head"
+                      >
+                        No article was uploaded
+                      </TableCell>
+                    </TableRow>
+                  </>
+                ) : (
+                  articleDetails.map((list, index) => (
+                    <TableList list={list} key={list.id} index={index} />
+                  ))
+                )}
               </TableBody>
             </Box>
           </TableContainer>

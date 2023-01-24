@@ -208,16 +208,34 @@ const QuizList = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {quizDetails.map((list, index) => (
-                  <TableList
-                    list={list}
-                    key={list.id}
-                    index={index}
-                    score={studentScore?.filter(
-                      (score) => score.quiz === list.id
-                    )}
-                  />
-                ))}
+                {quizDetails.length === 0 ? (
+                  <>
+                    <TableRow>
+                      <TableCell
+                        classes={{
+                          root:
+                            classes.tableCellRoot +
+                            " " +
+                            classes.tableCellRootBodyHead,
+                        }}
+                        variant="head"
+                      >
+                        No quiz was attempted
+                      </TableCell>
+                    </TableRow>
+                  </>
+                ) : (
+                  quizDetails.map((list, index) => (
+                    <TableList
+                      list={list}
+                      key={list.id}
+                      index={index}
+                      score={studentScore?.filter(
+                        (score) => score.quiz === list.id
+                      )}
+                    />
+                  ))
+                )}
               </TableBody>
             </Box>
           </TableContainer>

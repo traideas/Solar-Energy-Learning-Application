@@ -20,7 +20,6 @@
     "@material-ui/icons": "4.11.2",
     "axios": "^0.21.1",
     "eslint-config-react-app": "^6.0.0",
-    "node-sass": "5.0.0",
     "nouislider": "14.6.3",
     "prop-types": "15.7.2",
     "react": "17.0.1",
