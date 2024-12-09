@@ -1,6 +1,6 @@
-sudo docker-compose up # for running the docker
+sudo docker compose up # for running the docker
 
-sudo docker-compose exec solarlms sh # for getting the bash
+sudo docker compose exec solarlms sh # for getting the bash
 
 # then run the migration command in the docker bash
 
@@ -15,6 +15,11 @@ python manage.py createsuperuser
 Username: adminMyrel
 Email address: admin@myrel.com
 Password: admin123456
+
+#Connect Database
+sudo docker compose exec db sh
+mysql -u root -p
+# then enter your password: root
 
 add aws ip in on settings.py =>> ALLOWED_HOSTS = []
 and add cors header on the same file
